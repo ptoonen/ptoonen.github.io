@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Custom build tasks in TFS 2015 | Toonen.io</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a lot. Of course one of the major features is the new build engine">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom build tasks in TFS 2015">
+<meta property="og:url" content="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/index.html">
+<meta property="og:site_name" content="Toonen.io">
+<meta property="og:description" content="Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a lot. Of course one of the major features is the new build engine">
+<meta property="og:image" content="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/custom-task.png">
+<meta property="og:image" content="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/secret-vars.png">
+<meta property="og:updated_time" content="2016-07-09T23:19:21.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Custom build tasks in TFS 2015">
+<meta name="twitter:description" content="Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a lot. Of course one of the major features is the new build engine">
+<meta name="twitter:image" content="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/custom-task.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">Toonen.io</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/PeterToonen.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/PeterToonen.jpg" />
+            <h2 id="name">Peter Toonen</h2>
+            <h3 id="title">ALM Consultant / DevOps Engineer</h3>
+            <span id="location"><a href="https://www.google.nl/maps/@52.0842715,5.0124518,12z" target=_blank><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
+        </div>
+		<!--
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                6
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                14
+                <span>tags</span>
+            </div>
+        </div>
+		-->
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/ptoonen" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ptoonen" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+		<div class="article-info profile-block bio">
+			<h2>About</h2>
+			<p>I am a Microsoft MVP working as an ALM Consultant / DevOps Engineer at <a href="http://www.infosupport.com" target="_blank">Info Support</a>.</p>
+			<p>This blog has been started as a way to share knowledge on various technology-related subjects. In my spare time I like to be outdoors (with my dog) or travel the world.</p>
+			<br />
+			<p>
+				<a href="https://mvp.microsoft.com/en-us/PublicProfile/5001945?fullName=Peter%20%20Toonen">
+					<img class="mvp-logo" src="/css/images/MVP_Logo_Preferred_Cyan300_RGB_72ppi.png" />
+				</a>
+			</p>
+		</div>
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-custom-build-tasks-in-tfs-2015" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Custom build tasks in TFS 2015
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/">
+            <time datetime="2015-07-21T12:46:00.000Z" itemprop="datePublished">2015-07-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/NET/">.NET</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Build/">Build</a>, <a class="tag-link" href="/tags/Customization/">Customization</a>, <a class="tag-link" href="/tags/TFS/">TFS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a lot. Of course one of the major features is the new build engine and we’ve given that quite a ride. From cross platform builds on Mac and Linux to custom build tasks, we’ve accomplished quite a lot. Seeing as during yesterday’s Visual Studio 2015 launch, Brian Harry stated that it was ‘quite easy’ to build your own tasks, I figured I’d give a short write-down of our experiences with custom tasks.</p>
+<h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>From the moment I upgraded our R&amp;D server to RC1, we’ve been working with the new build system. Up until RC2 it was only possible to add custom build tasks, but we weren’t able to remove them. On top of that, the whole process isn’t documented quite yet. Seeing as we quite often add NuGet packages to a feed and didn’t want to add a, not very descriptive, PowerShell task to all of our build definitions, we decided to use this example for a custom task and see how it would fare.</p>
+<h2 id="Prerequisite-one-What-is-a-task"><a href="#Prerequisite-one-What-is-a-task" class="headerlink" title="Prerequisite one: What is a task?"></a>Prerequisite one: What is a task?</h2><p>To make a custom build task, we first need to know what it looks like. Luckily Microsoft has open-sourced most of the current build tasks in <a href="https://github.com/Microsoft/vso-agent-tasks" target="_blank" rel="external">https://github.com/Microsoft/vso-agent-tasks</a> which gave us a fair idea of what a build task is:</p>
+<ol>
+<li>a JSON file describing the plugin</li>
+<li>a PowerShell or Node.JS file containing the functionality (this post will focus on PowerShell)</li>
+<li>an (optional) icon file</li>
+<li>optional resources translating the options to another language</li>
+</ol>
+<p>Now the only thing we needed to find out was: how to upload these tasks and in what format?</p>
+<p>Good to know:</p>
+<ol>
+<li>To make sure your icon displays correctly, it must be 32×32 pixels</li>
+<li>The task ID is a GUID which you need to create yourself</li>
+<li>The task category should be an existing category</li>
+<li>Visibility tells you what kind of task it is, possible values are: Build, Release and Preview. Currently only Build-type tasks are shown</li>
+</ol>
+<h2 id="Prerequisite-two-How-to-upload-a-task"><a href="#Prerequisite-two-How-to-upload-a-task" class="headerlink" title="Prerequisite two: How to upload a task?"></a>Prerequisite two: How to upload a task?</h2><p>We quickly figured out that the tasks were simply .zip files containing the aforementioned items, so creating a zip was an easy but then we needed to get it there. By going through the github repository’s, we figured out there was a REST-API which controls all the tasks and we figured that by doing a PUT-call to said endpoint we could create a new task, but also overwrite tasks.</p>
+<p>The following powershell-script enables you to upload tasks:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">param</span>(</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string]<span class="variable">$TaskPath</span>,</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string]<span class="variable">$TfsUrl</span>,</div><div class="line">   [PSCredential]<span class="variable">$Credential</span> = (<span class="built_in">Get-Credential</span>),</div><div class="line">   [switch]<span class="variable">$Overwrite</span> = <span class="literal">$false</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment"># Load task definition from the JSON file</span></div><div class="line"><span class="variable">$taskDefinition</span> = (<span class="built_in">Get-Content</span> <span class="variable">$taskPath</span>\task.json) -join <span class="string">"`n"</span> | <span class="built_in">ConvertFrom-Json</span></div><div class="line"><span class="variable">$taskFolder</span> = <span class="built_in">Get-Item</span> <span class="variable">$TaskPath</span></div><div class="line"></div><div class="line"><span class="comment"># Zip the task content</span></div><div class="line"><span class="built_in">Write-Output</span> <span class="string">"Zipping task content"</span></div><div class="line"><span class="variable">$taskZip</span> = (<span class="string">"&#123;0&#125;\..\&#123;1&#125;.zip"</span> -f <span class="variable">$taskFolder</span>, <span class="variable">$taskDefinition</span>.id)</div><div class="line"><span class="keyword">if</span> (<span class="built_in">Test-Path</span> <span class="variable">$taskZip</span>) &#123; <span class="built_in">Remove-Item</span> <span class="variable">$taskZip</span> &#125;</div><div class="line"></div><div class="line"><span class="built_in">Add-Type</span> -AssemblyName <span class="string">"System.IO.Compression.FileSystem"</span></div><div class="line">[IO.Compression.ZipFile]::CreateFromDirectory(<span class="variable">$taskFolder</span>, <span class="variable">$taskZip</span>)</div><div class="line"></div><div class="line"><span class="comment"># Prepare to upload the task</span></div><div class="line"><span class="built_in">Write-Output</span> <span class="string">"Uploading task content"</span></div><div class="line"><span class="variable">$headers</span> = @&#123; <span class="string">"Accept"</span> = <span class="string">"application/json; api-version=2.0-preview"</span>; <span class="string">"X-TFS-FedAuthRedirect"</span> = <span class="string">"Suppress"</span> &#125;</div><div class="line"><span class="variable">$taskZipItem</span> = <span class="built_in">Get-Item</span> <span class="variable">$taskZip</span></div><div class="line"><span class="variable">$headers</span>.Add(<span class="string">"Content-Range"</span>, <span class="string">"bytes 0-$(<span class="variable">$taskZipItem</span>.Length - 1)/$(<span class="variable">$taskZipItem</span>.Length)"</span>)</div><div class="line"><span class="variable">$url</span> = (<span class="string">"&#123;0&#125;/_apis/distributedtask/tasks/&#123;1&#125;"</span> -f <span class="variable">$TfsUrl</span>, <span class="variable">$taskDefinition</span>.id)</div><div class="line"><span class="keyword">if</span> (<span class="variable">$Overwrite</span>) &#123;</div><div class="line">   <span class="variable">$url</span> += <span class="string">"?overwrite=true"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Actually upload it</span></div><div class="line"><span class="built_in">Invoke-RestMethod</span> -Uri <span class="variable">$url</span> -Credential <span class="variable">$Credential</span> -Headers <span class="variable">$headers</span> -ContentType application/octet-stream -Method Put -InFile <span class="variable">$taskZipItem</span></div></pre></td></tr></table></figure>
+<p>Good to know:</p>
+<ol>
+<li>Currently only ‘Agent Pool Administrators’ are able to add/update or remove tasks.</li>
+<li>Tasks are server-wide, this means that you will upload to the server, not to a specific collection or project.</li>
+</ol>
+<h2 id="Creating-the-actual-task"><a href="#Creating-the-actual-task" class="headerlink" title="Creating the actual task"></a>Creating the actual task</h2><p>So like I said, we’ll be creating a new task that’s going to publish our NuGet packages to a feed. So first we need to decide what information we need to push our packages:</p>
+<ol>
+<li>The target we want to pack (.csproj or .nuspec file relative to the source-directory)</li>
+<li>The package source we want to push to</li>
+</ol>
+<p>For this example I’m assuming you’re only building for a single build configuration and single target platform, which we’ll use in the PowerShell-script.</p>
+<p>First we’ll make the task definition. As I said, this is simply a JSON file describing the task and its inputs.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   <span class="attr">"id"</span>: <span class="string">"61ed0e1d-efb7-406e-a42b-80f5d22e6d54"</span>,</div><div class="line">   <span class="attr">"name"</span>: <span class="string">"NuGetPackAndPush"</span>,</div><div class="line">   <span class="attr">"friendlyName"</span>: <span class="string">"Nuget Pack and Push"</span>,</div><div class="line">   <span class="attr">"description"</span>: <span class="string">"Packs your output as NuGet package and pushes it to the specified source."</span>,</div><div class="line">   <span class="attr">"category"</span>: <span class="string">"Package"</span>,</div><div class="line">   <span class="attr">"author"</span>: <span class="string">"Info Support"</span>,</div><div class="line">   <span class="attr">"version"</span>: &#123;</div><div class="line">      <span class="attr">"Major"</span>: <span class="number">0</span>,</div><div class="line">      <span class="attr">"Minor"</span>: <span class="number">1</span>,</div><div class="line">      <span class="attr">"Patch"</span>: <span class="number">0</span></div><div class="line">   &#125;,</div><div class="line">   <span class="attr">"minimumAgentVersion"</span>: <span class="string">"1.83.0"</span>,</div><div class="line">   <span class="attr">"inputs"</span>: [</div><div class="line">      &#123;</div><div class="line">         <span class="attr">"name"</span>: <span class="string">"packtarget"</span>,</div><div class="line">         <span class="attr">"type"</span>: <span class="string">"string"</span>,</div><div class="line">         <span class="attr">"label"</span>: <span class="string">"Pack target"</span>,</div><div class="line">         <span class="attr">"defaultValue"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"required"</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">"helpMarkDown"</span>: <span class="string">"Relative path to .csproj or .nuspec file to pack."</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">         <span class="attr">"name"</span>: <span class="string">"packagesource"</span>,</div><div class="line">         <span class="attr">"type"</span>: <span class="string">"string"</span>,</div><div class="line">         <span class="attr">"label"</span>: <span class="string">"Package Source"</span>,</div><div class="line">         <span class="attr">"defaultValue"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"required"</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">"helpMarkDown"</span>: <span class="string">"The source we want to push the package to"</span></div><div class="line">      &#125;</div><div class="line">   ],</div><div class="line">   <span class="attr">"instanceNameFormat"</span>: <span class="string">"Nuget Pack and Push $(packtarget)"</span>,</div><div class="line">   <span class="attr">"execution"</span>: &#123;</div><div class="line">      <span class="attr">"PowerShell"</span>: &#123;</div><div class="line">         <span class="attr">"target"</span>: <span class="string">"$(currentDirectory)\\PackAndPush.ps1"</span>,</div><div class="line">         <span class="attr">"argumentFormat"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"workingDirectory"</span>: <span class="string">"$(currentDirectory)"</span></div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This version of the task will  be a very rudimentary one, which doesn’t do much (any) validation, so you might want to add that yourself.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">[cmdletbinding()]</div><div class="line"><span class="keyword">param</span></div><div class="line">(</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string] <span class="variable">$packtarget</span>,</div><div class="line">   [Parameter(Mandatory=<span class="literal">$false</span>)][string] <span class="variable">$packagesource</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 1 Auto Configuration</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="comment"># Stop the script on error</span></div><div class="line"><span class="variable">$ErrorActionPreference</span> = <span class="string">"Stop"</span></div><div class="line"></div><div class="line"><span class="comment"># Relative location of nuget.exe to build agent home directory</span></div><div class="line"><span class="variable">$nugetExecutableRelativePath</span> = <span class="string">"Agent\Worker\Tools\nuget.exe"</span></div><div class="line"></div><div class="line"><span class="comment"># These variables are provided by TFS</span></div><div class="line"><span class="variable">$buildAgentHomeDirectory</span> = <span class="variable">$env:AGENT_HOMEDIRECTORY</span></div><div class="line"><span class="variable">$buildSourcesDirectory</span> = <span class="variable">$Env:BUILD_SOURCESDIRECTORY</span></div><div class="line"><span class="variable">$buildStagingDirectory</span> = <span class="variable">$Env:BUILD_STAGINGDIRECTORY</span></div><div class="line"><span class="variable">$buildPlatform</span> = <span class="variable">$Env:BUILDPLATFORM</span></div><div class="line"><span class="variable">$buildConfiguration</span> = <span class="variable">$Env:BUILDCONFIGURATION</span></div><div class="line"></div><div class="line"><span class="variable">$packagesOutputDirectory</span> = <span class="variable">$buildStagingDirectory</span></div><div class="line"></div><div class="line"><span class="comment"># Determine full path of pack target file</span></div><div class="line"><span class="variable">$packTargetFullPath</span> = <span class="built_in">Join-Path</span> -Path <span class="variable">$buildSourcesDirectory</span> -ChildPath <span class="variable">$packTarget</span></div><div class="line"></div><div class="line"><span class="comment"># Determine full path to nuget.exe</span></div><div class="line"><span class="variable">$nugetExecutableFullPath</span> = <span class="built_in">Join-Path</span> -Path <span class="variable">$buildAgentHomeDirectory</span> -ChildPath <span class="variable">$nugetExecutableRelativePath</span></div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 2 Create package</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"2. Creating NuGet package"</span></div><div class="line"></div><div class="line"><span class="variable">$packCommand</span> = (<span class="string">"pack `"&#123;0&#125;`" -OutputDirectory `"&#123;1&#125;`" -NonInteractive -Symbols"</span> -f <span class="variable">$packTargetFullPath</span>, <span class="variable">$packagesOutputDirectory</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="variable">$packTargetFullPath</span>.ToLower().EndsWith(<span class="string">".csproj"</span>))</div><div class="line">&#123;</div><div class="line">   <span class="variable">$packCommand</span> += <span class="string">" -IncludeReferencedProjects"</span></div><div class="line"></div><div class="line">   <span class="comment"># Remove spaces from build platform, so 'Any CPU' becomes 'AnyCPU'</span></div><div class="line">   <span class="variable">$packCommand</span> += (<span class="string">" -Properties `"Configuration=&#123;0&#125;;Platform=&#123;1&#125;`""</span> -f    <span class="variable">$buildConfiguration</span>, (<span class="variable">$buildPlatform</span> <span class="nomarkup">-replace</span> <span class="string">'\s'</span>,<span class="string">''</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPack command: &#123;0&#125;"</span> -f <span class="variable">$packCommand</span>)</div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tCreating package..."</span>)</div><div class="line"></div><div class="line"><span class="variable">$packOutput</span> = <span class="built_in">Invoke-Expression</span> <span class="string">"&amp;'<span class="variable">$nugetExecutableFullPath</span>' <span class="variable">$packCommand</span>"</span> | <span class="built_in">Out-String</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPackage successfully created:"</span>)</div><div class="line"></div><div class="line"><span class="variable">$generatedPackageFullPath</span> = [regex]::match(<span class="variable">$packOutput</span>,<span class="string">"Successfully created package '(.+(?&lt;!\.symbols)\.nupkg)'"</span>).Groups[<span class="number">1</span>].Value</div><div class="line"><span class="built_in">Write-Host</span> `t`t<span class="variable">$generatedPackageFullPath</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tNote: The created package will be available in the drop location."</span>)</div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tOutput from NuGet.exe:"</span></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`t`t<span class="variable">$packOutput</span>"</span> <span class="nomarkup">-Replace</span> <span class="string">"`r`n"</span>, <span class="string">"`r`n`t`t"</span>)</div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 3 Publish package</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"3. Publish package"</span></div><div class="line"><span class="variable">$pushCommand</span> = <span class="string">"push `"&#123;0&#125;`" -Source `"&#123;1&#125;`" -NonInteractive"</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPush package '&#123;0&#125;' to '&#123;1&#125;'."</span> -f (<span class="built_in">Split-Path</span> <span class="variable">$generatedPackageFullPath</span> -Leaf), <span class="variable">$packagesource</span>)</div><div class="line"><span class="variable">$regularPackagePushCommand</span> = (<span class="variable">$pushCommand</span> -f <span class="variable">$generatedPackageFullPath</span>, <span class="variable">$packagesource</span>)</div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPush command: &#123;0&#125;"</span> -f <span class="variable">$regularPackagePushCommand</span>)</div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tPushing..."</span></div><div class="line"></div><div class="line"><span class="variable">$pushOutput</span> = <span class="built_in">Invoke-Expression</span> <span class="string">"&amp;'<span class="variable">$nugetExecutableFullPath</span>' <span class="variable">$regularPackagePushCommand</span>"</span> | <span class="built_in">Out-String</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tSuccess. Package pushed to source."</span></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tOutput from NuGet.exe:"</span></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`t`t<span class="variable">$pushOutput</span>"</span> <span class="nomarkup">-Replace</span> <span class="string">"`r`n"</span>, <span class="string">"`r`n`t`t"</span>)</div></pre></td></tr></table></figure>
+<p>To finish up, don’t forget to add a .png logo to your task ;-)<br>You should now be able to add a custom task to your build pipeline from the “Package” category:</p>
+<img src="/2015/07/21/custom-build-tasks-in-tfs-2015/custom-task.png" alt="Custom Task in Package category" title="Custom Task in Package category">
+<h2 id="Words-of-warning"><a href="#Words-of-warning" class="headerlink" title="Words of warning"></a>Words of warning</h2><p>Tasks can be versioned, use this to your advantage. All build definitions use the latest available version of a specific task, you can’t change this behavior from the web interface, so always assume the latest version is being used.</p>
+<p>If you don’t change the version number of your task when updating it, the build agents that have previously used your task will not download the newer version because the version number is still the same. This means that if you change the behavior of your task, you should always update the version number!</p>
+<p>When deleting a task, this task is not automatically removed from current build definitions, on top of that you won’t get a notification when editing the build definition but you will get an exception on executing a build based on that definition.</p>
+<p>Tasks are always available for the entire TFS instance, this means that you shouldn’t include credentials or anything that you don’t want others to see. Use ‘secret variables’ for this purpose:</p>
+<img src="/2015/07/21/custom-build-tasks-in-tfs-2015/secret-vars.png" alt="Secret Variables" title="Secret Variables">
+<h2 id="Further-Reading"><a href="#Further-Reading" class="headerlink" title="Further Reading"></a>Further Reading</h2><p>If you’ve followed this post so far, I recommend you also check out my team member Jonathan’s post/videos (in Dutch) out:</p>
+<p><a href="http://blogs.infosupport.com/using-invoke-sqlcmd-in-tfs-build-2015/" target="_blank" rel="external">Blog Post about Invoke SQLCmd in build vNext</a><br><a href="https://www.youtube.com/watch?v=e0U-Ca5ElQQ" target="_blank" rel="external">Video on build vNext (in Dutch)</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciqfsms0j0004789432xg74mu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2015/10/28/dev-intersection-2015-dag-3/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Dev Intersection 2015 - dag 3
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/07/12/load-testing-from-the-azure-portal/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Load testing from the Azure portal</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/07/09/new-blog/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/General/">General</a></p>
+                            <p class="item-title"><a href="/2016/07/09/new-blog/" class="title">New Blog</a></p>
+                            <p class="item-date"><time datetime="2016-07-09T21:09:34.000Z" itemprop="datePublished">2016-07-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/06/bash-for-windows/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/General/">General</a></p>
+                            <p class="item-title"><a href="/2016/04/06/bash-for-windows/" class="title">Bash for Windows</a></p>
+                            <p class="item-date"><time datetime="2016-04-06T20:59:00.000Z" itemprop="datePublished">2016-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/11/09/dev-intersection-2015-dag-6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
+                            <p class="item-title"><a href="/2015/11/09/dev-intersection-2015-dag-6/" class="title">Dev Intersection 2015 - dag 6</a></p>
+                            <p class="item-date"><time datetime="2015-11-09T17:01:00.000Z" itemprop="datePublished">2015-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/10/28/dev-intersection-2015-dag-3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
+                            <p class="item-title"><a href="/2015/10/28/dev-intersection-2015-dag-3/" class="title">Dev Intersection 2015 - dag 3</a></p>
+                            <p class="item-date"><time datetime="2015-10-28T06:38:00.000Z" itemprop="datePublished">2015-10-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NET/">.NET</a></p>
+                            <p class="item-title"><a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" class="title">Custom build tasks in TFS 2015</a></p>
+                            <p class="item-date"><time datetime="2015-07-21T12:46:00.000Z" itemprop="datePublished">2015-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NET/">.NET</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Conferences/">Conferences</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Peter Toonen<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

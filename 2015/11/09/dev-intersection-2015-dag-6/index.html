@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Dev Intersection 2015 - dag 6 | Toonen.io</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Ook al ben ik inmiddels alweer een tijdje terug uit Las Vegas en inmiddels de jet-lag te boven, wilde ik jullie toch niet mijn laatste dag op Dev Intersection onthouden. Dit was namelijk de dag waar i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dev Intersection 2015 - dag 6">
+<meta property="og:url" content="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/index.html">
+<meta property="og:site_name" content="Toonen.io">
+<meta property="og:description" content="Ook al ben ik inmiddels alweer een tijdje terug uit Las Vegas en inmiddels de jet-lag te boven, wilde ik jullie toch niet mijn laatste dag op Dev Intersection onthouden. Dit was namelijk de dag waar i">
+<meta property="og:image" content="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/particle-photon.jpg">
+<meta property="og:image" content="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/power-bi-stats.png">
+<meta property="og:updated_time" content="2016-07-09T23:18:09.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dev Intersection 2015 - dag 6">
+<meta name="twitter:description" content="Ook al ben ik inmiddels alweer een tijdje terug uit Las Vegas en inmiddels de jet-lag te boven, wilde ik jullie toch niet mijn laatste dag op Dev Intersection onthouden. Dit was namelijk de dag waar i">
+<meta name="twitter:image" content="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/particle-photon.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">Toonen.io</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/PeterToonen.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/PeterToonen.jpg" />
+            <h2 id="name">Peter Toonen</h2>
+            <h3 id="title">ALM Consultant / DevOps Engineer</h3>
+            <span id="location"><a href="https://www.google.nl/maps/@52.0842715,5.0124518,12z" target=_blank><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
+        </div>
+		<!--
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                6
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                14
+                <span>tags</span>
+            </div>
+        </div>
+		-->
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/ptoonen" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/ptoonen" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+		<div class="article-info profile-block bio">
+			<h2>About</h2>
+			<p>I am a Microsoft MVP working as an ALM Consultant / DevOps Engineer at <a href="http://www.infosupport.com" target="_blank">Info Support</a>.</p>
+			<p>This blog has been started as a way to share knowledge on various technology-related subjects. In my spare time I like to be outdoors (with my dog) or travel the world.</p>
+			<br />
+			<p>
+				<a href="https://mvp.microsoft.com/en-us/PublicProfile/5001945?fullName=Peter%20%20Toonen">
+					<img class="mvp-logo" src="/css/images/MVP_Logo_Preferred_Cyan300_RGB_72ppi.png" />
+				</a>
+			</p>
+		</div>
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-dev-intersection-2015-dag-6" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Dev Intersection 2015 - dag 6
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/11/09/dev-intersection-2015-dag-6/">
+            <time datetime="2015-11-09T17:01:00.000Z" itemprop="datePublished">2015-11-09</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Conferences/">Conferences</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DevInterSection/">DevInterSection</a>, <a class="tag-link" href="/tags/Dutch/">Dutch</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Ook al ben ik inmiddels alweer een tijdje terug uit Las Vegas en inmiddels de jet-lag te boven, wilde ik jullie toch niet mijn laatste dag op Dev Intersection onthouden. Dit was namelijk de dag waar ik het meest naar had uitgekeken.</p>
+<p>Ondanks mijn eerdere experimenten met IoT (<a href="http://dotnetflix.com/player/3" target="_blank" rel="external">dotnetFlix aflevering 3</a>) waarbij ik mijn gas- en electriciteitsmeter liet ‘praten’ met het internet en wat andere simpele projectjes, had ik nog steeds niet echt het idee dat ik met IoT bezig was, zo had ik wel een koppeling met Azure gemaakt maar niet de IoT hub gebruikt, geen stream analytics toegepast en geen PowerBI. Dat was nou precies waar mijn laatste workshop over ging: IoT, Azure, PowerBI en dat aangestuurd met <a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a>!</p>
+<img src="/2015/11/09/dev-intersection-2015-dag-6/particle-photon.jpg" alt="Particle Photon" title="Particle Photon">
+<p>Gedurende de gehele dag werd ik meegenomen door Doug Seven en zijn team waarbij we in eerste instantie aan de slag gingen met een <a href="https://store.particle.io/?product=particle-photon" target="_blank" rel="external">Particle Photon</a>. Deze mini-module van $19 (zie foto waar hij bovenop een breadboard ligt) is in staat om out-of-the-box te communiceren met wifi en heeft een aantal digitale en analoge poorten aan boord waarmee je kunt communiceren. Plug ‘m in in je PC (of een andere USB power source) en je kunt gaan zodra je jouw particle hebt ‘geclaimt’ via hun cloud service.</p>
+<p>Tijdens de workshop wordt uitgelegd dat je op verschillende manieren om kunt gaan met je devices, zo kun je rechtstreeks met het internet communiceren, of je kunt via een gateway-device werken. Zo doen wij dat ook deze dag: via onze pc. Gewapend met een text-editor (ik koos voor <a href="https://code.visualstudio.com/" target="_blank" rel="external">Visual Studio Code</a>), de <a href="http://johnny-five.io/" target="_blank" rel="external">Johnny Five</a> node module en de <a href="https://github.com/spark/particle-cli" target="_blank" rel="external">Particle-cli</a> module, kon ik aan de slag met Node.js. Aangezien er geen ‘hello world’ te outputten was op de module aangezien er geen display op zit, moest een knipperend lampje het doen (dat mijn lampje in morse alsnog ‘hello world’ seinde, laten we maar even buiten beschouwing ;-)). Probeer overigens ook vooral het particle-cli commando ‘nyan’ en ik geef je alvast als tip dat je ook ‘particle-cli nyan off’ kunt doen zonder een reboot te geven.</p>
+<p>Gedurende de dag kwamen we steeds verder met onze particles en koppelden we deze aan een <a href="https://github.com/sparkfun/Weather_Shield" target="_blank" rel="external">SparkFun weathershield</a> waarmee een simpel weerstation werd gebouwd. Door deze metrieken vervolgens met behulp van de Azure IoT node-module naar Azure te pushen en deze met een stream analytics job in een Power BI DataSet te gieten, kun je in Power BI vervolgens een mooi dashboard er overheen gieten. Let er hierbij op dat je om PowerBI als output voor je Stream Analytics Job te selecteren, je in de oude huidige Azure portal moet kijken!</p>
+<p>Zie hieronder mijn resultaat met op de horizontale as de tijd en verticaal de temperatuur :-)</p>
+<img src="/2015/11/09/dev-intersection-2015-dag-6/power-bi-stats.png" alt="Temperatuur" title="Temperatuur">
+<p>Al met al was dit een leerzame workshop waar je in korte tijd met een hoop informatie tot je neemt, en je de kans krijgt te werken met de mannen die <a href="http://www.microsoft.com/en-us/server-cloud/customer-stories/Kuka-Robotics.aspx" target="_blank" rel="external">hier</a> achter zitten en ze vragen te stellen. Krijg je dus de kans om een workshop van Doug en de mannen te volgen: grijp ‘m! Kijk op hun <a href="https://thinglabsio.github.io/" target="_blank" rel="external">github</a> voor de code, guides en workshop planning.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciqfsms0p00077894fu2tuwph" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/04/06/bash-for-windows/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Bash for Windows
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/10/28/dev-intersection-2015-dag-3/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Dev Intersection 2015 - dag 3</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/07/09/new-blog/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/General/">General</a></p>
+                            <p class="item-title"><a href="/2016/07/09/new-blog/" class="title">New Blog</a></p>
+                            <p class="item-date"><time datetime="2016-07-09T21:09:34.000Z" itemprop="datePublished">2016-07-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/04/06/bash-for-windows/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/General/">General</a></p>
+                            <p class="item-title"><a href="/2016/04/06/bash-for-windows/" class="title">Bash for Windows</a></p>
+                            <p class="item-date"><time datetime="2016-04-06T20:59:00.000Z" itemprop="datePublished">2016-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/11/09/dev-intersection-2015-dag-6/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
+                            <p class="item-title"><a href="/2015/11/09/dev-intersection-2015-dag-6/" class="title">Dev Intersection 2015 - dag 6</a></p>
+                            <p class="item-date"><time datetime="2015-11-09T17:01:00.000Z" itemprop="datePublished">2015-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/10/28/dev-intersection-2015-dag-3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
+                            <p class="item-title"><a href="/2015/10/28/dev-intersection-2015-dag-3/" class="title">Dev Intersection 2015 - dag 3</a></p>
+                            <p class="item-date"><time datetime="2015-10-28T06:38:00.000Z" itemprop="datePublished">2015-10-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NET/">.NET</a></p>
+                            <p class="item-title"><a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" class="title">Custom build tasks in TFS 2015</a></p>
+                            <p class="item-date"><time datetime="2015-07-21T12:46:00.000Z" itemprop="datePublished">2015-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NET/">.NET</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Conferences/">Conferences</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Peter Toonen<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
