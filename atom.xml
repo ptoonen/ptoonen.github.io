@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2016-07-09T06:29:02.833Z</updated>
+  <updated>2016-07-09T21:41:53.867Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -16,29 +16,34 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://toonen.io/2016/07/09/hello-world/"/>
-    <id>https://toonen.io/2016/07/09/hello-world/</id>
-    <published>2016-07-09T06:28:50.009Z</published>
-    <updated>2016-07-09T06:29:02.833Z</updated>
+    <title>New Blog</title>
+    <link href="https://toonen.io/2016/07/09/new-blog/"/>
+    <id>https://toonen.io/2016/07/09/new-blog/</id>
+    <published>2016-07-09T21:09:34.000Z</published>
+    <updated>2016-07-09T21:41:53.867Z</updated>
     
-    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;http://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;http://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;http://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;trobuleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;http://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo server&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;http://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo generate&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;http://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo deploy&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;http://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague &lt;a href=&quot;http://defaultconstructor.com&quot; title=&quot;Edwin van Wijk&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Edwin van Wijk&lt;/a&gt; tipped me off on using &lt;a href=&quot;http://hexo.io&quot; title=&quot;Hexo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hexo&lt;/a&gt; quite a while ago and I seem to have gotten the hang of it. This blog itself is still a work in progress and I’ll be migrating old posts over soon, but in the meanwhile I figured I’d share some tips.&lt;/p&gt;
+&lt;h2 id=&quot;Free-Blog&quot;&gt;&lt;a href=&quot;#Free-Blog&quot; class=&quot;headerlink&quot; title=&quot;Free Blog&quot;&gt;&lt;/a&gt;Free Blog&lt;/h2&gt;&lt;p&gt;As you might know, &lt;a href=&quot;https://github.com&quot; title=&quot;GitHub&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt; offers you a free website through GitHub Pages. This means that you can host your static website right from GitHub. Combine this with Hexo magic and you can start your own blog quite easily. What you might not know is that you can also add a custom domain to your GitHub page:&lt;/p&gt;
+&lt;img src=&quot;/2016/07/09/new-blog/github-custom-domain.png&quot; alt=&quot;Add a custom domain to GitHub pages&quot; title=&quot;Add a custom domain to GitHub pages&quot;&gt;
+&lt;p&gt;Now although this by itself is pretty cool, it gets better. Although it’s possible to use SSL on GitHub pages, this isn’t currently possible when using a custom domain, or is it?&lt;/p&gt;
+&lt;h2 id=&quot;CloudFlare-to-the-rescue&quot;&gt;&lt;a href=&quot;#CloudFlare-to-the-rescue&quot; class=&quot;headerlink&quot; title=&quot;CloudFlare to the rescue&quot;&gt;&lt;/a&gt;CloudFlare to the rescue&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://cloudflare.com&quot; title=&quot;CloudFlare&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CloudFlare&lt;/a&gt; offers a free tier which not only makes your website faster by using a smart caching mechanism, it also offers &lt;strong&gt;free SSL&lt;/strong&gt; for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:&lt;/p&gt;
+
+&lt;p&gt;For the DNS-savvy, yes, I used a CNAME as my domain’s root, please refer to &lt;a href=&quot;https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;this page&lt;/a&gt; on details as to why this is still RFC compliant.&lt;/p&gt;
+&lt;p&gt;Then nagivate to the ‘Crypto’ tab in the menu and set it to the following:&lt;/p&gt;
+&lt;img src=&quot;/2016/07/09/new-blog/cloudflare-crypto.png&quot; alt=&quot;Set the Encryption level to Full&quot; title=&quot;Set the Encryption level to Full&quot;&gt;
+&lt;p&gt;Now for the final step, which ensures all your users are automatically redirected to your SSL page, navigate to the ‘Page Rules’ tab and add the following rules (where you replace the domain with your own domain). If you use a sub-domain such as ‘blog.domain.com’, make sure to use two asterisks (*) in the first rule and replace $1 in the rule with $2 so that it will correctly rewrite:&lt;/p&gt;
+&lt;img src=&quot;/2016/07/09/new-blog/cloudflare-page-rules.png&quot; alt=&quot;Add Rewrite Rules&quot; title=&quot;Add Rewrite Rules&quot;&gt;
+&lt;h2 id=&quot;Sit-back-and-relax&quot;&gt;&lt;a href=&quot;#Sit-back-and-relax&quot; class=&quot;headerlink&quot; title=&quot;Sit back and relax&quot;&gt;&lt;/a&gt;Sit back and relax&lt;/h2&gt;&lt;p&gt;That’s it. You’re done. You have just setup your new &lt;strong&gt;secure&lt;/strong&gt; site using hexo, GitHub pages and CloudFlare. Of course you can also use this with the Basic Tier in &lt;a href=&quot;https://azure.microsoft.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Azure&lt;/a&gt; which allows you to use your own custom SSL for just 8 odd euro’s a month ;-)&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;http://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;http://hexo.io
+      &lt;p&gt;So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My collea
     
     </summary>
     
+    
+      <category term="general, tips-and-tricks" scheme="https://toonen.io/tags/general-tips-and-tricks/"/>
     
   </entry>
   

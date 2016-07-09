@@ -3,14 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive | Toonen.io</title>
+    <title>New Blog | Toonen.io</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Toonen.io">
-<meta property="og:url" content="https://toonen.io/archives/index.html">
+    <meta name="description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="New Blog">
+<meta property="og:url" content="https://toonen.io/2016/07/09/new-blog/index.html">
 <meta property="og:site_name" content="Toonen.io">
+<meta property="og:description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
+<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/github-custom-domain.png">
+<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-crypto.png">
+<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-page-rules.png">
+<meta property="og:updated_time" content="2016-07-09T21:41:53.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Toonen.io">
+<meta name="twitter:title" content="New Blog">
+<meta name="twitter:description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
+<meta name="twitter:image" content="https://toonen.io/2016/07/09/new-blog/github-custom-domain.png">
     
 
     
@@ -186,25 +194,22 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2016</h1>
-            </div>
+            <section id="main"><article id="post-new-blog" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/07/09/new-blog/">New Blog</a>
+        <h1 class="article-title" itemprop="name">
+            New Blog
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
         <a href="/2016/07/09/new-blog/">
@@ -213,18 +218,125 @@
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
         <a class="tag-link" href="/tags/general-tips-and-tricks/">general, tips-and-tricks</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague <a href="http://defaultconstructor.com" title="Edwin van Wijk" target="_blank" rel="external">Edwin van Wijk</a> tipped me off on using <a href="http://hexo.io" title="Hexo" target="_blank" rel="external">hexo</a> quite a while ago and I seem to have gotten the hang of it. This blog itself is still a work in progress and I’ll be migrating old posts over soon, but in the meanwhile I figured I’d share some tips.</p>
+<h2 id="Free-Blog"><a href="#Free-Blog" class="headerlink" title="Free Blog"></a>Free Blog</h2><p>As you might know, <a href="https://github.com" title="GitHub" target="_blank" rel="external">GitHub</a> offers you a free website through GitHub Pages. This means that you can host your static website right from GitHub. Combine this with Hexo magic and you can start your own blog quite easily. What you might not know is that you can also add a custom domain to your GitHub page:</p>
+<img src="/2016/07/09/new-blog/github-custom-domain.png" alt="Add a custom domain to GitHub pages" title="Add a custom domain to GitHub pages">
+<p>Now although this by itself is pretty cool, it gets better. Although it’s possible to use SSL on GitHub pages, this isn’t currently possible when using a custom domain, or is it?</p>
+<h2 id="CloudFlare-to-the-rescue"><a href="#CloudFlare-to-the-rescue" class="headerlink" title="CloudFlare to the rescue"></a>CloudFlare to the rescue</h2><p><a href="https://cloudflare.com" title="CloudFlare" target="_blank" rel="external">CloudFlare</a> offers a free tier which not only makes your website faster by using a smart caching mechanism, it also offers <strong>free SSL</strong> for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:</p>
+
+<p>For the DNS-savvy, yes, I used a CNAME as my domain’s root, please refer to <a href="https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/" target="_blank" rel="external">this page</a> on details as to why this is still RFC compliant.</p>
+<p>Then nagivate to the ‘Crypto’ tab in the menu and set it to the following:</p>
+<img src="/2016/07/09/new-blog/cloudflare-crypto.png" alt="Set the Encryption level to Full" title="Set the Encryption level to Full">
+<p>Now for the final step, which ensures all your users are automatically redirected to your SSL page, navigate to the ‘Page Rules’ tab and add the following rules (where you replace the domain with your own domain). If you use a sub-domain such as ‘blog.domain.com’, make sure to use two asterisks (*) in the first rule and replace $1 in the rule with $2 so that it will correctly rewrite:</p>
+<img src="/2016/07/09/new-blog/cloudflare-page-rules.png" alt="Add Rewrite Rules" title="Add Rewrite Rules">
+<h2 id="Sit-back-and-relax"><a href="#Sit-back-and-relax" class="headerlink" title="Sit back and relax"></a>Sit back and relax</h2><p>That’s it. You’re done. You have just setup your new <strong>secure</strong> site using hexo, GitHub pages and CloudFlare. Of course you can also use this with the Basic Tier in <a href="https://azure.microsoft.com" target="_blank" rel="external">Azure</a> which allows you to use your own custom SSL for just 8 odd euro’s a month ;-)</p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciqfp5muq0000f094gmz9gliu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">

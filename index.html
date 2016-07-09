@@ -129,7 +129,7 @@
             <img id="avatar" src="/css/images/PeterToonen.jpg" />
             <h2 id="name">Peter Toonen</h2>
             <h3 id="title">ALM Consultant / DevOps Engineer</h3>
-            <span id="location"><a href="" target=_blank><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
+            <span id="location"><a href="https://www.google.nl/maps/@52.0842715,5.0124518,12z" target=_blank><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
         </div>
 		<!--
         <div class="article-info profile-block">
@@ -138,7 +138,7 @@
                 <span>post</span>
             </div>
             <div class="article-info-block">
-                0
+                1
                 <span>tag</span>
             </div>
         </div>
@@ -187,7 +187,7 @@
 
             
             <section id="main">
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-new-blog" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -196,7 +196,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/07/09/hello-world/">Hello World</a>
+            <a class="article-title" href="/2016/07/09/new-blog/">New Blog</a>
         </h1>
     
 
@@ -205,14 +205,19 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/07/09/hello-world/">
-            <time datetime="2016-07-09T06:28:50.009Z" itemprop="datePublished">2016-07-09</time>
+        <a href="/2016/07/09/new-blog/">
+            <time datetime="2016-07-09T21:09:34.000Z" itemprop="datePublished">2016-07-09</time>
         </a>
     </div>
 
 
                         
                         
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/general-tips-and-tricks/">general, tips-and-tricks</a>
+    </div>
+
                     </div>
                 
             </header>
@@ -220,15 +225,18 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <p>So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague <a href="http://defaultconstructor.com" title="Edwin van Wijk" target="_blank" rel="external">Edwin van Wijk</a> tipped me off on using <a href="http://hexo.io" title="Hexo" target="_blank" rel="external">hexo</a> quite a while ago and I seem to have gotten the hang of it. This blog itself is still a work in progress and I’ll be migrating old posts over soon, but in the meanwhile I figured I’d share some tips.</p>
+<h2 id="Free-Blog"><a href="#Free-Blog" class="headerlink" title="Free Blog"></a>Free Blog</h2><p>As you might know, <a href="https://github.com" title="GitHub" target="_blank" rel="external">GitHub</a> offers you a free website through GitHub Pages. This means that you can host your static website right from GitHub. Combine this with Hexo magic and you can start your own blog quite easily. What you might not know is that you can also add a custom domain to your GitHub page:</p>
+<img src="/2016/07/09/new-blog/github-custom-domain.png" alt="Add a custom domain to GitHub pages" title="Add a custom domain to GitHub pages">
+<p>Now although this by itself is pretty cool, it gets better. Although it’s possible to use SSL on GitHub pages, this isn’t currently possible when using a custom domain, or is it?</p>
+<h2 id="CloudFlare-to-the-rescue"><a href="#CloudFlare-to-the-rescue" class="headerlink" title="CloudFlare to the rescue"></a>CloudFlare to the rescue</h2><p><a href="https://cloudflare.com" title="CloudFlare" target="_blank" rel="external">CloudFlare</a> offers a free tier which not only makes your website faster by using a smart caching mechanism, it also offers <strong>free SSL</strong> for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:</p>
+
+<p>For the DNS-savvy, yes, I used a CNAME as my domain’s root, please refer to <a href="https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/" target="_blank" rel="external">this page</a> on details as to why this is still RFC compliant.</p>
+<p>Then nagivate to the ‘Crypto’ tab in the menu and set it to the following:</p>
+<img src="/2016/07/09/new-blog/cloudflare-crypto.png" alt="Set the Encryption level to Full" title="Set the Encryption level to Full">
+<p>Now for the final step, which ensures all your users are automatically redirected to your SSL page, navigate to the ‘Page Rules’ tab and add the following rules (where you replace the domain with your own domain). If you use a sub-domain such as ‘blog.domain.com’, make sure to use two asterisks (*) in the first rule and replace $1 in the rule with $2 so that it will correctly rewrite:</p>
+<img src="/2016/07/09/new-blog/cloudflare-page-rules.png" alt="Add Rewrite Rules" title="Add Rewrite Rules">
+<h2 id="Sit-back-and-relax"><a href="#Sit-back-and-relax" class="headerlink" title="Sit back and relax"></a>Sit back and relax</h2><p>That’s it. You’re done. You have just setup your new <strong>secure</strong> site using hexo, GitHub pages and CloudFlare. Of course you can also use this with the Basic Tier in <a href="https://azure.microsoft.com" target="_blank" rel="external">Azure</a> which allows you to use your own custom SSL for just 8 odd euro’s a month ;-)</p>
 
         
         </div>
@@ -239,7 +247,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/hello-world/" data-id="ciqfmz71o0000mk945e9b3spt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciqfp5muq0000f094gmz9gliu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -327,7 +335,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2016/07/09/hello-world/" class="thumbnail">
+                            <a href="/2016/07/09/new-blog/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -338,8 +346,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/07/09/hello-world/" class="title">Hello World</a></p>
-                            <p class="item-date"><time datetime="2016-07-09T06:28:50.009Z" itemprop="datePublished">2016-07-09</time></p>
+                            <p class="item-title"><a href="/2016/07/09/new-blog/" class="title">New Blog</a></p>
+                            <p class="item-date"><time datetime="2016-07-09T21:09:34.000Z" itemprop="datePublished">2016-07-09</time></p>
                         </div>
                     </li>
                 
@@ -360,8 +368,22 @@
 
     
         
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/general-tips-and-tricks/">general, tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
     
         
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/general-tips-and-tricks/" style="font-size: 10px;">general, tips-and-tricks</a>
+        </div>
+    </div>
+
     
         
     <div class="widget-wrap widget-list">
