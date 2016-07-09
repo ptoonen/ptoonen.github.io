@@ -334,6 +334,9 @@ code {
 .widget dt {
   font-weight: bold;
 }
+.mvp-logo {
+  margin: 20px auto 20px;
+}
 #header {
   background: #fff;
   position: relative;
