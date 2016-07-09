@@ -14,7 +14,8 @@
 <meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/github-custom-domain.png">
 <meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-crypto.png">
 <meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-page-rules.png">
-<meta property="og:updated_time" content="2016-07-09T21:41:53.867Z">
+<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-cache-level-bypass.png">
+<meta property="og:updated_time" content="2016-07-09T21:51:35.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="New Blog">
 <meta name="twitter:description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
@@ -236,13 +237,15 @@
 <h2 id="Free-Blog"><a href="#Free-Blog" class="headerlink" title="Free Blog"></a>Free Blog</h2><p>As you might know, <a href="https://github.com" title="GitHub" target="_blank" rel="external">GitHub</a> offers you a free website through GitHub Pages. This means that you can host your static website right from GitHub. Combine this with Hexo magic and you can start your own blog quite easily. What you might not know is that you can also add a custom domain to your GitHub page:</p>
 <img src="/2016/07/09/new-blog/github-custom-domain.png" alt="Add a custom domain to GitHub pages" title="Add a custom domain to GitHub pages">
 <p>Now although this by itself is pretty cool, it gets better. Although it’s possible to use SSL on GitHub pages, this isn’t currently possible when using a custom domain, or is it?</p>
-<h2 id="CloudFlare-to-the-rescue"><a href="#CloudFlare-to-the-rescue" class="headerlink" title="CloudFlare to the rescue"></a>CloudFlare to the rescue</h2><p><a href="https://cloudflare.com" title="CloudFlare" target="_blank" rel="external">CloudFlare</a> offers a free tier which not only makes your website faster by using a smart caching mechanism, it also offers <strong>free SSL</strong> for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:</p>
+<h2 id="CloudFlare-to-the-rescue"><a href="#CloudFlare-to-the-rescue" class="headerlink" title="CloudFlare to the rescue"></a>CloudFlare to the rescue</h2><p><a href="https://cloudflare.com" title="CloudFlare" target="_blank" rel="external">CloudFlare</a> offers a free tier that not only makes your website faster by using a smart caching mechanism (which you might want to turn off seeing as hexo generates static content), it also offers <strong>free SSL</strong> for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:</p>
 
 <p>For the DNS-savvy, yes, I used a CNAME as my domain’s root, please refer to <a href="https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/" target="_blank" rel="external">this page</a> on details as to why this is still RFC compliant.</p>
 <p>Then nagivate to the ‘Crypto’ tab in the menu and set it to the following:</p>
 <img src="/2016/07/09/new-blog/cloudflare-crypto.png" alt="Set the Encryption level to Full" title="Set the Encryption level to Full">
 <p>Now for the final step, which ensures all your users are automatically redirected to your SSL page, navigate to the ‘Page Rules’ tab and add the following rules (where you replace the domain with your own domain). If you use a sub-domain such as ‘blog.domain.com’, make sure to use two asterisks (*) in the first rule and replace $1 in the rule with $2 so that it will correctly rewrite:</p>
 <img src="/2016/07/09/new-blog/cloudflare-page-rules.png" alt="Add Rewrite Rules" title="Add Rewrite Rules">
+<p>In case you do want to disable caching to prevent issues with your static site, enable a third rule where you match <a href="https://yourdomain.ext/*" target="_blank" rel="external">https://yourdomain.ext/*</a> and set the action to ‘Cache Level = ByPass’:</p>
+<img src="/2016/07/09/new-blog/cloudflare-cache-level-bypass.png" alt="Disable Caching" title="Disable Caching">
 <h2 id="Sit-back-and-relax"><a href="#Sit-back-and-relax" class="headerlink" title="Sit back and relax"></a>Sit back and relax</h2><p>That’s it. You’re done. You have just setup your new <strong>secure</strong> site using hexo, GitHub pages and CloudFlare. Of course you can also use this with the Basic Tier in <a href="https://azure.microsoft.com" target="_blank" rel="external">Azure</a> which allows you to use your own custom SSL for just 8 odd euro’s a month ;-)</p>
 
         
@@ -254,7 +257,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciqfp5muq0000f094gmz9gliu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciqfphr7u0000k894h9l96901" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
