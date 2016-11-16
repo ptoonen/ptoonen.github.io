@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2016-11-16T21:04:19.000Z</updated>
+  <updated>2016-11-16T21:12:01.521Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://toonen.io/2016/11/16/Coretainers/"/>
     <id>https://toonen.io/2016/11/16/Coretainers/</id>
     <published>2016-11-16T19:56:02.000Z</published>
-    <updated>2016-11-16T21:04:19.000Z</updated>
+    <updated>2016-11-16T21:12:01.521Z</updated>
     
     <content type="html">&lt;p&gt;Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the &lt;a href=&quot;https://www.sdn.nl&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SDN Event&lt;/a&gt; in September.&lt;br&gt;The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.&lt;/p&gt;
 &lt;h1 id=&quot;Docker-made-easy&quot;&gt;&lt;a href=&quot;#Docker-made-easy&quot; class=&quot;headerlink&quot; title=&quot;Docker made easy&quot;&gt;&lt;/a&gt;Docker made easy&lt;/h1&gt;&lt;p&gt;The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.&lt;br&gt;Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:&lt;/p&gt;
@@ -51,7 +51,7 @@
 &lt;p&gt;Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Mind you&lt;/em&gt;: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.&lt;/p&gt;
 &lt;h1 id=&quot;Result&quot;&gt;&lt;a href=&quot;#Result&quot; class=&quot;headerlink&quot; title=&quot;Result&quot;&gt;&lt;/a&gt;Result&lt;/h1&gt;&lt;p&gt;After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!&lt;br&gt;That’s what another new option in VS2017 does for you:&lt;/p&gt;
-&lt;img src=&quot;/2016/11/16/Coretainers/but-wait-theres-more.png&quot; alt=&quot;Continuous Delivery from VS2017&quot; title=&quot;Continuous Delivery from VS2017&quot;&gt; 
+&lt;img src=&quot;/2016/11/16/Coretainers/configure-continuous-delivery.png&quot; alt=&quot;Continuous Delivery from VS2017&quot; title=&quot;Continuous Delivery from VS2017&quot;&gt; 
 &lt;p&gt;More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.&lt;/p&gt;
 </content>
     
@@ -64,9 +64,9 @@
       <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
     
     
-      <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
-    
       <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+    
+      <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
     
       <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
     
@@ -144,8 +144,6 @@
       <category term="General" scheme="https://toonen.io/categories/General/"/>
     
     
-      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
-    
       <category term="Windows" scheme="https://toonen.io/tags/Windows/"/>
     
       <category term="Linux" scheme="https://toonen.io/tags/Linux/"/>
@@ -153,6 +151,8 @@
       <category term="Cross-Platform" scheme="https://toonen.io/tags/Cross-Platform/"/>
     
       <category term="Bash" scheme="https://toonen.io/tags/Bash/"/>
+    
+      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
   </entry>
   
