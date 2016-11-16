@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2016-07-09T23:18:52.350Z</updated>
+  <updated>2016-11-16T20:59:59.402Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Coretainers</title>
+    <link href="https://toonen.io/2016/11/16/Coretainers/"/>
+    <id>https://toonen.io/2016/11/16/Coretainers/</id>
+    <published>2016-11-16T19:56:02.000Z</published>
+    <updated>2016-11-16T20:59:59.402Z</updated>
+    
+    <content type="html">&lt;p&gt;Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the &lt;a href=&quot;https://www.sdn.nl&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SDN Event&lt;/a&gt; in September.&lt;br&gt;The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.&lt;/p&gt;
+&lt;h1 id=&quot;Docker-made-easy&quot;&gt;&lt;a href=&quot;#Docker-made-easy&quot; class=&quot;headerlink&quot; title=&quot;Docker made easy&quot;&gt;&lt;/a&gt;Docker made easy&lt;/h1&gt;&lt;p&gt;The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.&lt;br&gt;Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:&lt;/p&gt;
+&lt;img src=&quot;/2016/11/16/Coretainers/docker-support.png&quot; alt=&quot;Built-in Docker support&quot; title=&quot;Built-in Docker support&quot;&gt; 
+&lt;p&gt;If you have &lt;a href=&quot;https://docs.docker.com/docker-for-windows/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Docker for Windows&lt;/a&gt; installed, you can get going. If not, install it first.&lt;br&gt;This will automatically generate several files for you:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dockerfile (where it all starts)&lt;/li&gt;
+&lt;li&gt;docker-compose.yml (compose your containers, more on this in a future post)&lt;/li&gt;
+&lt;li&gt;docker-compose.ci.build.yml (instructions for a CI build)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This will be all you need to get going. Really, that’s it. Just press ‘F5’ (or click the debug button, which now conventiently says ‘Docker’).&lt;br&gt;Visual Studio will now start building your application and put it into a container. The best part here is that it will link your source files on disk into the container by using &lt;a href=&quot;https://docs.docker.com/engine/tutorials/dockervolumes/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;volumes&lt;/a&gt;. If you inspect the docker-compose.vs.debug.yml file, you can clearly see the line that says:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;- .:/app&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;what this line does, is that it links the current directory to the /app directory within the container. This means you can edit your code (and views) live, refresh your browser and it’ll update the app that you’re running &lt;em&gt;within&lt;/em&gt; the container. The best thing is though, you can set breakpoints and they work just as though it was an application running on your local dev machine.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Mind you&lt;/em&gt;: if your debug experience didn’t go quite as planned and you run into an error. You might just see something like this in the output window:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ERROR: for awesomewebapp  Cannot create container for service awesomewebapp: D: drive is not shared. Please share it in Docker for Windows Settings&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Although the error message is quite verbose nowadays, right-click the Docker icon in your taskbar and go to settings. Now on the ‘Shared Drives’ tab, you can share the disk where your application resides. &lt;/p&gt;
+&lt;h1 id=&quot;Publish-to-Azure&quot;&gt;&lt;a href=&quot;#Publish-to-Azure&quot; class=&quot;headerlink&quot; title=&quot;Publish to Azure&quot;&gt;&lt;/a&gt;Publish to Azure&lt;/h1&gt;&lt;p&gt;Now where it get’s really awesome, is that starting today you can publish your container to Azure with a few simple clicks. If you right-click your project, you can press ‘Publish’. We all know this action from years of publishing web applications through &lt;a href=&quot;https://www.iis.net/downloads/microsoft/web-deploy&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;WebDeploy&lt;/a&gt; - and we all know what joy that brought ;-)&lt;br&gt;We then got the ability to quickly select ‘host in Azure’ when we created the project and now we have this:&lt;/p&gt;
+&lt;img src=&quot;/2016/11/16/Coretainers/publish-to-azure.png&quot; alt=&quot;Publish Container to Azure&quot; title=&quot;Publish Container to Azure&quot;&gt; 
+&lt;p&gt;The settings are simple:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Provide a unique name for your app&lt;/li&gt;
+&lt;li&gt;Select an Azure Subscription&lt;/li&gt;
+&lt;li&gt;Select a resource group, or create one&lt;/li&gt;
+&lt;li&gt;Select or create an App Service Plan&lt;/li&gt;
+&lt;li&gt;Select or create a Docker registry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I’m assuming you’re familiar with Azure terms such as the resource group and service plan, but the last one deserves a bit of explanation. A Docker registry is like a repository where your containers are stored. You can have both private and public registries - DockerHub being the most famous one. By default this will create a private registry where you can store the different versions of your container.&lt;/p&gt;
+&lt;p&gt;Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Mind you&lt;/em&gt;: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.&lt;/p&gt;
+&lt;h1 id=&quot;Result&quot;&gt;&lt;a href=&quot;#Result&quot; class=&quot;headerlink&quot; title=&quot;Result&quot;&gt;&lt;/a&gt;Result&lt;/h1&gt;&lt;p&gt;After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!&lt;br&gt;That’s what another new option in VS2017 does for you:&lt;/p&gt;
+ 
+&lt;p&gt;More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with 
+    
+    </summary>
+    
+      <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
+    
+    
+      <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
+    
+      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+    
+      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+    
+      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>New Blog</title>
@@ -85,6 +144,8 @@
       <category term="General" scheme="https://toonen.io/categories/General/"/>
     
     
+      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+    
       <category term="Windows" scheme="https://toonen.io/tags/Windows/"/>
     
       <category term="Linux" scheme="https://toonen.io/tags/Linux/"/>
@@ -92,8 +153,6 @@
       <category term="Cross-Platform" scheme="https://toonen.io/tags/Cross-Platform/"/>
     
       <category term="Bash" scheme="https://toonen.io/tags/Bash/"/>
-    
-      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
   </entry>
   
