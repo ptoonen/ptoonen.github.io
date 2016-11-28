@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2016-11-16T21:12:01.521Z</updated>
+  <updated>2016-11-28T12:10:42.000Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git in VS2017 with self-signed SSL</title>
+    <link href="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/"/>
+    <id>https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/</id>
+    <published>2016-11-28T11:00:47.000Z</published>
+    <updated>2016-11-28T12:10:42.000Z</updated>
+    
+    <content type="html">&lt;p&gt;When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.&lt;br&gt;This means that my browser, and git have no issues connecting and cloning. When I’m in the office &lt;em&gt;and&lt;/em&gt; connected to our corporate WiFi network, I get a self-signed SSL certificate. &lt;/p&gt;
+&lt;p&gt;It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) &lt;strong&gt;but&lt;/strong&gt; they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.&lt;/p&gt;
+&lt;h2 id=&quot;Let’s-fix&quot;&gt;&lt;a href=&quot;#Let’s-fix&quot; class=&quot;headerlink&quot; title=&quot;Let’s fix&quot;&gt;&lt;/a&gt;Let’s fix&lt;/h2&gt;&lt;p&gt;Microsoft has done a &lt;a href=&quot;terrific write-up&quot;&gt;https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/&lt;/a&gt; of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:&lt;/p&gt;
+&lt;img src=&quot;/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-error.png&quot; alt=&quot;Error cloning with untrusted certificate&quot; title=&quot;Error cloning with untrusted certificate&quot;&gt;
+&lt;p&gt;The Git client resides in your VS2017 installation dir, which by default is &lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio\2017\&lt;/code&gt;. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar &lt;code&gt;Common7\IDE&lt;/code&gt; directory and then to the &lt;code&gt;CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs&lt;/code&gt; folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:&lt;/p&gt;
+&lt;img src=&quot;/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-vslogo-ascii.png&quot; alt=&quot;Visual Studio ASCII art logo Git&quot; title=&quot;Visual Studio ASCII art logo Git&quot;&gt;
+&lt;p&gt;Hope this saves you a bit of trouble ;-)&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely 
+    
+    </summary>
+    
+    
+      <category term="Visual Studio" scheme="https://toonen.io/tags/Visual-Studio/"/>
+    
+  </entry>
   
   <entry>
     <title>Coretainers</title>
@@ -64,9 +93,9 @@
       <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
     
     
-      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
-    
       <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
+    
+      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
       <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
     
@@ -144,6 +173,8 @@
       <category term="General" scheme="https://toonen.io/categories/General/"/>
     
     
+      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+    
       <category term="Windows" scheme="https://toonen.io/tags/Windows/"/>
     
       <category term="Linux" scheme="https://toonen.io/tags/Linux/"/>
@@ -151,8 +182,6 @@
       <category term="Cross-Platform" scheme="https://toonen.io/tags/Cross-Platform/"/>
     
       <category term="Bash" scheme="https://toonen.io/tags/Bash/"/>
-    
-      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
   </entry>
   

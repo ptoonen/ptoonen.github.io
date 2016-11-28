@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Load testing from the Azure portal | Toonen.io</title>
+    <title>Git in VS2017 with self-signed SSL | Toonen.io</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
+    <meta name="description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Load testing from the Azure portal">
-<meta property="og:url" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/index.html">
+<meta property="og:title" content="Git in VS2017 with self-signed SSL">
+<meta property="og:url" content="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/index.html">
 <meta property="og:site_name" content="Toonen.io">
-<meta property="og:description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
-<meta property="og:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png">
-<meta property="og:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/vso-more-options.png">
-<meta property="og:updated_time" content="2016-07-09T23:18:57.755Z">
+<meta property="og:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
+<meta property="og:image" content="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-error.png">
+<meta property="og:image" content="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-vslogo-ascii.png">
+<meta property="og:updated_time" content="2016-11-28T12:10:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Load testing from the Azure portal">
-<meta name="twitter:description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
-<meta name="twitter:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png">
+<meta name="twitter:title" content="Git in VS2017 with self-signed SSL">
+<meta name="twitter:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
+<meta name="twitter:image" content="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-error.png">
     
 
     
@@ -196,7 +196,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-load-testing-from-the-azure-portal" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Git-in-VS2017-with-self-signed-SSL" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -204,7 +204,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Load testing from the Azure portal
+            Git in VS2017 with self-signed SSL
         </h1>
     
 
@@ -213,22 +213,17 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/07/12/load-testing-from-the-azure-portal/">
-            <time datetime="2015-07-12T14:57:00.000Z" itemprop="datePublished">2015-07-12</time>
+        <a href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/">
+            <time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Cloud/">Cloud</a>
-    </div>
-
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Test/">Test</a>
+        <a class="tag-link" href="/tags/Visual-Studio/">Visual Studio</a>
     </div>
 
                     </div>
@@ -239,23 +234,15 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes into production, it comes to a grinding halt and you’re left puzzled as to why this happened.</p>
-<p>Back in 2013 Microsoft released a solution for this issue: Azure-based load testing which is able to simulate real-world load-testing on your application from Azure with unlimited resources (well, the only real limiting factor is your wallet). The only strange thing here was that in order to use this Azure-based load testing, I had to go to my <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="external">VSO</a> account to start a test instead of just starting a load test in the Azure portal where I published my web application.</p>
-<p>This has changed now.</p>
-<h2 id="Introducing-Azure-load-testing-from-the-portal"><a href="#Introducing-Azure-load-testing-from-the-portal" class="headerlink" title="Introducing Azure load testing from the portal"></a>Introducing Azure load testing from the portal</h2><p>Yesterday I stumbled onto <a href="http://blogs.msdn.com/b/charles_sterling/archive/2015/07/10/10627246.aspx" target="_blank" rel="external">this post</a> (which contains way more pictures than this post will) by Charles Sterling, where he revealed that as an ‘nascent feature PM’ he more or less accidentally released a new feature into the wild. As of now it’s possible to start a load test from the Azure portal right from where you control your web application. It’s as easy as adding a tile to your web app and starting the test. Or even better, by enabling a feature flag and simply adding a new load test.</p>
-<p>To get started, load up your Azure Portal (the new one!) and navigate to one of your web apps and then follow these steps:</p>
-<ol>
-<li>Right-click the space in between any of the tiles already displayed and click ‘Add Tiles’</li>
-<li>Now choose the ‘Operations’ category and select ‘Cloud Load Test’</li>
-<li>You will now get a new tile in your web app panel</li>
-<li>Click ‘Done’ on the top left</li>
-<li>Click the tile and add a new Load Test, enter the VSO account you want to use, the URL and a name for the test. Mind you, the test name can’t contain any spaces or non-alphanumeric characters.</li>
-</ol>
-<img src="/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png" alt="Load Test" title="Load Test">
-<p>In case you don’t want to add a new tile, you can also include the following feature flag in the portal URL: ?websitesextension_cloudloadtest=true turning the URL into something like: <a href="https://portal.azure.com/?websitesextension_cloudloadtest=true" target="_blank" rel="external">https://portal.azure.com/?websitesextension_cloudloadtest=true</a><br>After doing so, you will be able to access load testing from your web app’s settings option.</p>
-<h2 id="Summarizing"><a href="#Summarizing" class="headerlink" title="Summarizing"></a>Summarizing</h2><p>You now have a new way to perform load testing in the Azure portal, snugly in your Web App blade. It is currently lacking some of the features that VSO does offer, such as browser distribution and think time, but who knows, they might just add them before the final version:</p>
-<img src="/2015/07/12/load-testing-from-the-azure-portal/vso-more-options.png" alt="VSO has slightly more options" title="VSO has slightly more options">
-<p>All in all it’s a nice time-saver and the tests are now in a place where I’d actually expect them to be.</p>
+            <p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
+<p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
+<h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
+<img src="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
+<p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
+<p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
+<p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
+<img src="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
+<p>Hope this saves you a bit of trouble ;-)</p>
 
         
         </div>
@@ -266,7 +253,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciw21421l0007e8bv32coroiw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/" data-id="ciw2142170004e8bvbus84244" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -341,15 +328,11 @@
         
 <nav id="article-nav">
     
-        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    Custom build tasks in TFS 2015
-                
-            </div>
-        </a>
     
+        <a href="/2016/11/16/Coretainers/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Coretainers</div>
+        </a>
     
 </nav>
 
