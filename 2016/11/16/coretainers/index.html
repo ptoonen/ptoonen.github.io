@@ -11,14 +11,14 @@
 <meta property="og:url" content="https://toonen.io/2016/11/16/coretainers/index.html">
 <meta property="og:site_name" content="Toonen.io">
 <meta property="og:description" content="Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I sho">
-<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/docker-support.png">
-<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/publish-to-azure.png">
-<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/configure-continuous-delivery.png">
-<meta property="og:updated_time" content="2016-11-16T21:12:02.000Z">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/enable-docker-support.png">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/publish-container-to-azure.png">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/vs-configure-continuous-delivery.png">
+<meta property="og:updated_time" content="2017-02-08T22:53:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coretainers">
 <meta name="twitter:description" content="Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I sho">
-<meta name="twitter:image" content="https://toonen.io/2016/11/16/coretainers/docker-support.png">
+<meta name="twitter:image" content="https://toonen.io/2016/11/16/coretainers/enable-docker-support.png">
     
 
     
@@ -253,7 +253,7 @@ ga('send', 'pageview');
             
             <p>Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the <a href="https://www.sdn.nl" target="_blank" rel="external">SDN Event</a> in September.<br>The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.</p>
 <h1 id="Docker-made-easy"><a href="#Docker-made-easy" class="headerlink" title="Docker made easy"></a>Docker made easy</h1><p>The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.<br>Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:</p>
-<img src="/2016/11/16/coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
+<img src="/2016/11/16/coretainers/enable-docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
 <p>If you have <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="external">Docker for Windows</a> installed, you can get going. If not, install it first.<br>This will automatically generate several files for you:</p>
 <ul>
 <li>Dockerfile (where it all starts)</li>
@@ -267,7 +267,7 @@ ga('send', 'pageview');
 <p><code>ERROR: for awesomewebapp  Cannot create container for service awesomewebapp: D: drive is not shared. Please share it in Docker for Windows Settings</code></p>
 <p>Although the error message is quite verbose nowadays, right-click the Docker icon in your taskbar and go to settings. Now on the ‘Shared Drives’ tab, you can share the disk where your application resides. </p>
 <h1 id="Publish-to-Azure"><a href="#Publish-to-Azure" class="headerlink" title="Publish to Azure"></a>Publish to Azure</h1><p>Now where it get’s really awesome, is that starting today you can publish your container to Azure with a few simple clicks. If you right-click your project, you can press ‘Publish’. We all know this action from years of publishing web applications through <a href="https://www.iis.net/downloads/microsoft/web-deploy" target="_blank" rel="external">WebDeploy</a> - and we all know what joy that brought ;-)<br>We then got the ability to quickly select ‘host in Azure’ when we created the project and now we have this:</p>
-<img src="/2016/11/16/coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
+<img src="/2016/11/16/coretainers/publish-container-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
 <p>The settings are simple:</p>
 <ul>
 <li>Provide a unique name for your app</li>
@@ -280,7 +280,7 @@ ga('send', 'pageview');
 <p>Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.</p>
 <p><em>Mind you</em>: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.</p>
 <h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p>After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!<br>That’s what another new option in VS2017 does for you:</p>
-<img src="/2016/11/16/coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
+<img src="/2016/11/16/coretainers/vs-configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
 <p>More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.</p>
 
         
@@ -292,7 +292,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyxj98j50004ejy29efy2i22" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyxjyozb0004sly26fz7l4aj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

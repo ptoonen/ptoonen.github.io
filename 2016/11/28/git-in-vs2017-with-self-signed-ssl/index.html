@@ -11,13 +11,13 @@
 <meta property="og:url" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/index.html">
 <meta property="og:site_name" content="Toonen.io">
 <meta property="og:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
-<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png">
-<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png">
-<meta property="og:updated_time" content="2016-11-28T12:10:42.000Z">
+<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error-untrusted-cert.png">
+<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-tfs-vslogo-ascii.png">
+<meta property="og:updated_time" content="2017-02-08T22:53:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git in VS2017 with self-signed SSL">
 <meta name="twitter:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
-<meta name="twitter:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png">
+<meta name="twitter:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error-untrusted-cert.png">
     
 
     
@@ -248,11 +248,11 @@ ga('send', 'pageview');
             <p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
 <p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
 <h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
-<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error-untrusted-cert.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
 <p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
 <p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
 <p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
-<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-tfs-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
 <p>Hope this saves you a bit of trouble ;-)</p>
 
         
@@ -264,7 +264,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyxj98jh000bejy2keknwa5a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyxjyozm000bsly234eb17l9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

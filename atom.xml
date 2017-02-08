@@ -85,16 +85,16 @@
     <link href="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/"/>
     <id>https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/</id>
     <published>2016-11-28T11:00:47.000Z</published>
-    <updated>2016-11-28T12:10:42.000Z</updated>
+    <updated>2017-02-08T22:53:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
 <p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
 <h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
-<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error-untrusted-cert.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
 <p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
 <p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
 <p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
-<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-tfs-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
 <p>Hope this saves you a bit of trouble ;-)</p>
 ]]></content>
     
@@ -114,11 +114,11 @@
     <link href="https://toonen.io/2016/11/16/coretainers/"/>
     <id>https://toonen.io/2016/11/16/coretainers/</id>
     <published>2016-11-16T19:56:02.000Z</published>
-    <updated>2016-11-16T21:12:02.000Z</updated>
+    <updated>2017-02-08T22:53:23.000Z</updated>
     
     <content type="html"><![CDATA[<p>Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the <a href="https://www.sdn.nl" target="_blank" rel="external">SDN Event</a> in September.<br>The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.</p>
 <h1 id="Docker-made-easy"><a href="#Docker-made-easy" class="headerlink" title="Docker made easy"></a>Docker made easy</h1><p>The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.<br>Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:</p>
-<img src="/2016/11/16/coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
+<img src="/2016/11/16/coretainers/enable-docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
 <p>If you have <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="external">Docker for Windows</a> installed, you can get going. If not, install it first.<br>This will automatically generate several files for you:</p>
 <ul>
 <li>Dockerfile (where it all starts)</li>
@@ -132,7 +132,7 @@
 <p><code>ERROR: for awesomewebapp  Cannot create container for service awesomewebapp: D: drive is not shared. Please share it in Docker for Windows Settings</code></p>
 <p>Although the error message is quite verbose nowadays, right-click the Docker icon in your taskbar and go to settings. Now on the ‘Shared Drives’ tab, you can share the disk where your application resides. </p>
 <h1 id="Publish-to-Azure"><a href="#Publish-to-Azure" class="headerlink" title="Publish to Azure"></a>Publish to Azure</h1><p>Now where it get’s really awesome, is that starting today you can publish your container to Azure with a few simple clicks. If you right-click your project, you can press ‘Publish’. We all know this action from years of publishing web applications through <a href="https://www.iis.net/downloads/microsoft/web-deploy" target="_blank" rel="external">WebDeploy</a> - and we all know what joy that brought ;-)<br>We then got the ability to quickly select ‘host in Azure’ when we created the project and now we have this:</p>
-<img src="/2016/11/16/coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
+<img src="/2016/11/16/coretainers/publish-container-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
 <p>The settings are simple:</p>
 <ul>
 <li>Provide a unique name for your app</li>
@@ -145,7 +145,7 @@
 <p>Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.</p>
 <p><em>Mind you</em>: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.</p>
 <h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p>After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!<br>That’s what another new option in VS2017 does for you:</p>
-<img src="/2016/11/16/coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
+<img src="/2016/11/16/coretainers/vs-configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
 <p>More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.</p>
 ]]></content>
     
