@@ -3,23 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>New Blog | Toonen.io</title>
+    <title>Git in VS2017 with self-signed SSL | Toonen.io</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
+    <meta name="description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="New Blog">
-<meta property="og:url" content="https://toonen.io/2016/07/09/new-blog/index.html">
+<meta property="og:title" content="Git in VS2017 with self-signed SSL">
+<meta property="og:url" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/index.html">
 <meta property="og:site_name" content="Toonen.io">
-<meta property="og:description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
-<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/github-custom-domain.png">
-<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-crypto.png">
-<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-page-rules.png">
-<meta property="og:image" content="https://toonen.io/2016/07/09/new-blog/cloudflare-cache-level-bypass.png">
-<meta property="og:updated_time" content="2016-07-09T23:18:54.000Z">
+<meta property="og:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
+<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png">
+<meta property="og:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png">
+<meta property="og:updated_time" content="2016-11-28T12:10:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="New Blog">
-<meta name="twitter:description" content="So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague Edwin van Wijk tipped me off on using hexo quite a while ag">
-<meta name="twitter:image" content="https://toonen.io/2016/07/09/new-blog/github-custom-domain.png">
+<meta name="twitter:title" content="Git in VS2017 with self-signed SSL">
+<meta name="twitter:description" content="When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.This means that my browser, and git">
+<meta name="twitter:image" content="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png">
     
 
     
@@ -209,7 +207,7 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="post-new-blog" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-git-in-vs2017-with-self-signed-ssl" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +215,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            New Blog
+            Git in VS2017 with self-signed SSL
         </h1>
     
 
@@ -226,22 +224,17 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/07/09/new-blog/">
-            <time datetime="2016-07-09T21:09:34.000Z" itemprop="datePublished">2016-07-09</time>
+        <a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/">
+            <time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/General/">General</a>
-    </div>
-
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/freebies/">freebies</a>, <a class="tag-link" href="/tags/tips-and-tricks/">tips-and-tricks</a>
+        <a class="tag-link" href="/tags/Visual-Studio/">Visual Studio</a>
     </div>
 
                     </div>
@@ -252,20 +245,15 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My colleague <a href="http://defaultconstructor.com" title="Edwin van Wijk" target="_blank" rel="external">Edwin van Wijk</a> tipped me off on using <a href="http://hexo.io" title="Hexo" target="_blank" rel="external">hexo</a> quite a while ago and I seem to have gotten the hang of it. This blog itself is still a work in progress and I’ll be migrating old posts over soon, but in the meanwhile I figured I’d share some tips.</p>
-<h2 id="Free-Blog"><a href="#Free-Blog" class="headerlink" title="Free Blog"></a>Free Blog</h2><p>As you might know, <a href="https://github.com" title="GitHub" target="_blank" rel="external">GitHub</a> offers you a free website through GitHub Pages. This means that you can host your static website right from GitHub. Combine this with Hexo magic and you can start your own blog quite easily. What you might not know is that you can also add a custom domain to your GitHub page:</p>
-<img src="/2016/07/09/new-blog/github-custom-domain.png" alt="Add a custom domain to GitHub pages" title="Add a custom domain to GitHub pages">
-<p>Now although this by itself is pretty cool, it gets better. Although it’s possible to use SSL on GitHub pages, this isn’t currently possible when using a custom domain, or is it?</p>
-<h2 id="CloudFlare-to-the-rescue"><a href="#CloudFlare-to-the-rescue" class="headerlink" title="CloudFlare to the rescue"></a>CloudFlare to the rescue</h2><p><a href="https://cloudflare.com" title="CloudFlare" target="_blank" rel="external">CloudFlare</a> offers a free tier that not only makes your website faster by using a smart caching mechanism (which you might want to turn off seeing as hexo generates static content), it also offers <strong>free SSL</strong> for all sites. Simply register for a free account on their site, go to the ‘DNS’ tab and add a CNAME for your domain, like so:</p>
-
-<p>For the DNS-savvy, yes, I used a CNAME as my domain’s root, please refer to <a href="https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/" target="_blank" rel="external">this page</a> on details as to why this is still RFC compliant.</p>
-<p>Then nagivate to the ‘Crypto’ tab in the menu and set it to the following:</p>
-<img src="/2016/07/09/new-blog/cloudflare-crypto.png" alt="Set the Encryption level to Full" title="Set the Encryption level to Full">
-<p>Now for the final step, which ensures all your users are automatically redirected to your SSL page, navigate to the ‘Page Rules’ tab and add the following rules (where you replace the domain with your own domain). If you use a sub-domain such as ‘blog.domain.com’, make sure to use two asterisks (*) in the first rule and replace $1 in the rule with $2 so that it will correctly rewrite:</p>
-<img src="/2016/07/09/new-blog/cloudflare-page-rules.png" alt="Add Rewrite Rules" title="Add Rewrite Rules">
-<p>In case you do want to disable caching to prevent issues with your static site, enable a third rule where you match <a href="https://yourdomain.ext/*" target="_blank" rel="external">https://yourdomain.ext/*</a> and set the action to ‘Cache Level = ByPass’:</p>
-<img src="/2016/07/09/new-blog/cloudflare-cache-level-bypass.png" alt="Disable Caching" title="Disable Caching">
-<h2 id="Sit-back-and-relax"><a href="#Sit-back-and-relax" class="headerlink" title="Sit back and relax"></a>Sit back and relax</h2><p>That’s it. You’re done. You have just setup your new <strong>secure</strong> site using hexo, GitHub pages and CloudFlare. Of course you can also use this with the Basic Tier in <a href="https://azure.microsoft.com" target="_blank" rel="external">Azure</a> which allows you to use your own custom SSL for just 8 odd euro’s a month ;-)</p>
+            <p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
+<p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
+<h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
+<p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
+<p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
+<p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
+<p>Hope this saves you a bit of trouble ;-)</p>
 
         
         </div>
@@ -276,7 +264,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciyxj98jl000gejy283uiblzg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyxj98jh000bejy2keknwa5a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -351,19 +339,19 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2016/11/16/coretainers/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2017/02/08/azure-functions-put-to-use/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Newer</strong>
             <div class="article-nav-title">
                 
-                    Coretainers
+                    Azure Functions put to use
                 
             </div>
         </a>
     
     
-        <a href="/2016/04/06/bash-for-windows/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2016/11/16/coretainers/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Bash for Windows</div>
+            <div class="article-nav-title">Coretainers</div>
         </a>
     
 </nav>
