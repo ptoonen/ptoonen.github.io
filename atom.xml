@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2017-02-08T21:58:08.000Z</updated>
+  <updated>2017-02-08T22:07:11.000Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://toonen.io/2017/02/08/azure-functions-put-to-use/"/>
     <id>https://toonen.io/2017/02/08/azure-functions-put-to-use/</id>
     <published>2017-02-08T20:16:27.000Z</published>
-    <updated>2017-02-08T21:58:08.000Z</updated>
+    <updated>2017-02-08T22:07:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
 <p>The underlying messaging mechanism of our app is an Azure Service Bus (or actually, multiple buses), with several topics and subscriptions upon those topics. As all of our events flow through Azure already, it’s easy to store them in blobstorage and use them for auditing/analysis/what-have-you at a later point in time. Now that the usage is increasing, we felt that it was time to add some alerting and we made plans for a new service that would react to our ‘ActivityFailed’-event, it would then send an email as soon as one of those events (luckily they don’t occur that often) would occur. Sounds easy enough, right?</p>
@@ -70,6 +70,8 @@
       &lt;p&gt;At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originate
     
     </summary>
+    
+      <category term="Cloud" scheme="https://toonen.io/categories/Cloud/"/>
     
     
       <category term="Azure" scheme="https://toonen.io/tags/Azure/"/>
