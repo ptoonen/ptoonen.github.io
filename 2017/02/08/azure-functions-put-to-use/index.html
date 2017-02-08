@@ -3,21 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Load testing from the Azure portal | Toonen.io</title>
+    <title>Azure Functions put to use | Toonen.io</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
+    <meta name="description" content="At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Load testing from the Azure portal">
-<meta property="og:url" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/index.html">
+<meta property="og:title" content="Azure Functions put to use">
+<meta property="og:url" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/index.html">
 <meta property="og:site_name" content="Toonen.io">
-<meta property="og:description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
-<meta property="og:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png">
-<meta property="og:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/vso-more-options.png">
-<meta property="og:updated_time" content="2016-07-09T23:18:58.000Z">
+<meta property="og:description" content="At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/create-function-app.png">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/create-your-own-function.png">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/your-first-function.png">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/add-file-to-function.png">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/integrate-tab.png">
+<meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/sendgrid-config.png">
+<meta property="og:updated_time" content="2017-02-08T21:58:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Load testing from the Azure portal">
-<meta name="twitter:description" content="Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes in">
-<meta name="twitter:image" content="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png">
+<meta name="twitter:title" content="Azure Functions put to use">
+<meta name="twitter:description" content="At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra">
+<meta name="twitter:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/create-function-app.png">
     
 
     
@@ -196,7 +200,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-load-testing-from-the-azure-portal" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-azure-functions-put-to-use" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -204,7 +208,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Load testing from the Azure portal
+            Azure Functions put to use
         </h1>
     
 
@@ -213,22 +217,17 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/07/12/load-testing-from-the-azure-portal/">
-            <time datetime="2015-07-12T14:57:00.000Z" itemprop="datePublished">2015-07-12</time>
+        <a href="/2017/02/08/azure-functions-put-to-use/">
+            <time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Cloud/">Cloud</a>
-    </div>
-
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Test/">Test</a>
+        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Serverless/">Serverless</a>
     </div>
 
                     </div>
@@ -239,23 +238,47 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- and load-tests but for some reason when the application goes into production, it comes to a grinding halt and you’re left puzzled as to why this happened.</p>
-<p>Back in 2013 Microsoft released a solution for this issue: Azure-based load testing which is able to simulate real-world load-testing on your application from Azure with unlimited resources (well, the only real limiting factor is your wallet). The only strange thing here was that in order to use this Azure-based load testing, I had to go to my <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="external">VSO</a> account to start a test instead of just starting a load test in the Azure portal where I published my web application.</p>
-<p>This has changed now.</p>
-<h2 id="Introducing-Azure-load-testing-from-the-portal"><a href="#Introducing-Azure-load-testing-from-the-portal" class="headerlink" title="Introducing Azure load testing from the portal"></a>Introducing Azure load testing from the portal</h2><p>Yesterday I stumbled onto <a href="http://blogs.msdn.com/b/charles_sterling/archive/2015/07/10/10627246.aspx" target="_blank" rel="external">this post</a> (which contains way more pictures than this post will) by Charles Sterling, where he revealed that as an ‘nascent feature PM’ he more or less accidentally released a new feature into the wild. As of now it’s possible to start a load test from the Azure portal right from where you control your web application. It’s as easy as adding a tile to your web app and starting the test. Or even better, by enabling a feature flag and simply adding a new load test.</p>
-<p>To get started, load up your Azure Portal (the new one!) and navigate to one of your web apps and then follow these steps:</p>
-<ol>
-<li>Right-click the space in between any of the tiles already displayed and click ‘Add Tiles’</li>
-<li>Now choose the ‘Operations’ category and select ‘Cloud Load Test’</li>
-<li>You will now get a new tile in your web app panel</li>
-<li>Click ‘Done’ on the top left</li>
-<li>Click the tile and add a new Load Test, enter the VSO account you want to use, the URL and a name for the test. Mind you, the test name can’t contain any spaces or non-alphanumeric characters.</li>
-</ol>
-<img src="/2015/07/12/load-testing-from-the-azure-portal/azure-load-test.png" alt="Load Test" title="Load Test">
-<p>In case you don’t want to add a new tile, you can also include the following feature flag in the portal URL: ?websitesextension_cloudloadtest=true turning the URL into something like: <a href="https://portal.azure.com/?websitesextension_cloudloadtest=true" target="_blank" rel="external">https://portal.azure.com/?websitesextension_cloudloadtest=true</a><br>After doing so, you will be able to access load testing from your web app’s settings option.</p>
-<h2 id="Summarizing"><a href="#Summarizing" class="headerlink" title="Summarizing"></a>Summarizing</h2><p>You now have a new way to perform load testing in the Azure portal, snugly in your Web App blade. It is currently lacking some of the features that VSO does offer, such as browser distribution and think time, but who knows, they might just add them before the final version:</p>
-<img src="/2015/07/12/load-testing-from-the-azure-portal/vso-more-options.png" alt="VSO has slightly more options" title="VSO has slightly more options">
-<p>All in all it’s a nice time-saver and the tests are now in a place where I’d actually expect them to be.</p>
+            <p>At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
+<p>The underlying messaging mechanism of our app is an Azure Service Bus (or actually, multiple buses), with several topics and subscriptions upon those topics. As all of our events flow through Azure already, it’s easy to store them in blobstorage and use them for auditing/analysis/what-have-you at a later point in time. Now that the usage is increasing, we felt that it was time to add some alerting and we made plans for a new service that would react to our ‘ActivityFailed’-event, it would then send an email as soon as one of those events (luckily they don’t occur that often) would occur. Sounds easy enough, right?</p>
+<h1 id="Dockerize-or-…"><a href="#Dockerize-or-…" class="headerlink" title="Dockerize or … ?"></a>Dockerize or … ?</h1><p>As you may know Docker is a great tool to envelope your application into a well-known and well-described format so that it can run anywhere the same as it would on your machine. We would develop the service in .NET Core, so it would be easy enough to Dockerize it and host it somewhere just like some of the other services. But last night I thought to myself ‘Wait, we run in Azure, use the Azure Service Bus and only need to react to messages on the bus..’ and I decided I would try to create an <a href="https://azure.microsoft.com/en-us/services/functions/" target="_blank" rel="external">Azure Function</a> to react to the event and send me the mail. It literally took me about 15 minutes to develop. I’ll describe the process below.</p>
+<h2 id="Going-serverless"><a href="#Going-serverless" class="headerlink" title="Going serverless"></a>Going serverless</h2><p>Azure Functions are a way to process events in an easy way without having to worry about where you run it. It’s basically ‘just code’ and Azure does the rest for you. I had played with Azure Functions before, but didn’t really find a use-case for it. I do however feel that they are the next step after containerization. It may not fit all problems, but there are certainly use-cases out there which would benefit from a completely serverless architecture.</p>
+<p>Step one is going to the <a href="https://portal.azure.com" target="_blank" rel="external">Azure Portal</a> and creating a new ‘Function App’. Tip: use a consumption plan if you only want to be billed for your actual usage.</p>
+<img src="/2017/02/08/azure-functions-put-to-use/create-function-app.png" alt="Creating the Function App" title="Creating the Function App"> 
+<p>Once your Function App is created, navigate to it. The first time you navigate to your Function App, you won’t have any functions yet, so you will be presented with the Quickstart Wizard. We will not use it, so scroll down and click ‘Create your own custom function’.</p>
+<img src="/2017/02/08/azure-functions-put-to-use/create-your-own-function.png" alt="Create your own custom function" title="Create your own custom function"> 
+<p>Now from the template gallery, select C# as language and ‘Data Processing’ as scenario. Click the ‘ServiceBusTopicTrigger-CSharp’ template and enter the following values in the corresponding fields:</p>
+<ul>
+<li><strong>Name</strong>: a meaningful name for your function, pick something like ‘EmailNotifier’</li>
+<li><strong>Topic name</strong>: this is the name of the topic on your service bus which you’ll listen to</li>
+<li><strong>Subscription name</strong>: The subscription name on top of the topic specified above</li>
+<li><strong>Access Rights</strong>: select ‘Manage’, and make this match the <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-shared-access-signature-authentication" target="_blank" rel="external">SAS Token</a>. As of writing this post, there’s a <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="external">bug</a> preventing you from using the expected ‘Listen’ permissions. That is - you can use it, but your function will cease to trigger after a few hours.</li>
+<li><strong>Service Bus connection</strong>: Service Bus connection strings are saved as Application Setting for your entire Function App and can be shared over multiple functions. Just click ‘new’ the first time and enter the connection string <em>without</em> the EntityPath in it</li>
+</ul>
+<p>You will now have a basic function. Congratulations!</p>
+<h2 id="Making-it-do-something-useful"><a href="#Making-it-do-something-useful" class="headerlink" title="Making it do something useful"></a>Making it do something useful</h2><p>In order to do something meaningful with our app, we’ll need to go through a few steps. First let’s discover what is created for us. Click the ‘Files’ button on the top right of the editor:</p>
+<img src="/2017/02/08/azure-functions-put-to-use/your-first-function.png" alt="Exploring your first function" title="Exploring your first function"> 
+<p>You will see that you have two files:</p>
+<ul>
+<li>function.json - which describes your in- and outputs</li>
+<li>run.csx - which is the code for your function</li>
+</ul>
+<p>Take some time to familiarize you with both files and notice that the run.csx isn’t much different from a regular C# program.</p>
+<p>It actually has using statements and a <code>public static void Main()</code> alike function called ‘Run’. Azure Functions provides you with framework libraries such as System and System.Linq and you can include some additional assemblies using the <code>#r</code> directive. A full list of all available assemblies can be found <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-csharp#importing-namespaces" target="_blank" rel="external">here</a>. As you can see, using all types/methods within the Microsoft.ServiceBus namespace will be easy. I can just add a the following lines of code to the beginning of run.csx:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using Microsoft.Servicebus;</div></pre></td></tr></table></figure>
+<p>I also will be using Newtonsoft.Json to deserialize my messages and SendGrid to send my emails, so I will need some way to restore the NuGet packages. This turns out to be quite easy. I just have to add a new file and tell my function what my dependencies are. Add a file called <code>project.json</code> to your function like so:</p>
+<img src="/2017/02/08/azure-functions-put-to-use/add-file-to-function.png" alt="Adding a file" title="Adding a file"> 
+<p>Now add the following code to it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;frameworks&quot;: &#123;</div><div class="line">    &quot;net46&quot;:&#123;</div><div class="line">      &quot;dependencies&quot;: &#123;</div><div class="line">        &quot;Sendgrid&quot;: &quot;8.0.5&quot;,</div><div class="line">        &quot;Newtonsoft.Json&quot;: &quot;9.0.1&quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This will trigger my function to perform a NuGet restore before executing my function for the first time. Don’t forget to add the using statements to your code.</p>
+<p>We’re almost ready to get the code done but first we’ll need to add an output to our function. Head to the ‘Integrate’ section of your function and take note of the ‘Message parameter name’, we will use this later on. Now click ‘New Output’ and select ‘SendGrid’ (currently in preview).</p>
+<img src="/2017/02/08/azure-functions-put-to-use/integrate-tab.png" alt="Integrate" title="Integrate"> 
+<p>The easiest way to utilize this output, is to enter the from, to, subject and API key here. Mind you that the API key is the name of an Application Setting which contains the actual key! </p>
+<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" alt="Configurate SendGrid" title="Configurate SendGrid"> 
+<p>Save the changes and then add the Application Setting corresponding to the API key name (SendGridApiKey in this example) by clicking ‘Function App Settings’ and then ‘Configure app setings’<br>Once you’ve added the input, take a look at your <code>function.json</code> and see how it reflects the changes. </p>
+<p>Finally adjust the code for run.csx to reflect your application logic. Notice how I named the ‘Message parameter name’ incomingMessage and added an <code>out Mail message</code> to the method signature:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#r &quot;SendGrid&quot;</div><div class="line">#r &quot;Newtonsoft.Json&quot;</div><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using SendGrid.Helpers.Mail;</div><div class="line">using Newtonsoft.Json;</div><div class="line">using System;</div><div class="line">using System.Threading.Tasks;</div><div class="line">using Microsoft.ServiceBus.Messaging;</div><div class="line"></div><div class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</div><div class="line">&#123;</div><div class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</div><div class="line">    </div><div class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</div><div class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</div><div class="line">    </div><div class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</div><div class="line"></div><div class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</div><div class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</div><div class="line"></div><div class="line">         message = new Mail();</div><div class="line"></div><div class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</div><div class="line">         message.AddContent(messageContent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>That’s it. Click Run and your message will be parsed, checked and you will be alerted in case something goes wrong :-)</p>
+<h1 id="The-result"><a href="#The-result" class="headerlink" title="The result"></a>The result</h1><p>I’ve already received my first alert - even though I triggered it intentionally, it’s still awesome to see that I now have a low-cost, easy to use solution which only runs when it should. Of course there optimizations to be made, but for now it does the trick. And in the meanwhile I’ve learned some more about Azure Functions </p>
 
         
         </div>
@@ -266,7 +289,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciyxhyfa8000gpey2a0ep2y31" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciyxhyf9h0000pey2eqg5uvnv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -341,15 +364,11 @@
         
 <nav id="article-nav">
     
-        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    Custom build tasks in TFS 2015
-                
-            </div>
-        </a>
     
+        <a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Git in VS2017 with self-signed SSL</div>
+        </a>
     
 </nav>
 

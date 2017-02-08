@@ -137,11 +137,11 @@
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                18
+                19
                 <span>tags</span>
             </div>
         </div>
@@ -190,7 +190,7 @@
 
             
             <section id="main">
-    <article id="post-Git-in-VS2017-with-self-signed-SSL" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-azure-functions-put-to-use" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -198,7 +198,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/">Git in VS2017 with self-signed SSL</a>
+            <a class="article-title" href="/2017/02/08/azure-functions-put-to-use/">Azure Functions put to use</a>
         </h1>
     
 
@@ -207,8 +207,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/">
-            <time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time>
+        <a href="/2017/02/08/azure-functions-put-to-use/">
+            <time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time>
         </a>
     </div>
 
@@ -217,7 +217,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Visual-Studio/">Visual Studio</a>
+        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Serverless/">Serverless</a>
     </div>
 
                     </div>
@@ -228,15 +228,47 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
-<p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
-<h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
-<img src="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
-<p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
-<p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
-<p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
-<img src="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
-<p>Hope this saves you a bit of trouble ;-)</p>
+            <p>At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
+<p>The underlying messaging mechanism of our app is an Azure Service Bus (or actually, multiple buses), with several topics and subscriptions upon those topics. As all of our events flow through Azure already, it’s easy to store them in blobstorage and use them for auditing/analysis/what-have-you at a later point in time. Now that the usage is increasing, we felt that it was time to add some alerting and we made plans for a new service that would react to our ‘ActivityFailed’-event, it would then send an email as soon as one of those events (luckily they don’t occur that often) would occur. Sounds easy enough, right?</p>
+<h1 id="Dockerize-or-…"><a href="#Dockerize-or-…" class="headerlink" title="Dockerize or … ?"></a>Dockerize or … ?</h1><p>As you may know Docker is a great tool to envelope your application into a well-known and well-described format so that it can run anywhere the same as it would on your machine. We would develop the service in .NET Core, so it would be easy enough to Dockerize it and host it somewhere just like some of the other services. But last night I thought to myself ‘Wait, we run in Azure, use the Azure Service Bus and only need to react to messages on the bus..’ and I decided I would try to create an <a href="https://azure.microsoft.com/en-us/services/functions/" target="_blank" rel="external">Azure Function</a> to react to the event and send me the mail. It literally took me about 15 minutes to develop. I’ll describe the process below.</p>
+<h2 id="Going-serverless"><a href="#Going-serverless" class="headerlink" title="Going serverless"></a>Going serverless</h2><p>Azure Functions are a way to process events in an easy way without having to worry about where you run it. It’s basically ‘just code’ and Azure does the rest for you. I had played with Azure Functions before, but didn’t really find a use-case for it. I do however feel that they are the next step after containerization. It may not fit all problems, but there are certainly use-cases out there which would benefit from a completely serverless architecture.</p>
+<p>Step one is going to the <a href="https://portal.azure.com" target="_blank" rel="external">Azure Portal</a> and creating a new ‘Function App’. Tip: use a consumption plan if you only want to be billed for your actual usage.</p>
+<img src="/2017/02/08/azure-functions-put-to-use/create-function-app.png" alt="Creating the Function App" title="Creating the Function App"> 
+<p>Once your Function App is created, navigate to it. The first time you navigate to your Function App, you won’t have any functions yet, so you will be presented with the Quickstart Wizard. We will not use it, so scroll down and click ‘Create your own custom function’.</p>
+<img src="/2017/02/08/azure-functions-put-to-use/create-your-own-function.png" alt="Create your own custom function" title="Create your own custom function"> 
+<p>Now from the template gallery, select C# as language and ‘Data Processing’ as scenario. Click the ‘ServiceBusTopicTrigger-CSharp’ template and enter the following values in the corresponding fields:</p>
+<ul>
+<li><strong>Name</strong>: a meaningful name for your function, pick something like ‘EmailNotifier’</li>
+<li><strong>Topic name</strong>: this is the name of the topic on your service bus which you’ll listen to</li>
+<li><strong>Subscription name</strong>: The subscription name on top of the topic specified above</li>
+<li><strong>Access Rights</strong>: select ‘Manage’, and make this match the <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-shared-access-signature-authentication" target="_blank" rel="external">SAS Token</a>. As of writing this post, there’s a <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="external">bug</a> preventing you from using the expected ‘Listen’ permissions. That is - you can use it, but your function will cease to trigger after a few hours.</li>
+<li><strong>Service Bus connection</strong>: Service Bus connection strings are saved as Application Setting for your entire Function App and can be shared over multiple functions. Just click ‘new’ the first time and enter the connection string <em>without</em> the EntityPath in it</li>
+</ul>
+<p>You will now have a basic function. Congratulations!</p>
+<h2 id="Making-it-do-something-useful"><a href="#Making-it-do-something-useful" class="headerlink" title="Making it do something useful"></a>Making it do something useful</h2><p>In order to do something meaningful with our app, we’ll need to go through a few steps. First let’s discover what is created for us. Click the ‘Files’ button on the top right of the editor:</p>
+<img src="/2017/02/08/azure-functions-put-to-use/your-first-function.png" alt="Exploring your first function" title="Exploring your first function"> 
+<p>You will see that you have two files:</p>
+<ul>
+<li>function.json - which describes your in- and outputs</li>
+<li>run.csx - which is the code for your function</li>
+</ul>
+<p>Take some time to familiarize you with both files and notice that the run.csx isn’t much different from a regular C# program.</p>
+<p>It actually has using statements and a <code>public static void Main()</code> alike function called ‘Run’. Azure Functions provides you with framework libraries such as System and System.Linq and you can include some additional assemblies using the <code>#r</code> directive. A full list of all available assemblies can be found <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-csharp#importing-namespaces" target="_blank" rel="external">here</a>. As you can see, using all types/methods within the Microsoft.ServiceBus namespace will be easy. I can just add a the following lines of code to the beginning of run.csx:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using Microsoft.Servicebus;</div></pre></td></tr></table></figure>
+<p>I also will be using Newtonsoft.Json to deserialize my messages and SendGrid to send my emails, so I will need some way to restore the NuGet packages. This turns out to be quite easy. I just have to add a new file and tell my function what my dependencies are. Add a file called <code>project.json</code> to your function like so:</p>
+<img src="/2017/02/08/azure-functions-put-to-use/add-file-to-function.png" alt="Adding a file" title="Adding a file"> 
+<p>Now add the following code to it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;frameworks&quot;: &#123;</div><div class="line">    &quot;net46&quot;:&#123;</div><div class="line">      &quot;dependencies&quot;: &#123;</div><div class="line">        &quot;Sendgrid&quot;: &quot;8.0.5&quot;,</div><div class="line">        &quot;Newtonsoft.Json&quot;: &quot;9.0.1&quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>This will trigger my function to perform a NuGet restore before executing my function for the first time. Don’t forget to add the using statements to your code.</p>
+<p>We’re almost ready to get the code done but first we’ll need to add an output to our function. Head to the ‘Integrate’ section of your function and take note of the ‘Message parameter name’, we will use this later on. Now click ‘New Output’ and select ‘SendGrid’ (currently in preview).</p>
+<img src="/2017/02/08/azure-functions-put-to-use/integrate-tab.png" alt="Integrate" title="Integrate"> 
+<p>The easiest way to utilize this output, is to enter the from, to, subject and API key here. Mind you that the API key is the name of an Application Setting which contains the actual key! </p>
+<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" alt="Configurate SendGrid" title="Configurate SendGrid"> 
+<p>Save the changes and then add the Application Setting corresponding to the API key name (SendGridApiKey in this example) by clicking ‘Function App Settings’ and then ‘Configure app setings’<br>Once you’ve added the input, take a look at your <code>function.json</code> and see how it reflects the changes. </p>
+<p>Finally adjust the code for run.csx to reflect your application logic. Notice how I named the ‘Message parameter name’ incomingMessage and added an <code>out Mail message</code> to the method signature:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#r &quot;SendGrid&quot;</div><div class="line">#r &quot;Newtonsoft.Json&quot;</div><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using SendGrid.Helpers.Mail;</div><div class="line">using Newtonsoft.Json;</div><div class="line">using System;</div><div class="line">using System.Threading.Tasks;</div><div class="line">using Microsoft.ServiceBus.Messaging;</div><div class="line"></div><div class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</div><div class="line">&#123;</div><div class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</div><div class="line">    </div><div class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</div><div class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</div><div class="line">    </div><div class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</div><div class="line"></div><div class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</div><div class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</div><div class="line"></div><div class="line">         message = new Mail();</div><div class="line"></div><div class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</div><div class="line">         message.AddContent(messageContent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>That’s it. Click Run and your message will be parsed, checked and you will be alerted in case something goes wrong :-)</p>
+<h1 id="The-result"><a href="#The-result" class="headerlink" title="The result"></a>The result</h1><p>I’ve already received my first alert - even though I triggered it intentionally, it’s still awesome to see that I now have a low-cost, easy to use solution which only runs when it should. Of course there optimizations to be made, but for now it does the trick. And in the meanwhile I’ve learned some more about Azure Functions </p>
 
         
         </div>
@@ -247,7 +279,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/28/Git-in-VS2017-with-self-signed-SSL/" data-id="ciw2142170004e8bvbus84244" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciyxhyf9h0000pey2eqg5uvnv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -323,7 +355,7 @@
 
 
 
-    <article id="post-Coretainers" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-git-in-vs2017-with-self-signed-ssl" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -331,7 +363,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/11/16/Coretainers/">Coretainers</a>
+            <a class="article-title" href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/">Git in VS2017 with self-signed SSL</a>
         </h1>
     
 
@@ -340,7 +372,140 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/11/16/Coretainers/">
+        <a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/">
+            <time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Visual-Studio/">Visual Studio</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>When I’m out of the office, I connect to my team’s TFS server through the firewall and get served up with a properly signed (by a widely trusted CA) SSL certificate.<br>This means that my browser, and git have no issues connecting and cloning. When I’m in the office <em>and</em> connected to our corporate WiFi network, I get a self-signed SSL certificate. </p>
+<p>It’s always been a hassle to add these certificates to Git’s local certificate store but luckily Visual Studio didn’t require you to do the same, seeing as they used Lib2Git. With VS2017, Microsoft switched to git.exe (which is good) <strong>but</strong> they aren’t using the one already on your path but rather a bundled installation which resides in the VS2017 extensions directory. This means that you have to add SSL certificates to yet another git trusted store.</p>
+<h2 id="Let’s-fix"><a href="#Let’s-fix" class="headerlink" title="Let’s fix"></a>Let’s fix</h2><p>Microsoft has done a <a href="terrific write-up">https://blogs.msdn.microsoft.com/phkelley/2014/01/20/adding-a-corporate-or-self-signed-certificate-authority-to-git-exes-store/</a> of how to add a certificates should be added to your git.exe client and now this must be applied to Visual Studio as well to prevent this from happening:</p>
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-error.png" alt="Error cloning with untrusted certificate" title="Error cloning with untrusted certificate">
+<p>The Git client resides in your VS2017 installation dir, which by default is <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\</code>. Now if you browse to your edition (i.e. ‘Enterprise’), you will see the familiar <code>Common7\IDE</code> directory and then to the <code>CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code> folder, you will find the ca-bundle.crt that Visual Studio uses. So the full path (for a default installation of VS2017 Enterprise) would be:</p>
+<p><code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\mingw32\ssl\certs</code></p>
+<p>Add your Base64 encoded certificate and the next time you attempt to clone a repo within VS2017, you should be presented with the trusted VS logo ASCII art from TFS:</p>
+<img src="/2016/11/28/git-in-vs2017-with-self-signed-ssl/git-clone-vslogo-ascii.png" alt="Visual Studio ASCII art logo Git" title="Visual Studio ASCII art logo Git">
+<p>Hope this saves you a bit of trouble ;-)</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyxhyfa2000apey218g5so94" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-coretainers" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/11/16/coretainers/">Coretainers</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/16/coretainers/">
             <time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time>
         </a>
     </div>
@@ -368,7 +533,7 @@
             
             <p>Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the <a href="https://www.sdn.nl" target="_blank" rel="external">SDN Event</a> in September.<br>The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.</p>
 <h1 id="Docker-made-easy"><a href="#Docker-made-easy" class="headerlink" title="Docker made easy"></a>Docker made easy</h1><p>The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.<br>Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:</p>
-<img src="/2016/11/16/Coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
+<img src="/2016/11/16/coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
 <p>If you have <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="external">Docker for Windows</a> installed, you can get going. If not, install it first.<br>This will automatically generate several files for you:</p>
 <ul>
 <li>Dockerfile (where it all starts)</li>
@@ -382,7 +547,7 @@
 <p><code>ERROR: for awesomewebapp  Cannot create container for service awesomewebapp: D: drive is not shared. Please share it in Docker for Windows Settings</code></p>
 <p>Although the error message is quite verbose nowadays, right-click the Docker icon in your taskbar and go to settings. Now on the ‘Shared Drives’ tab, you can share the disk where your application resides. </p>
 <h1 id="Publish-to-Azure"><a href="#Publish-to-Azure" class="headerlink" title="Publish to Azure"></a>Publish to Azure</h1><p>Now where it get’s really awesome, is that starting today you can publish your container to Azure with a few simple clicks. If you right-click your project, you can press ‘Publish’. We all know this action from years of publishing web applications through <a href="https://www.iis.net/downloads/microsoft/web-deploy" target="_blank" rel="external">WebDeploy</a> - and we all know what joy that brought ;-)<br>We then got the ability to quickly select ‘host in Azure’ when we created the project and now we have this:</p>
-<img src="/2016/11/16/Coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
+<img src="/2016/11/16/coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
 <p>The settings are simple:</p>
 <ul>
 <li>Provide a unique name for your app</li>
@@ -395,7 +560,7 @@
 <p>Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.</p>
 <p><em>Mind you</em>: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.</p>
 <h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p>After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!<br>That’s what another new option in VS2017 does for you:</p>
-<img src="/2016/11/16/Coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
+<img src="/2016/11/16/coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
 <p>More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.</p>
 
         
@@ -407,7 +572,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/Coretainers/" data-id="ciw21420q0000e8bvk332g5kj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyxhyf9r0003pey2rsi54edq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,7 +715,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciw214224000ee8bvmgqmuga8" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciyxhyfa4000dpey2y9ikd2j7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -693,7 +858,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="ciw21421w000be8bv6hkg8zxy" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="ciyxhyf9m0001pey27qxwinty" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -831,7 +996,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciw21421c0005e8bver6x7w1s" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciyxhyfa10008pey2vi2zph07" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -966,7 +1131,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="ciw21421t0009e8bvf85lsge4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="ciyxhyf9z0006pey2mcpy9hu0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1139,7 +1304,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciw21420x0001e8bvek5crzi2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciyxhyf9y0005pey27d5wjmwm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1285,7 +1450,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciw21421l0007e8bv32coroiw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciyxhyfa8000gpey2a0ep2y31" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1374,7 +1539,16 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/" class="title">Git in VS2017 with self-signed SSL</a></p>
+                            <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Azure Functions put to use</a></p>
+                            <p class="item-date"><time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/" class="title">Git in VS2017 with self-signed SSL</a></p>
                             <p class="item-date"><time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time></p>
                         </div>
                     </li>
@@ -1383,7 +1557,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/DevOps/">DevOps</a></p>
-                            <p class="item-title"><a href="/2016/11/16/Coretainers/" class="title">Coretainers</a></p>
+                            <p class="item-title"><a href="/2016/11/16/coretainers/" class="title">Coretainers</a></p>
                             <p class="item-date"><time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time></p>
                         </div>
                     </li>
@@ -1406,15 +1580,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
-                            <p class="item-title"><a href="/2015/11/09/dev-intersection-2015-dag-6/" class="title">Dev Intersection 2015 - dag 6</a></p>
-                            <p class="item-date"><time datetime="2015-11-09T17:01:00.000Z" itemprop="datePublished">2015-11-09</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1433,7 +1598,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1442,7 +1607,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1451,7 +1616,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 10px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 10px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 10px;">Serverless</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 
@@ -1479,7 +1644,7 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2016 Peter Toonen<br>
+            &copy; 2017 Peter Toonen<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>

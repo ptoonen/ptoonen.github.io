@@ -8,17 +8,17 @@
     <meta name="description" content="Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I sho">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coretainers">
-<meta property="og:url" content="https://toonen.io/2016/11/16/Coretainers/index.html">
+<meta property="og:url" content="https://toonen.io/2016/11/16/coretainers/index.html">
 <meta property="og:site_name" content="Toonen.io">
 <meta property="og:description" content="Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I sho">
-<meta property="og:image" content="https://toonen.io/2016/11/16/Coretainers/docker-support.png">
-<meta property="og:image" content="https://toonen.io/2016/11/16/Coretainers/publish-to-azure.png">
-<meta property="og:image" content="https://toonen.io/2016/11/16/Coretainers/configure-continuous-delivery.png">
-<meta property="og:updated_time" content="2016-11-16T21:12:01.521Z">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/docker-support.png">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/publish-to-azure.png">
+<meta property="og:image" content="https://toonen.io/2016/11/16/coretainers/configure-continuous-delivery.png">
+<meta property="og:updated_time" content="2016-11-16T21:12:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coretainers">
 <meta name="twitter:description" content="Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I sho">
-<meta name="twitter:image" content="https://toonen.io/2016/11/16/Coretainers/docker-support.png">
+<meta name="twitter:image" content="https://toonen.io/2016/11/16/coretainers/docker-support.png">
     
 
     
@@ -145,11 +145,11 @@
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                18
+                19
                 <span>tags</span>
             </div>
         </div>
@@ -197,7 +197,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Coretainers" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-coretainers" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -214,7 +214,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/11/16/Coretainers/">
+        <a href="/2016/11/16/coretainers/">
             <time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time>
         </a>
     </div>
@@ -242,7 +242,7 @@
             
             <p>Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with Windows containers and the full fledged .NET framework as I showed at the <a href="https://www.sdn.nl" target="_blank" rel="external">SDN Event</a> in September.<br>The thing is, that if you haven’t looked at containers by now, you’re in for a treat. Where it used to be quite hard to figure everything out for yourself, Microsoft announced a new way of integrating today and are taking it to the next level in Visual Studio 2017. Especially when you combine the power of containers with the flexibility of .NET Core.</p>
 <h1 id="Docker-made-easy"><a href="#Docker-made-easy" class="headerlink" title="Docker made easy"></a>Docker made easy</h1><p>The combination of .NET Core and containers is very powerful. It gives a small iamge, which runs anywhere. You can literally ship your ‘machine’ and today it became even easier.<br>Starting with Visual Studio 2017, when you create a web application, you can enable Docker support from the box:</p>
-<img src="/2016/11/16/Coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
+<img src="/2016/11/16/coretainers/docker-support.png" alt="Built-in Docker support" title="Built-in Docker support"> 
 <p>If you have <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="external">Docker for Windows</a> installed, you can get going. If not, install it first.<br>This will automatically generate several files for you:</p>
 <ul>
 <li>Dockerfile (where it all starts)</li>
@@ -256,7 +256,7 @@
 <p><code>ERROR: for awesomewebapp  Cannot create container for service awesomewebapp: D: drive is not shared. Please share it in Docker for Windows Settings</code></p>
 <p>Although the error message is quite verbose nowadays, right-click the Docker icon in your taskbar and go to settings. Now on the ‘Shared Drives’ tab, you can share the disk where your application resides. </p>
 <h1 id="Publish-to-Azure"><a href="#Publish-to-Azure" class="headerlink" title="Publish to Azure"></a>Publish to Azure</h1><p>Now where it get’s really awesome, is that starting today you can publish your container to Azure with a few simple clicks. If you right-click your project, you can press ‘Publish’. We all know this action from years of publishing web applications through <a href="https://www.iis.net/downloads/microsoft/web-deploy" target="_blank" rel="external">WebDeploy</a> - and we all know what joy that brought ;-)<br>We then got the ability to quickly select ‘host in Azure’ when we created the project and now we have this:</p>
-<img src="/2016/11/16/Coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
+<img src="/2016/11/16/coretainers/publish-to-azure.png" alt="Publish Container to Azure" title="Publish Container to Azure"> 
 <p>The settings are simple:</p>
 <ul>
 <li>Provide a unique name for your app</li>
@@ -269,7 +269,7 @@
 <p>Press the ‘create’ button. Visual Studio and Azure will do the rest for you, it’s that simple.</p>
 <p><em>Mind you</em>: make sure that both your app service plan and registry are in the same Azure region. As of writing this post, only West US is supported. You can select the region from the ‘Services’ tab and then pressing the gears next to the app service or registry you’re creating.</p>
 <h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p>After pushing the ‘create’ button, my container got published to Azure and I’m able to access it from my browser. And although this is of course an awesome way to publish your application, this is probably not what you want from a DevOps perspective. You want to be able to make a change to the app, commit and push your changes to the repo and have an automated build/release pipeline to put your changes in production… and you can!<br>That’s what another new option in VS2017 does for you:</p>
-<img src="/2016/11/16/Coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
+<img src="/2016/11/16/coretainers/configure-continuous-delivery.png" alt="Continuous Delivery from VS2017" title="Continuous Delivery from VS2017"> 
 <p>More on this feature in a later post though. For now, experiment with the containers and new features you have and I’ll show you how to automatically create a CI/CD pipeline from right within Visual Studio in a future post.</p>
 
         
@@ -281,7 +281,7 @@
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/Coretainers/" data-id="ciw21420q0000e8bvk332g5kj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyxhyf9r0003pey2rsi54edq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -356,7 +356,7 @@
         
 <nav id="article-nav">
     
-        <a href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Newer</strong>
             <div class="article-nav-title">
                 
@@ -397,7 +397,16 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/11/28/Git-in-VS2017-with-self-signed-SSL/" class="title">Git in VS2017 with self-signed SSL</a></p>
+                            <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Azure Functions put to use</a></p>
+                            <p class="item-date"><time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/" class="title">Git in VS2017 with self-signed SSL</a></p>
                             <p class="item-date"><time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time></p>
                         </div>
                     </li>
@@ -406,7 +415,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/DevOps/">DevOps</a></p>
-                            <p class="item-title"><a href="/2016/11/16/Coretainers/" class="title">Coretainers</a></p>
+                            <p class="item-title"><a href="/2016/11/16/coretainers/" class="title">Coretainers</a></p>
                             <p class="item-date"><time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time></p>
                         </div>
                     </li>
@@ -429,15 +438,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Conferences/">Conferences</a></p>
-                            <p class="item-title"><a href="/2015/11/09/dev-intersection-2015-dag-6/" class="title">Dev Intersection 2015 - dag 6</a></p>
-                            <p class="item-date"><time datetime="2015-11-09T17:01:00.000Z" itemprop="datePublished">2015-11-09</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -456,7 +456,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -465,7 +465,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -474,7 +474,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 10px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 10px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 10px;">Serverless</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 
@@ -502,7 +502,7 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2016 Peter Toonen<br>
+            &copy; 2017 Peter Toonen<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
