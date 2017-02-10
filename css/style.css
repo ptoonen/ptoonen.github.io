@@ -1351,6 +1351,15 @@ ol.toc {
   -ms-transition: color 0.3s ease-out;
   transition: color 0.3s ease-out;
 }
+.article.rtl .article-title,
+.article.rtl .article-entry p {
+  direction: rtl;
+}
+.article.rtl .article-meta > div {
+  float: right;
+  margin-left: 10px;
+  margin-right: 0;
+}
 .lg-outer .lg-thumb-item {
   border-radius: 0 !important;
 }
