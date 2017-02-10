@@ -244,7 +244,7 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>At work we run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
+            <p>We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
 <p>The underlying messaging mechanism of our app is an Azure Service Bus (or actually, multiple buses), with several topics and subscriptions upon those topics. As all of our events flow through Azure already, it’s easy to store them in blobstorage and use them for auditing/analysis/what-have-you at a later point in time. Now that the usage is increasing, we felt that it was time to add some alerting and we made plans for a new service that would react to our ‘ActivityFailed’-event, it would then send an email as soon as one of those events (luckily they don’t occur that often) would occur. Sounds easy enough, right?</p>
 <h1 id="Dockerize-or-…"><a href="#Dockerize-or-…" class="headerlink" title="Dockerize or … ?"></a>Dockerize or … ?</h1><p>As you may know Docker is a great tool to envelope your application into a well-known and well-described format so that it can run anywhere the same as it would on your machine. We would develop the service in .NET Core, so it would be easy enough to Dockerize it and host it somewhere just like some of the other services. But last night I thought to myself ‘Wait, we run in Azure, use the Azure Service Bus and only need to react to messages on the bus..’ and I decided I would try to create an <a href="https://azure.microsoft.com/en-us/services/functions/" target="_blank" rel="external">Azure Function</a> to react to the event and send me the mail. It literally took me about 15 minutes to develop. I’ll describe the process below.</p>
 <h2 id="Going-serverless"><a href="#Going-serverless" class="headerlink" title="Going serverless"></a>Going serverless</h2><p>Azure Functions are a way to process events in an easy way without having to worry about where you run it. It’s basically ‘just code’ and Azure does the rest for you. I had played with Azure Functions before, but didn’t really find a use-case for it. I do however feel that they are the next step after containerization. It may not fit all problems, but there are certainly use-cases out there which would benefit from a completely serverless architecture.</p>
@@ -295,7 +295,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciyxjyoyz0000sly2m2i1kza7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciyzn6rsp00013b3wyfun2lz7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -428,7 +428,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyxjyozm000bsly234eb17l9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciyzn6rt6000b3b3w1zublz93" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -588,7 +588,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyxjyozb0004sly26fz7l4aj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciyzn6rt200063b3wfz97jfii" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -731,7 +731,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciyxjyozq000gsly2hmqrtt1n" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciyzn6rt9000f3b3w9z0e3l9a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -874,7 +874,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="ciyxjyoz50001sly23qw4fyl8" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="ciyzn6rsj00003b3wgvd3g80k" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1012,7 +1012,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciyxjyozk0009sly2z8vidm1g" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciyzn6rt400093b3w7p5g3vtv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1147,7 +1147,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="ciyxjyozj0006sly25duz4rhw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="ciyzn6rt000053b3wkdd0nkfo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1320,7 +1320,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciyxjyozh0005sly2zjestorm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciyzn6rsu00043b3wyceidz51" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1466,7 +1466,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciyxjyozo000esly2xws8g3hg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciyzn6rt9000e3b3we4shaiya" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

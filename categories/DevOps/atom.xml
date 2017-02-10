@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/DevOps/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2017-02-08T22:53:23.000Z</updated>
+    <id>/categories/DevOps/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>Coretainers</title>
+        <link href="https://toonen.io/2016/11/16/coretainers/"/>
+        <id>https://toonen.io/2016/11/16/coretainers/</id>
+        <published>2016-11-16T19:56:02.000Z</published>
+        <updated>2017-02-08T22:53:23.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Most people, if not everyone, have seen the .NET Core demo’s in a Docker container on Linux by now. Some may even have experimented with 
+            
+        </summary>
+        
+        <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
+        
+        
+        <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+        
+        <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
+        
+        <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+        
+        <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
+        
+    </entry>
+    
+</feed>

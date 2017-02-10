@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/Cloud/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2017-02-10T10:03:18.000Z</updated>
+    <id>/categories/Cloud/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>Azure Functions put to use</title>
+        <link href="https://toonen.io/2017/02/08/azure-functions-put-to-use/"/>
+        <id>https://toonen.io/2017/02/08/azure-functions-put-to-use/</id>
+        <published>2017-02-08T20:16:27.000Z</published>
+        <updated>2017-02-10T10:03:18.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from o
+            
+        </summary>
+        
+        <category term="Cloud" scheme="https://toonen.io/categories/Cloud/"/>
+        
+        
+        <category term="Azure" scheme="https://toonen.io/tags/Azure/"/>
+        
+        <category term="Serverless" scheme="https://toonen.io/tags/Serverless/"/>
+        
+    </entry>
+    
+    <entry>
+        <title>Load testing from the Azure portal</title>
+        <link href="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/"/>
+        <id>https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/</id>
+        <published>2015-07-12T14:57:00.000Z</published>
+        <updated>2016-07-09T23:18:58.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Before you launch a new web application, you make sure you have thoroughly tested it, you have performed unit-, integration-, usability- 
+            
+        </summary>
+        
+        <category term="Cloud" scheme="https://toonen.io/categories/Cloud/"/>
+        
+        
+        <category term="Azure" scheme="https://toonen.io/tags/Azure/"/>
+        
+        <category term="Test" scheme="https://toonen.io/tags/Test/"/>
+        
+    </entry>
+    
+</feed>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/NET/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2016-07-09T23:19:22.000Z</updated>
+    <id>/categories/NET/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>Custom build tasks in TFS 2015</title>
+        <link href="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/"/>
+        <id>https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/</id>
+        <published>2015-07-21T12:46:00.000Z</published>
+        <updated>2016-07-09T23:19:22.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a l
+            
+        </summary>
+        
+        <category term=".NET" scheme="https://toonen.io/categories/NET/"/>
+        
+        
+        <category term="TFS" scheme="https://toonen.io/tags/TFS/"/>
+        
+        <category term="Build" scheme="https://toonen.io/tags/Build/"/>
+        
+        <category term="Customization" scheme="https://toonen.io/tags/Customization/"/>
+        
+    </entry>
+    
+</feed>

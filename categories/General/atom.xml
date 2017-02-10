@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/General/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2016-07-09T23:18:54.000Z</updated>
+    <id>/categories/General/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>New Blog</title>
+        <link href="https://toonen.io/2016/07/09/new-blog/"/>
+        <id>https://toonen.io/2016/07/09/new-blog/</id>
+        <published>2016-07-09T21:09:34.000Z</published>
+        <updated>2016-07-09T23:18:54.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;So as you may have noticed, I have started a new blog. It’s been a long time coming but I finally found some time this weekend. My collea
+            
+        </summary>
+        
+        <category term="General" scheme="https://toonen.io/categories/General/"/>
+        
+        
+        <category term="tips-and-tricks" scheme="https://toonen.io/tags/tips-and-tricks/"/>
+        
+        <category term="freebies" scheme="https://toonen.io/tags/freebies/"/>
+        
+    </entry>
+    
+    <entry>
+        <title>Bash for Windows</title>
+        <link href="https://toonen.io/2016/04/06/bash-for-windows/"/>
+        <id>https://toonen.io/2016/04/06/bash-for-windows/</id>
+        <published>2016-04-06T20:59:00.000Z</published>
+        <updated>2016-07-09T23:14:52.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;So last week at //Build/ Microsoft announced native Bash-integration on the Windows 10 platform and today they delivered the first previe
+            
+        </summary>
+        
+        <category term="General" scheme="https://toonen.io/categories/General/"/>
+        
+        
+        <category term="Windows" scheme="https://toonen.io/tags/Windows/"/>
+        
+        <category term="Linux" scheme="https://toonen.io/tags/Linux/"/>
+        
+        <category term="Cross-Platform" scheme="https://toonen.io/tags/Cross-Platform/"/>
+        
+        <category term="Bash" scheme="https://toonen.io/tags/Bash/"/>
+        
+        <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
+        
+    </entry>
+    
+</feed>

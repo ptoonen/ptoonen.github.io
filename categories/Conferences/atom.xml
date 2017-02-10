@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/Conferences/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2016-07-09T23:18:10.000Z</updated>
+    <id>/categories/Conferences/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>Dev Intersection 2015 - dag 6</title>
+        <link href="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/"/>
+        <id>https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/</id>
+        <published>2015-11-09T17:01:00.000Z</published>
+        <updated>2016-07-09T23:18:10.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Ook al ben ik inmiddels alweer een tijdje terug uit Las Vegas en inmiddels de jet-lag te boven, wilde ik jullie toch niet mijn laatste da
+            
+        </summary>
+        
+        <category term="Conferences" scheme="https://toonen.io/categories/Conferences/"/>
+        
+        
+        <category term="DevInterSection" scheme="https://toonen.io/tags/DevInterSection/"/>
+        
+        <category term="Dutch" scheme="https://toonen.io/tags/Dutch/"/>
+        
+    </entry>
+    
+    <entry>
+        <title>Dev Intersection 2015 - dag 3</title>
+        <link href="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/"/>
+        <id>https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/</id>
+        <published>2015-10-28T06:38:00.000Z</published>
+        <updated>2016-07-09T23:18:22.000Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dageli
+            
+        </summary>
+        
+        <category term="Conferences" scheme="https://toonen.io/categories/Conferences/"/>
+        
+        
+        <category term="DevInterSection" scheme="https://toonen.io/tags/DevInterSection/"/>
+        
+        <category term="Dutch" scheme="https://toonen.io/tags/Dutch/"/>
+        
+    </entry>
+    
+</feed>
