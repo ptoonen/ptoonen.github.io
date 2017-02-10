@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Toonen.io</title>
+    <title>Toonen.io - Peter Toonen&#39;s digital adventures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta property="og:type" content="website">
-<meta property="og:title" content="Toonen.io">
+<meta property="og:title" content="Toonen.io - Peter Toonen's digital adventures">
 <meta property="og:url" content="https://toonen.io/index.html">
-<meta property="og:site_name" content="Toonen.io">
+<meta property="og:site_name" content="Toonen.io - Peter Toonen's digital adventures">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Toonen.io">
+<meta name="twitter:title" content="Toonen.io - Peter Toonen's digital adventures">
     
 
     
-        <link rel="alternate" href="atom.xml" title="Toonen.io" type="application/atom+xml" />
+        <link rel="alternate" href="atom.xml" title="Toonen.io - Peter Toonen&#39;s digital adventures" type="application/atom+xml" />
     
 
     
@@ -209,7 +209,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2017/02/08/azure-functions-put-to-use/">Azure Functions put to use</a>
+            <a class="article-title" href="/2017/02/08/azure-functions-put-to-use/">Going Serverless - Azure Functions put to use</a>
         </h1>
     
 
@@ -284,7 +284,7 @@ ga('send', 'pageview');
 <p>Finally adjust the code for run.csx to reflect your application logic. Notice how I named the ‘Message parameter name’ incomingMessage and added an <code>out Mail message</code> to the method signature:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#r &quot;SendGrid&quot;</div><div class="line">#r &quot;Newtonsoft.Json&quot;</div><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using SendGrid.Helpers.Mail;</div><div class="line">using Newtonsoft.Json;</div><div class="line">using System;</div><div class="line">using System.Threading.Tasks;</div><div class="line">using Microsoft.ServiceBus.Messaging;</div><div class="line"></div><div class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</div><div class="line">&#123;</div><div class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</div><div class="line">    </div><div class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</div><div class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</div><div class="line">    </div><div class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</div><div class="line"></div><div class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</div><div class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</div><div class="line"></div><div class="line">         message = new Mail();</div><div class="line"></div><div class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</div><div class="line">         message.AddContent(messageContent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>That’s it. Click Run and your message will be parsed, checked and you will be alerted in case something goes wrong :-)</p>
-<h1 id="The-result"><a href="#The-result" class="headerlink" title="The result"></a>The result</h1><p>I’ve already received my first alert - even though I triggered it intentionally, it’s still awesome to see that I now have a low-cost, easy to use solution which only runs when it should. Of course there optimizations to be made, but for now it does the trick. And in the meanwhile I’ve learned some more about Azure Functions </p>
+<h1 id="The-result"><a href="#The-result" class="headerlink" title="The result"></a>The result</h1><p>I’ve already received my first alert - even though I triggered it intentionally, it’s still awesome to see that I now have a low-cost, easy to use solution which only runs when it should. Of course there optimizations to be made, but for now it does the trick. And in the meanwhile I’ve learned some more about building serverless applications using Azure Functions.</p>
 
         
         </div>
@@ -1555,7 +1555,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Cloud/">Cloud</a></p>
-                            <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Azure Functions put to use</a></p>
+                            <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Going Serverless - Azure Functions put to use</a></p>
                             <p class="item-date"><time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time></p>
                         </div>
                     </li>
