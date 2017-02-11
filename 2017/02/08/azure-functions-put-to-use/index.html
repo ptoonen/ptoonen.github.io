@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/add-file-to-function.png">
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/integrate-tab.png">
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/sendgrid-config.png">
-<meta property="og:updated_time" content="2017-02-10T22:36:01.000Z">
+<meta property="og:updated_time" content="2017-02-11T11:43:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Going Serverless - Azure Functions put to use">
 <meta name="twitter:description" content="We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is n">
@@ -289,7 +289,7 @@ ga('send', 'pageview');
 <p>We’re almost ready to get the code done but first we’ll need to add an output to our function. Head to the ‘Integrate’ section of your function and take note of the ‘Message parameter name’, we will use this later on. Now click ‘New Output’ and select ‘SendGrid’ (currently in preview).</p>
 <img src="/2017/02/08/azure-functions-put-to-use/integrate-tab.png" alt="Integrate" title="Integrate"> 
 <p>The easiest way to utilize this output, is to enter the from, to, subject and API key here. Mind you that the API key is the name of an Application Setting which contains the actual key! </p>
-<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" alt="Configurate SendGrid" title="Configurate SendGrid"> 
+<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" alt="Configure SendGrid" title="Configure SendGrid"> 
 <p>Save the changes and then add the Application Setting corresponding to the API key name (SendGridApiKey in this example) by clicking ‘Function App Settings’ and then ‘Configure app setings’<br>Once you’ve added the input, take a look at your <code>function.json</code> and see how it reflects the changes. </p>
 <p>Finally adjust the code for run.csx to reflect your application logic. Notice how I named the ‘Message parameter name’ incomingMessage and added an <code>out Mail message</code> to the method signature:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#r &quot;SendGrid&quot;</div><div class="line">#r &quot;Newtonsoft.Json&quot;</div><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using SendGrid.Helpers.Mail;</div><div class="line">using Newtonsoft.Json;</div><div class="line">using System;</div><div class="line">using System.Threading.Tasks;</div><div class="line">using Microsoft.ServiceBus.Messaging;</div><div class="line"></div><div class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</div><div class="line">&#123;</div><div class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</div><div class="line">    </div><div class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</div><div class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</div><div class="line">    </div><div class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</div><div class="line"></div><div class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</div><div class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</div><div class="line"></div><div class="line">         message = new Mail();</div><div class="line"></div><div class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</div><div class="line">         message.AddContent(messageContent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -305,7 +305,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciz0erv3q0000zry2jaq7lxu6" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciz16beww0000cgy2507mczqf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
