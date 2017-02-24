@@ -151,11 +151,11 @@ ga('send', 'pageview');
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                9
+                10
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                19
+                20
                 <span>tags</span>
             </div>
         </div>
@@ -204,6 +204,167 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-continuous-delivery-of-azure-functions-with-tfs" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/">Continuous Delivery of Azure Functions with TFS</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/">
+            <time datetime="2017-02-24T18:03:23.000Z" itemprop="datePublished">2017-02-24</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a>, <a class="tag-link" href="/tags/DevOps/">DevOps</a>, <a class="tag-link" href="/tags/Serverless/">Serverless</a>, <a class="tag-link" href="/tags/TFS/">TFS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>In my previous post (<a href="/2017/02/08/azure-functions-put-to-use/" title="Going Serverless - Azure Functions put to use">Going Serverless - Azure Functions put to use</a>), I showed you how to create a simple serverless app that did some basic alerting based on events on an Azure Service Bus. Now although this example did show you how to create the function and successfully run it, it didn’t show you how to do it <em>properly</em>: by rubbing some DevOps on it.</p>
+<p>The code I used before was simple enough to maintain but I can imagine you would want to use Visual Studio to develop your functions. Luckily <a href="https://blogs.msdn.microsoft.com/webdev/2016/12/01/visual-studio-tools-for-azure-functions/" target="_blank" rel="external">there’s an extension for that</a>. After you’ve installed the extension (make sure to get the updated one and heed the prerequisites), you will be able to create a new Function App quite easily and although it’s not as complete as the docker integration (yet), you <em>can</em> use it to deploy your functions using web deploy rather than the <a href="https://docs.microsoft.com/en-us/azure/app-service-web/app-service-continuous-deployment" target="_blank" rel="external">source control integration</a> from the portal. </p>
+<h1 id="Creating-the-App"><a href="#Creating-the-App" class="headerlink" title="Creating the App"></a>Creating the App</h1><p>In Visual Studio create a new solution using the wizard by selecting the (C# -&gt; ) ‘Cloud’ -&gt; ‘Azure Functions’ project type. You will see a project structure very similar to what you’re used to from other project types. It will feature a few files:</p>
+<ul>
+<li><code>host.json</code> - contains <a href="https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json" target="_blank" rel="external">global config</a> for all the functions within your project.</li>
+<li><code>appsettings.json</code> - this is pretty self-explanatory, right?</li>
+<li><code>ProjectReadme.html</code> - you can safely remove this.</li>
+</ul>
+<p>Now as you may have noticed, there’s no actual function yet. You still have to add it by right-clicking the project-node and selecting the ‘Add’ -&gt; ‘New Azure Function’ option.</p>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/add-new-azure-function.png" alt="Add new Azure Function" title="Add new Azure Function"> 
+<p>Pick the ‘ServiceBusTopicTrigger - C#’ type and enter the parameters like before. </p>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/all-parameters-added.png" alt="Parameters Added" title="Parameters Added"> 
+<p>You will notice that after creating the functions, you’ll end up with what we have before, including the <code>project.json</code> we had to manually create in the portal. That also means we can just reuse the code from before :-) Take a look at your function.json file and notice that it has a green squiggly underneath the manage permissions (which we have to use, <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="external">remember</a>?), I didn’t actually test it with the capital ‘M’ there, but I changed it to ‘manage’ before publishing. Let me know if you do try and succeed!<br>Unfortunately, Visual Studio doesn’t understand this project type completely just yet, so adding NuGet packages is a manual process. You’ll also notice that IntelliSense is limited, it’ll work just fine if you’re using the assemblies which you get out-of-the-box, but if you use external references, I have found it to be lacking.</p>
+<h1 id="Why-use-Visual-Studio-at-all"><a href="#Why-use-Visual-Studio-at-all" class="headerlink" title="Why use Visual Studio at all?"></a>Why use Visual Studio at all?</h1><p>By now you might be wondering what the advantage of using Visual Studio is over just creating a function in the portal. Well, there are several reasons:</p>
+<ul>
+<li>You might want to store your sources in source control and you’re using TFS - which is not supported in the portal.</li>
+<li>You might want to create more complex solutions, where you share code over functions for instance. You can do this by adding an empty function and loading it in another by using the <code>#load &quot;..\shared\shared.csx&quot;</code> directive at the top of your file (below the <code>#R</code> directives).</li>
+<li>You can debug your functions. The first time you’ll try this, you will be prompted to download the Azure Functions CLI.</li>
+</ul>
+<p>So read on if you want to see how to deploy this from source control.</p>
+<h1 id="TFS"><a href="#TFS" class="headerlink" title="TFS"></a>TFS</h1><p>I want my release to inject some variables using <a href="https://github.com/qetza/vsts-replacetokens-task#readme" target="_blank" rel="external">Guillaume’s replace token build task</a>, then package and publish it. Seeing as a function isn’t really something that you’ll build, it’s rather strange that you’ll need a build to feed your release definition, so you might consider a build definition which directly deploys your function to an Azure Web Application, this won’t allow you to use environments though and because functions don’t support application slots yet, I like using a staging environment before going to production. Whichever way you’ll go, you will have to know that a web deploy is the only possible way to deliver your function to the cloud now.<br>I will assume that you have created a web application and/or build definition before, so I won’t go into that and assume that it’s all in place.</p>
+<p>My build simply copies all files to a file container on the server, nothing special there. My release definition contains 4 steps per environment:</p>
+<ul>
+<li>Replace Tokens: replaces all tokens with the correct servicebus topics, the email address, etc.</li>
+<li>Archive Files: zip the <code>$(System.DefaultWorkingDirectory)/AwesomeNotifier/AwesomeNotifier</code> folder and create a zip-file with <code>$(System.DefaultWorkingDirectory)/package.zip</code> as name.</li>
+<li>Deploy Azure App Service: select your subscription, the app name and tell it which package to use (<code>$(System.DefaultWorkingDirectory)/package.zip</code> in our case).</li>
+<li>Azure App Service Manage: select your subscription, select the start method, and select the application.</li>
+</ul>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/4-step-release-definition.png" alt="Finished Release Definition" title="Finished Release Definition"> 
+<p>Now if you set the trigger of your build to Continuous Integration and automatically create a release and deploy your (test) environment after a succesful build, you’ll have created a working continuous delivery pipeline to update your Azure Function using Visual Studio and TFS. Good luck! </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" data-id="cizkczqii0001fd3wp29bnlyj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-azure-functions-put-to-use" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -298,7 +459,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="ciz16c2860000dwy2srr9zwmq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="cizkczqie0000fd3wafly0nmm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -433,7 +594,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="ciz16c28v000edwy2g2s2pl37" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="cizkczqj2000efd3wk7dzenre" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -595,7 +756,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="ciz16c28h0004dwy2lbjzkfff" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="cizkczqiu0005fd3w8kuv9hg7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -740,7 +901,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="ciz16c28x000gdwy2u7xrlbvt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="cizkczqj8000lfd3w8gyzgc4m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -885,7 +1046,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="ciz16c28c0001dwy21vsxokfx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="cizkczqio0004fd3w5186jniz" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1025,7 +1186,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="ciz16c28r0009dwy27irb6ppy" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="cizkczqiy000bfd3w28iye9bj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1162,7 +1323,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="ciz16c28p0006dwy2vz1pk5ge" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="cizkczqix0009fd3wp178cnao" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1337,7 +1498,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="ciz16c28o0005dwy2mp4j3quh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="cizkczqiv0006fd3wvtzeq83m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1485,7 +1646,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="ciz16c28t000bdwy2o4hczke7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/07/12/load-testing-from-the-azure-portal/" data-id="cizkczqj4000gfd3wm86ebc4w" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1575,6 +1736,15 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/DevOps/">DevOps</a></p>
+                            <p class="item-title"><a href="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" class="title">Continuous Delivery of Azure Functions with TFS</a></p>
+                            <p class="item-date"><time datetime="2017-02-24T18:03:23.000Z" itemprop="datePublished">2017-02-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Cloud/">Cloud</a></p>
                             <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Going Serverless - Azure Functions put to use</a></p>
                             <p class="item-date"><time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time></p>
@@ -1608,15 +1778,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/General/">General</a></p>
-                            <p class="item-title"><a href="/2016/04/06/bash-for-windows/" class="title">Bash for Windows</a></p>
-                            <p class="item-date"><time datetime="2016-04-06T20:59:00.000Z" itemprop="datePublished">2016-04-06</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1626,7 +1787,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NET/">.NET</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Conferences/">Conferences</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NET/">.NET</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Conferences/">Conferences</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1635,7 +1796,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1644,7 +1805,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1653,7 +1814,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 20px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 10px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 20px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 10px;">Serverless</a> <a href="/tags/TFS/" style="font-size: 10px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 10px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 

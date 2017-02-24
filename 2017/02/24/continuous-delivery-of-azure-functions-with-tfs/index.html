@@ -3,17 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Tag: Visual Studio | Peter Toonen on all things tech</title>
+    <title>Continuous Delivery of Azure Functions with TFS | Peter Toonen on all things tech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="All about tech and the adventures of Peter Toonen in the digital world.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Peter Toonen on all things tech">
-<meta property="og:url" content="https://toonen.io/tags/Visual-Studio/index.html">
+    <meta name="description" content="In my previous post (Going Serverless - Azure Functions put to use), I showed you how to create a simple serverless app that did some basic alerting based on events on an Azure Service Bus. Now althou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Continuous Delivery of Azure Functions with TFS">
+<meta property="og:url" content="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/index.html">
 <meta property="og:site_name" content="Peter Toonen on all things tech">
-<meta property="og:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta property="og:description" content="In my previous post (Going Serverless - Azure Functions put to use), I showed you how to create a simple serverless app that did some basic alerting based on events on an Azure Service Bus. Now althou">
+<meta property="og:image" content="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/add-new-azure-function.png">
+<meta property="og:image" content="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/all-parameters-added.png">
+<meta property="og:image" content="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/4-step-release-definition.png">
+<meta property="og:updated_time" content="2017-02-24T21:57:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peter Toonen on all things tech">
-<meta name="twitter:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta name="twitter:title" content="Continuous Delivery of Azure Functions with TFS">
+<meta name="twitter:description" content="In my previous post (Going Serverless - Azure Functions put to use), I showed you how to create a simple serverless app that did some basic alerting based on events on an Azure Service Bus. Now althou">
+<meta name="twitter:image" content="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/add-new-azure-function.png">
     
 
     
@@ -203,45 +208,190 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#Visual Studio</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-continuous-delivery-of-azure-functions-with-tfs" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/">Git in VS2017 with self-signed SSL</a>
+        <h1 class="article-title" itemprop="name">
+            Continuous Delivery of Azure Functions with TFS
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/">
-            <time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time>
+        <a href="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/">
+            <time datetime="2017-02-24T18:03:23.000Z" itemprop="datePublished">2017-02-24</time>
         </a>
     </div>
 
 
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Visual-Studio/">Visual Studio</a>
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/DevOps/">DevOps</a>
     </div>
 
-                </div>
-            </div>
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Azure/">Azure</a>, <a class="tag-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a>, <a class="tag-link" href="/tags/DevOps/">DevOps</a>, <a class="tag-link" href="/tags/Serverless/">Serverless</a>, <a class="tag-link" href="/tags/TFS/">TFS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>In my previous post (<a href="/2017/02/08/azure-functions-put-to-use/" title="Going Serverless - Azure Functions put to use">Going Serverless - Azure Functions put to use</a>), I showed you how to create a simple serverless app that did some basic alerting based on events on an Azure Service Bus. Now although this example did show you how to create the function and successfully run it, it didn’t show you how to do it <em>properly</em>: by rubbing some DevOps on it.</p>
+<p>The code I used before was simple enough to maintain but I can imagine you would want to use Visual Studio to develop your functions. Luckily <a href="https://blogs.msdn.microsoft.com/webdev/2016/12/01/visual-studio-tools-for-azure-functions/" target="_blank" rel="external">there’s an extension for that</a>. After you’ve installed the extension (make sure to get the updated one and heed the prerequisites), you will be able to create a new Function App quite easily and although it’s not as complete as the docker integration (yet), you <em>can</em> use it to deploy your functions using web deploy rather than the <a href="https://docs.microsoft.com/en-us/azure/app-service-web/app-service-continuous-deployment" target="_blank" rel="external">source control integration</a> from the portal. </p>
+<h1 id="Creating-the-App"><a href="#Creating-the-App" class="headerlink" title="Creating the App"></a>Creating the App</h1><p>In Visual Studio create a new solution using the wizard by selecting the (C# -&gt; ) ‘Cloud’ -&gt; ‘Azure Functions’ project type. You will see a project structure very similar to what you’re used to from other project types. It will feature a few files:</p>
+<ul>
+<li><code>host.json</code> - contains <a href="https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json" target="_blank" rel="external">global config</a> for all the functions within your project.</li>
+<li><code>appsettings.json</code> - this is pretty self-explanatory, right?</li>
+<li><code>ProjectReadme.html</code> - you can safely remove this.</li>
+</ul>
+<p>Now as you may have noticed, there’s no actual function yet. You still have to add it by right-clicking the project-node and selecting the ‘Add’ -&gt; ‘New Azure Function’ option.</p>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/add-new-azure-function.png" alt="Add new Azure Function" title="Add new Azure Function"> 
+<p>Pick the ‘ServiceBusTopicTrigger - C#’ type and enter the parameters like before. </p>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/all-parameters-added.png" alt="Parameters Added" title="Parameters Added"> 
+<p>You will notice that after creating the functions, you’ll end up with what we have before, including the <code>project.json</code> we had to manually create in the portal. That also means we can just reuse the code from before :-) Take a look at your function.json file and notice that it has a green squiggly underneath the manage permissions (which we have to use, <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="external">remember</a>?), I didn’t actually test it with the capital ‘M’ there, but I changed it to ‘manage’ before publishing. Let me know if you do try and succeed!<br>Unfortunately, Visual Studio doesn’t understand this project type completely just yet, so adding NuGet packages is a manual process. You’ll also notice that IntelliSense is limited, it’ll work just fine if you’re using the assemblies which you get out-of-the-box, but if you use external references, I have found it to be lacking.</p>
+<h1 id="Why-use-Visual-Studio-at-all"><a href="#Why-use-Visual-Studio-at-all" class="headerlink" title="Why use Visual Studio at all?"></a>Why use Visual Studio at all?</h1><p>By now you might be wondering what the advantage of using Visual Studio is over just creating a function in the portal. Well, there are several reasons:</p>
+<ul>
+<li>You might want to store your sources in source control and you’re using TFS - which is not supported in the portal.</li>
+<li>You might want to create more complex solutions, where you share code over functions for instance. You can do this by adding an empty function and loading it in another by using the <code>#load &quot;..\shared\shared.csx&quot;</code> directive at the top of your file (below the <code>#R</code> directives).</li>
+<li>You can debug your functions. The first time you’ll try this, you will be prompted to download the Azure Functions CLI.</li>
+</ul>
+<p>So read on if you want to see how to deploy this from source control.</p>
+<h1 id="TFS"><a href="#TFS" class="headerlink" title="TFS"></a>TFS</h1><p>I want my release to inject some variables using <a href="https://github.com/qetza/vsts-replacetokens-task#readme" target="_blank" rel="external">Guillaume’s replace token build task</a>, then package and publish it. Seeing as a function isn’t really something that you’ll build, it’s rather strange that you’ll need a build to feed your release definition, so you might consider a build definition which directly deploys your function to an Azure Web Application, this won’t allow you to use environments though and because functions don’t support application slots yet, I like using a staging environment before going to production. Whichever way you’ll go, you will have to know that a web deploy is the only possible way to deliver your function to the cloud now.<br>I will assume that you have created a web application and/or build definition before, so I won’t go into that and assume that it’s all in place.</p>
+<p>My build simply copies all files to a file container on the server, nothing special there. My release definition contains 4 steps per environment:</p>
+<ul>
+<li>Replace Tokens: replaces all tokens with the correct servicebus topics, the email address, etc.</li>
+<li>Archive Files: zip the <code>$(System.DefaultWorkingDirectory)/AwesomeNotifier/AwesomeNotifier</code> folder and create a zip-file with <code>$(System.DefaultWorkingDirectory)/package.zip</code> as name.</li>
+<li>Deploy Azure App Service: select your subscription, the app name and tell it which package to use (<code>$(System.DefaultWorkingDirectory)/package.zip</code> in our case).</li>
+<li>Azure App Service Manage: select your subscription, select the start method, and select the application.</li>
+</ul>
+<img src="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/4-step-release-definition.png" alt="Finished Release Definition" title="Finished Release Definition"> 
+<p>Now if you set the trigger of your build to Continuous Integration and automatically create a release and deploy your (test) environment after a succesful build, you’ll have created a working continuous delivery pipeline to update your Azure Function using Visual Studio and TFS. Good luck! </p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" data-id="cizkczqii0001fd3wp29bnlyj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/02/08/azure-functions-put-to-use/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Going Serverless - Azure Functions put to use</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -371,11 +521,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/';
+        
+        this.page.identifier = 'continuous-delivery-of-azure-functions-with-tfs';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'toonen-io' + '.disqus.com/count.js';
+        s.src = '//' + 'toonen-io' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
