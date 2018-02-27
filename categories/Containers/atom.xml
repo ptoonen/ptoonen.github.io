@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title></title>
+    
+    <link href="/categories/Containers/atom.xml" rel="self"/>
+    
+    <link href="https://toonen.io/"/>
+    <updated>2018-02-27T21:07:43.117Z</updated>
+    <id>/categories/Containers/</id>
+    
+    <generator uri="http://hexo.io/">Hexo</generator>
+    
+    <entry>
+        <title>Running Docker 17.10 on Windows Server 1709 without nested virtualization</title>
+        <link href="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/"/>
+        <id>https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/</id>
+        <published>2018-02-26T11:01:29.000Z</published>
+        <updated>2018-02-27T21:07:43.117Z</updated>
+        
+        <summary type="html">
+            
+            &lt;p&gt;Although some people have overheard me saying that &lt;a href=&quot;https://www.youtube.com/watch?v=d2J7GvFdaGE&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;C
+            
+        </summary>
+        
+        <category term="Containers" scheme="https://toonen.io/categories/Containers/"/>
+        
+        
+        <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+        
+        <category term="Servers" scheme="https://toonen.io/tags/Servers/"/>
+        
+    </entry>
+    
+</feed>

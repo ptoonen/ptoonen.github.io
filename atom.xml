@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2017-02-24T21:57:47.000Z</updated>
+  <updated>2018-02-27T21:07:43.117Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Running Docker 17.10 on Windows Server 1709 without nested virtualization</title>
+    <link href="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/"/>
+    <id>https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/</id>
+    <published>2018-02-26T11:01:29.000Z</published>
+    <updated>2018-02-27T21:07:43.117Z</updated>
+    
+    <content type="html"><![CDATA[<p>Although some people have overheard me saying that <a href="https://www.youtube.com/watch?v=d2J7GvFdaGE" target="_blank" rel="external">Containers are Dead</a>, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.<br>Recently, during a hackathon, I tried to use Docker Swarm’s awesome <a href="https://docs.docker.com/engine/swarm/ingress/" target="_blank" rel="external">Routing Mesh</a> but couldn’t get it to work on Windows Server 2016. It turns out that it will only work on Windows Server 1709.</p>
+<h1 id="Installing-Docker-EE-Preview"><a href="#Installing-Docker-EE-Preview" class="headerlink" title="Installing Docker EE Preview"></a>Installing Docker EE Preview</h1><p>Since it was a hackathon anyway, I figured I might as well try to roll Windows Server 1709 (this is the new semi-annual release channel by the way) on a VM and I followed the instructions to <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">install Docker</a> on it. But… it still didn’t work. Turns out, I needed <a href="https://blog.docker.com/2017/09/docker-windows-server-1709/" target="_blank" rel="external">different instructions</a> and the preview. But for some reason it wouldn’t install! It told me I needed to install the Hyper-V feature:</p>
+<img src="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
+<h1 id="Forcing-it-to-run-anyway"><a href="#Forcing-it-to-run-anyway" class="headerlink" title="Forcing it to run anyway"></a>Forcing it to run anyway</h1><p>Using the following piece of Powershell, it’s quite easy to get it to work anyway. This does assume you followed the <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">‘normal’</a> installation instructions first though.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Stop Docker</span></div><div class="line"><span class="built_in">Stop-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Get Docker</span></div><div class="line">Save-package -providername DockerProvider -Name Docker -RequiredVersion Preview -Path <span class="variable">$Env:TEMP</span></div><div class="line"></div><div class="line"><span class="variable">$dockerZipPath</span> = (<span class="built_in">Resolve-Path</span> <span class="variable">$Env:TEMP</span>\Docker*.zip)</div><div class="line">Expand-archive <span class="variable">$dockerZipPath</span> <span class="variable">$Env:TEMP</span>\Docker</div><div class="line"></div><div class="line"><span class="comment"># Move to correct location</span></div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\dockerd.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\docker.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"></div><div class="line"><span class="comment"># Disable Linux containers</span></div><div class="line">[Environment]::SetEnvironmentVariable(<span class="string">"LCOW_SUPPORTED"</span>, <span class="literal">$null</span>, <span class="string">"Machine"</span>)</div><div class="line"><span class="built_in">Start-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Cleanup</span></div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$dockerZipPath</span> -Force</div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$Env:TEMP</span>\Docker -Recurse -Force</div></pre></td></tr></table></figure>
+<p>The LCOW_SUPPORTED environment variable makes sure you won’t accidently try to run a Linux container anyway :-) O, did I forget to mention that? Docker 17.10 adds <a href="https://blog.docker.com/2017/09/preview-linux-containers-on-windows/" target="_blank" rel="external">support for Linux containers on Windows Server through LinuxKit</a>.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Although some people have overheard me saying that &lt;a href=&quot;https://www.youtube.com/watch?v=d2J7GvFdaGE&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;C
+    
+    </summary>
+    
+      <category term="Containers" scheme="https://toonen.io/categories/Containers/"/>
+    
+    
+      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+    
+      <category term="Servers" scheme="https://toonen.io/tags/Servers/"/>
+    
+  </entry>
   
   <entry>
     <title>Continuous Delivery of Azure Functions with TFS</title>
@@ -218,13 +248,13 @@
       <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
     
     
-      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
+      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
     
       <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
-      <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
+      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
     
-      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+      <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
     
   </entry>
   
