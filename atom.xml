@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2018-03-04T18:20:20.931Z</updated>
+  <updated>2018-03-04T18:29:56.853Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/"/>
     <id>https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/</id>
     <published>2018-03-04T08:52:47.000Z</published>
-    <updated>2018-03-04T18:20:20.931Z</updated>
+    <updated>2018-03-04T18:29:56.853Z</updated>
     
     <content type="html"><![CDATA[<p>Recently, I spent some time with the guys from the <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker Mutator</a> team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the <a href="http://stryker-mutator.io/blog/2018-02-08/get-your-mutation-score-badge-now.html" target="_blank" rel="external">Mutation Score Badge</a>. Even though I had to overcome my fear of JavaScript, I managed to find some good parts in NodeJS and combine them into a Azure Function that provides the actual mutation badge. Get the why, how and what in this post.</p>
 <img src="/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png" alt="Example badges" title="Example badges">
@@ -41,7 +41,7 @@
 <p>we were able to pack it all into one file. What it does is that it applies <a href="https://www.npmjs.com/package/webpack" target="_blank" rel="external">WebPack</a> magic to your function (also rewriting your function.json to reference to index.js as entrypoint). Running this brought our cold boot down to acceptable levels.</p>
 <h2 id="What-now"><a href="#What-now" class="headerlink" title="What now?"></a>What now?</h2><p>Well, we’re live :) There’s still some work to do by the functions team, but with the newly announced <a href="https://github.com/Azure/app-service-announcements/issues/84" target="_blank" rel="external">Run-From-Zip</a> functionality, I’m positive that it’ll run even smoother than now. On top of that, we now also know what it has cost us over the month of February: a whopping $0.33 :-) So I guess this still applies:</p>
 <img src="/2018/03/04/creating-a-github-badge-with-azure-functions/microsoft-lt3-oss.png" alt="Microsoft loves Open Source" title="Microsoft loves Open Source">
-<p>Or at least they make it pretty easy for Open Source projects to use their services without incurring too much of a cost penalty. </p>
+<p>Or at least they make it pretty easy for Open Source projects to use their services without incurring too much of a cost penalty. I’ll follow up on this post to describe how we wrapped this all up in a neat VSTS pipeline to deploy continuously.</p>
 ]]></content>
     
     <summary type="html">
@@ -49,6 +49,8 @@
       &lt;p&gt;Recently, I spent some time with the guys from the &lt;a href=&quot;https://stryker-mutator.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Stryker Mutator&lt;/a
     
     </summary>
+    
+      <category term="Cloud" scheme="https://toonen.io/categories/Cloud/"/>
     
     
       <category term="OpenSource" scheme="https://toonen.io/tags/OpenSource/"/>
