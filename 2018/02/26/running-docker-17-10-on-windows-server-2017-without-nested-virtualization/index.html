@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Dev Intersection 2015 - dag 3 | Peter Toonen on all things tech</title>
+    <title>Running Docker 17.10 on Windows Server 1709 without nested virtualization | Peter Toonen on all things tech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we">
+    <meta name="description" content="Although some people have overheard me saying that Containers are Dead, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.Recently, during">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dev Intersection 2015 - dag 3">
-<meta property="og:url" content="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/index.html">
+<meta property="og:title" content="Running Docker 17.10 on Windows Server 1709 without nested virtualization">
+<meta property="og:url" content="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/index.html">
 <meta property="og:site_name" content="Peter Toonen on all things tech">
-<meta property="og:description" content="Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we">
-<meta property="og:image" content="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg">
-<meta property="og:updated_time" content="2016-07-09T23:18:22.000Z">
+<meta property="og:description" content="Although some people have overheard me saying that Containers are Dead, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.Recently, during">
+<meta property="og:image" content="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/hyperv-feature.png">
+<meta property="og:updated_time" content="2018-02-27T21:07:43.117Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dev Intersection 2015 - dag 3">
-<meta name="twitter:description" content="Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we">
-<meta name="twitter:image" content="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg">
+<meta name="twitter:title" content="Running Docker 17.10 on Windows Server 1709 without nested virtualization">
+<meta name="twitter:description" content="Although some people have overheard me saying that Containers are Dead, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.Recently, during">
+<meta name="twitter:image" content="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/hyperv-feature.png">
     
 
     
@@ -154,11 +154,11 @@ ga('send', 'pageview');
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                11
+                12
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                21
+                24
                 <span>tags</span>
             </div>
         </div>
@@ -206,7 +206,7 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="post-dev-intersection-2015-dag-3" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-running-docker-17-10-on-windows-server-2017-without-nested-virtualization" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -214,7 +214,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            Dev Intersection 2015 - dag 3
+            Running Docker 17.10 on Windows Server 1709 without nested virtualization
         </h1>
     
 
@@ -223,8 +223,8 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/10/28/dev-intersection-2015-dag-3/">
-            <time datetime="2015-10-28T06:38:00.000Z" itemprop="datePublished">2015-10-28</time>
+        <a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">
+            <time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time>
         </a>
     </div>
 
@@ -232,13 +232,13 @@ ga('send', 'pageview');
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Conferences/">Conferences</a>
+        <a class="article-category-link" href="/categories/Containers/">Containers</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/DevInterSection/">DevInterSection</a>, <a class="tag-link" href="/tags/Dutch/">Dutch</a>
+        <a class="tag-link" href="/tags/Containers/">Containers</a>, <a class="tag-link" href="/tags/Servers/">Servers</a>
     </div>
 
                     </div>
@@ -249,12 +249,12 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we hier zien en horen. Na <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-1/" target="_blank" rel="external">Edwin</a> en <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-2/" target="_blank" rel="external">Mark</a> ben ik vandaag aan de beurt.</p>
-<p>De derde dag van de conferentie was de eerste dag waarop ‘reguliere’ sessies werden gegeven. Na een goed ontbijt, begon de dag met een keynote van Scott Guthrie. Hij vertelde voornamelijk over de ‘Journey to the Cloud’ en deelde Microsoft’s visie op DevOps met <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="external">Visual Studio Online</a>, enkele indrukwekkende cijfers over Azure (wat te denken van 777 biljoen storage queries per dag?!) en de manier waarop Microsoft’s Clouddiensten zoals Office 365 in het grote plaatje van de moderne IT-industrie passen.</p>
-<img src="/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg" alt="DevOps met VSO" title="DevOps met VSO">
-<p>Na de keynote zijn we elk onze eigen kant uit gegaan. Ik heb sessies gevolgd van Julie Lerman (Domain Driven Design for the Database Driven Mind), welke erg goed wordt samengevat in een <a href="https://msdn.microsoft.com/en-us/magazine/dn342868.aspx" target="_blank" rel="external">drietal blogposts</a>, een sessie van Steven Murawski (Survive and Thrive in a DevOps World) die erop neer kwam dat het invoeren van DevOps voornamelijk een cultuur-shift is waarbij men de ‘fear culture’ en ‘blame game’ moet laten varen. Hij heeft een flink aantal tips <a href="http://stevenmurawski.com/devops-reading-list/" target="_blank" rel="external">op zijn blog</a> staan om met DevOps aan de slag te gaan.</p>
-<p>In de middag ben ik verder gegaan met een sessie van Troy Hunt (Securing ASP.NET in an Azure Environment). Nadat ik zijn workshop had gevolgd op maandag, was ik erg benieuwd wat hij over dit onderwerp had te zeggen en ik werd niet teleurgesteld. Alhoewel het in het begin voornamelijk om no-brainers ging zoals het least-privileged-account principe, kwam hij uiteindelijk tot tips omtrent <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-database-dynamic-data-masking-get-started/" target="_blank" rel="external">dynamic data masking</a> in Azure SQL databases, stipte hij nog even het belang van application settings en connection strings in de Azure portal aan en dat je eigenlijk altijd two step verification aan moet zetten als je met jouw account een Azure subscription gaat beheren. Dit laatste kun je instellen via <a href="https://account.live.com/proofs/Manage" target="_blank" rel="external">accountbeheer</a>.</p>
-<p>Al met al was dit weer een geslaagde dag en kijk ik al uit naar morgen!</p>
+            <p>Although some people have overheard me saying that <a href="https://www.youtube.com/watch?v=d2J7GvFdaGE" target="_blank" rel="external">Containers are Dead</a>, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.<br>Recently, during a hackathon, I tried to use Docker Swarm’s awesome <a href="https://docs.docker.com/engine/swarm/ingress/" target="_blank" rel="external">Routing Mesh</a> but couldn’t get it to work on Windows Server 2016. It turns out that it will only work on Windows Server 1709.</p>
+<h1 id="Installing-Docker-EE-Preview"><a href="#Installing-Docker-EE-Preview" class="headerlink" title="Installing Docker EE Preview"></a>Installing Docker EE Preview</h1><p>Since it was a hackathon anyway, I figured I might as well try to roll Windows Server 1709 (this is the new semi-annual release channel by the way) on a VM and I followed the instructions to <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">install Docker</a> on it. But… it still didn’t work. Turns out, I needed <a href="https://blog.docker.com/2017/09/docker-windows-server-1709/" target="_blank" rel="external">different instructions</a> and the preview. But for some reason it wouldn’t install! It told me I needed to install the Hyper-V feature:</p>
+<img src="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
+<h1 id="Forcing-it-to-run-anyway"><a href="#Forcing-it-to-run-anyway" class="headerlink" title="Forcing it to run anyway"></a>Forcing it to run anyway</h1><p>Using the following piece of Powershell, it’s quite easy to get it to work anyway. This does assume you followed the <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">‘normal’</a> installation instructions first though.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Stop Docker</span></div><div class="line"><span class="built_in">Stop-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Get Docker</span></div><div class="line">Save-package -providername DockerProvider -Name Docker -RequiredVersion Preview -Path <span class="variable">$Env:TEMP</span></div><div class="line"></div><div class="line"><span class="variable">$dockerZipPath</span> = (<span class="built_in">Resolve-Path</span> <span class="variable">$Env:TEMP</span>\Docker*.zip)</div><div class="line">Expand-archive <span class="variable">$dockerZipPath</span> <span class="variable">$Env:TEMP</span>\Docker</div><div class="line"></div><div class="line"><span class="comment"># Move to correct location</span></div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\dockerd.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\docker.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"></div><div class="line"><span class="comment"># Disable Linux containers</span></div><div class="line">[Environment]::SetEnvironmentVariable(<span class="string">"LCOW_SUPPORTED"</span>, <span class="literal">$null</span>, <span class="string">"Machine"</span>)</div><div class="line"><span class="built_in">Start-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Cleanup</span></div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$dockerZipPath</span> -Force</div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$Env:TEMP</span>\Docker -Recurse -Force</div></pre></td></tr></table></figure>
+<p>The LCOW_SUPPORTED environment variable makes sure you won’t accidently try to run a Linux container anyway :-) O, did I forget to mention that? Docker 17.10 adds <a href="https://blog.docker.com/2017/09/preview-linux-containers-on-windows/" target="_blank" rel="external">support for Linux containers on Windows Server through LinuxKit</a>.</p>
 
         
         </div>
@@ -265,7 +265,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="cje65993n000brzbn14jnclky" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/" data-id="cjed4mzus000ramsfus379g8h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -333,7 +333,7 @@ ga('send', 'pageview');
 
             
     
-        <a href="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/">Comments</a>
+        <a href="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">Comments</a>
     
 
         </footer>
@@ -342,19 +342,19 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2015/11/09/dev-intersection-2015-dag-6/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/03/04/creating-a-github-badge-with-azure-functions/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Newer</strong>
             <div class="article-nav-title">
                 
-                    Dev Intersection 2015 - dag 6
+                    Creating a GitHub badge with Azure Functions
                 
             </div>
         </a>
     
     
-        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Custom build tasks in TFS 2015</div>
+            <div class="article-nav-title">Continuous Delivery of Azure Functions with TFS</div>
         </a>
     
 </nav>
@@ -388,8 +388,17 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/creating-a-github-badge-with-azure-functions/" class="title">Creating a GitHub badge with Azure Functions</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T08:52:47.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Containers/">Containers</a></p>
-                            <p class="item-title"><a href="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/" class="title">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a></p>
+                            <p class="item-title"><a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/" class="title">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a></p>
                             <p class="item-date"><time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time></p>
                         </div>
                     </li>
@@ -421,15 +430,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/DevOps/">DevOps</a></p>
-                            <p class="item-title"><a href="/2016/11/16/coretainers/" class="title">Coretainers</a></p>
-                            <p class="item-date"><time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -448,7 +448,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -457,7 +457,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/">Cloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSource/">OpenSource</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stryker/">Stryker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -466,7 +466,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cloud/" style="font-size: 10px;">Cloud</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/OpenSource/" style="font-size: 10px;">OpenSource</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/Stryker/" style="font-size: 10px;">Stryker</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 
@@ -504,9 +504,9 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/';
+            this.page.url = 'https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/';
         
-        this.page.identifier = 'dev-intersection-2015-dag-3';
+        this.page.identifier = 'running-docker-17-10-on-windows-server-2017-without-nested-virtualization';
     };
     (function() { 
         var d = document, s = d.createElement('script');  

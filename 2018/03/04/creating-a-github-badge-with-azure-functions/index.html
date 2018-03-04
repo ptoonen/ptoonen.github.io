@@ -3,17 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Category: .NET | Peter Toonen on all things tech</title>
+    <title>Creating a GitHub badge with Azure Functions | Peter Toonen on all things tech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="All about tech and the adventures of Peter Toonen in the digital world.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Peter Toonen on all things tech">
-<meta property="og:url" content="https://toonen.io/categories/NET/index.html">
+    <meta name="description" content="Recently, I spent some time with the guys from the Stryker Mutator team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the Mutation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating a GitHub badge with Azure Functions">
+<meta property="og:url" content="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/index.html">
 <meta property="og:site_name" content="Peter Toonen on all things tech">
-<meta property="og:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta property="og:description" content="Recently, I spent some time with the guys from the Stryker Mutator team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the Mutation">
+<meta property="og:image" content="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png">
+<meta property="og:image" content="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/app-settings.png">
+<meta property="og:image" content="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/microsoft-lt3-oss.png">
+<meta property="og:updated_time" content="2018-03-04T18:20:20.931Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peter Toonen on all things tech">
-<meta name="twitter:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta name="twitter:title" content="Creating a GitHub badge with Azure Functions">
+<meta name="twitter:description" content="Recently, I spent some time with the guys from the Stryker Mutator team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the Mutation">
+<meta name="twitter:image" content="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png">
     
 
     
@@ -203,50 +208,175 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-folder"></i></span>
-        <h1 class="title">.NET</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-creating-a-github-badge-with-azure-functions" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2015/07/21/custom-build-tasks-in-tfs-2015/">Custom build tasks in TFS 2015</a>
+        <h1 class="article-title" itemprop="name">
+            Creating a GitHub badge with Azure Functions
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/">
-            <time datetime="2015-07-21T12:46:00.000Z" itemprop="datePublished">2015-07-21</time>
+        <a href="/2018/03/04/creating-a-github-badge-with-azure-functions/">
+            <time datetime="2018-03-04T08:52:47.000Z" itemprop="datePublished">2018-03-04</time>
         </a>
     </div>
 
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/NET/">.NET</a>
-    </div>
-
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Build/">Build</a>, <a class="tag-link" href="/tags/Customization/">Customization</a>, <a class="tag-link" href="/tags/TFS/">TFS</a>
+        <a class="tag-link" href="/tags/Cloud/">Cloud</a>, <a class="tag-link" href="/tags/OpenSource/">OpenSource</a>, <a class="tag-link" href="/tags/Stryker/">Stryker</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Recently, I spent some time with the guys from the <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker Mutator</a> team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the <a href="http://stryker-mutator.io/blog/2018-02-08/get-your-mutation-score-badge-now.html" target="_blank" rel="external">Mutation Score Badge</a>. Even though I had to overcome my fear of JavaScript, I managed to find some good parts in NodeJS and combine them into a Azure Function that provides the actual mutation badge. Get the why, how and what in this post.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png" alt="Example badges" title="Example badges">
+<h2 id="Why-Azure-Functions"><a href="#Why-Azure-Functions" class="headerlink" title="Why Azure Functions?"></a>Why Azure Functions?</h2><p>Well, simply put: because it’s cheap, easy and it supports multiple languages. Since <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker</a> is writting in NodeJS, I decided to challenge myself and write the function in NodeJS as well. Our setup is quite simple:</p>
+<ul>
+<li>We use an <a href="https://azure.microsoft.com/en-us/services/storage/tables/" target="_blank" rel="external">Azure Storage Table</a> to score all mutation scores posted from the Dashboard.</li>
+<li>When someone requests a badge, the function performs a lookup in this table and presents the badge</li>
+<li>We have a <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies" target="_blank" rel="external">Function Proxy</a> to be able to use our own domain and a friendly URL.</li>
+</ul>
+<h2 id="How-we-developed-the-function"><a href="#How-we-developed-the-function" class="headerlink" title="How we developed the function"></a>How we developed the function</h2><p>All code was written in TypeScript and using <a href="https://blogs.technet.microsoft.com/livedevopsinjapan/2017/10/11/enabling-typescript-local-debugging-with-azure-functions-on-mac/" target="_blank" rel="external">this</a> excellent post by <a href="https://social.technet.microsoft.com/profile/Tsuyoshi+Ushio" target="_blank" rel="external">Tsuyoshi Ushio</a>, I was able to develop and debug it on my mac quite easily (well, after a crashcourse in TypeScript from <a href="https://twitter.com/_nicojs" target="_blank" rel="external">Nico Jansen</a>).</p>
+<h2 id="Is-it-really-all-that-awesome"><a href="#Is-it-really-all-that-awesome" class="headerlink" title="Is it really all that awesome?"></a>Is it really all that awesome?</h2><p>No, it isn’t. We hit quite a few snags while developing but especially when deploying. As you read before, the functions are dirt-cheap on a consumption plan but this also means that they’re not ‘Always-On’. Where this doesn’t really seem to be an issue for regular C# functions, for some reason the NodeJS functions were extremely slow and on top of that, I had to use Kudu to do an npm install.</p>
+<h3 id="Azure-and-NodeJS"><a href="#Azure-and-NodeJS" class="headerlink" title="Azure and NodeJS"></a>Azure and NodeJS</h3><p>We soon discovered that uploading a lot of small files to Azure would take a while, and we decided we’d just want to upload the package.json and run npm install on Azure <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#node-version-and-package-management" target="_blank" rel="external">through Kudu</a>. Notice that on this page it also says that the Node version is locked on 6.5.0. Even adjusting the WEBSITE_NODE_DEFAULT_VERSION environment variable didn’t work.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/app-settings.png" alt="Adjusting the environment variable" title="Adjusting the environment variable"> 
+<p>This limited us in our ability to use certain Node functionality that required version 8+ (util.promisify in particular) so we went to look for another solution. This present itself in the portal. If you look carefully at the screenshot above, you can see a variable called FUNCTIONS_EXTENSION_RUNTIME. This is set to ~1 by default, but you can simply change that to run on the ‘beta’ version. <em>Mind you</em>: you can only safely change this if you don’t currently have any functions deployed.</p>
+<p>Unfortunately, it turned out that changing this to the beta <a href="https://github.com/Azure/app-service-announcements/issues/68" target="_blank" rel="external">doesn’t support proxies yet</a>, so we reverted and included our own promisify.</p>
+<h3 id="Cold-Boot"><a href="#Cold-Boot" class="headerlink" title="Cold Boot"></a>Cold Boot</h3><p>As mentioned before, we initially planned on deploying through Kudu and simply running NPM install there and we did. Thing is, the functions were really slow. I mean… REALLY slow. It took over 20 seconds to start and as it turns out, <a href="https://github.com/Azure/azure-functions-host/issues/298" target="_blank" rel="external">we weren’t the only ones</a>. Our solution was to apply FuncPack and by simply running this before our publish:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g azure-functions-pack</div><div class="line">funcpack pack ./</div></pre></td></tr></table></figure>
+<p>we were able to pack it all into one file. What it does is that it applies <a href="https://www.npmjs.com/package/webpack" target="_blank" rel="external">WebPack</a> magic to your function (also rewriting your function.json to reference to index.js as entrypoint). Running this brought our cold boot down to acceptable levels.</p>
+<h2 id="What-now"><a href="#What-now" class="headerlink" title="What now?"></a>What now?</h2><p>Well, we’re live :) There’s still some work to do by the functions team, but with the newly announced <a href="https://github.com/Azure/app-service-announcements/issues/84" target="_blank" rel="external">Run-From-Zip</a> functionality, I’m positive that it’ll run even smoother than now. On top of that, we now also know what it has cost us over the month of February: a whopping $0.33 :-) So I guess this still applies:</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/microsoft-lt3-oss.png" alt="Microsoft loves Open Source" title="Microsoft loves Open Source">
+<p>Or at least they make it pretty easy for Open Source projects to use their services without incurring too much of a cost penalty. </p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/" data-id="cjed4mzuj0007amsf3922wb8n" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Running Docker 17.10 on Windows Server 1709 without nested virtualization</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -376,11 +506,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/';
+        
+        this.page.identifier = 'creating-a-github-badge-with-azure-functions';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'toonen-io' + '.disqus.com/count.js';
+        s.src = '//' + 'toonen-io' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

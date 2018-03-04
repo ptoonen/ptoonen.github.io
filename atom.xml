@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2018-02-27T21:07:43.117Z</updated>
+  <updated>2018-03-04T18:20:20.931Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -16,15 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Creating a GitHub badge with Azure Functions</title>
+    <link href="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/"/>
+    <id>https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/</id>
+    <published>2018-03-04T08:52:47.000Z</published>
+    <updated>2018-03-04T18:20:20.931Z</updated>
+    
+    <content type="html"><![CDATA[<p>Recently, I spent some time with the guys from the <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker Mutator</a> team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the <a href="http://stryker-mutator.io/blog/2018-02-08/get-your-mutation-score-badge-now.html" target="_blank" rel="external">Mutation Score Badge</a>. Even though I had to overcome my fear of JavaScript, I managed to find some good parts in NodeJS and combine them into a Azure Function that provides the actual mutation badge. Get the why, how and what in this post.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png" alt="Example badges" title="Example badges">
+<h2 id="Why-Azure-Functions"><a href="#Why-Azure-Functions" class="headerlink" title="Why Azure Functions?"></a>Why Azure Functions?</h2><p>Well, simply put: because it’s cheap, easy and it supports multiple languages. Since <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker</a> is writting in NodeJS, I decided to challenge myself and write the function in NodeJS as well. Our setup is quite simple:</p>
+<ul>
+<li>We use an <a href="https://azure.microsoft.com/en-us/services/storage/tables/" target="_blank" rel="external">Azure Storage Table</a> to score all mutation scores posted from the Dashboard.</li>
+<li>When someone requests a badge, the function performs a lookup in this table and presents the badge</li>
+<li>We have a <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies" target="_blank" rel="external">Function Proxy</a> to be able to use our own domain and a friendly URL.</li>
+</ul>
+<h2 id="How-we-developed-the-function"><a href="#How-we-developed-the-function" class="headerlink" title="How we developed the function"></a>How we developed the function</h2><p>All code was written in TypeScript and using <a href="https://blogs.technet.microsoft.com/livedevopsinjapan/2017/10/11/enabling-typescript-local-debugging-with-azure-functions-on-mac/" target="_blank" rel="external">this</a> excellent post by <a href="https://social.technet.microsoft.com/profile/Tsuyoshi+Ushio" target="_blank" rel="external">Tsuyoshi Ushio</a>, I was able to develop and debug it on my mac quite easily (well, after a crashcourse in TypeScript from <a href="https://twitter.com/_nicojs" target="_blank" rel="external">Nico Jansen</a>).</p>
+<h2 id="Is-it-really-all-that-awesome"><a href="#Is-it-really-all-that-awesome" class="headerlink" title="Is it really all that awesome?"></a>Is it really all that awesome?</h2><p>No, it isn’t. We hit quite a few snags while developing but especially when deploying. As you read before, the functions are dirt-cheap on a consumption plan but this also means that they’re not ‘Always-On’. Where this doesn’t really seem to be an issue for regular C# functions, for some reason the NodeJS functions were extremely slow and on top of that, I had to use Kudu to do an npm install.</p>
+<h3 id="Azure-and-NodeJS"><a href="#Azure-and-NodeJS" class="headerlink" title="Azure and NodeJS"></a>Azure and NodeJS</h3><p>We soon discovered that uploading a lot of small files to Azure would take a while, and we decided we’d just want to upload the package.json and run npm install on Azure <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#node-version-and-package-management" target="_blank" rel="external">through Kudu</a>. Notice that on this page it also says that the Node version is locked on 6.5.0. Even adjusting the WEBSITE_NODE_DEFAULT_VERSION environment variable didn’t work.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/app-settings.png" alt="Adjusting the environment variable" title="Adjusting the environment variable"> 
+<p>This limited us in our ability to use certain Node functionality that required version 8+ (util.promisify in particular) so we went to look for another solution. This present itself in the portal. If you look carefully at the screenshot above, you can see a variable called FUNCTIONS_EXTENSION_RUNTIME. This is set to ~1 by default, but you can simply change that to run on the ‘beta’ version. <em>Mind you</em>: you can only safely change this if you don’t currently have any functions deployed.</p>
+<p>Unfortunately, it turned out that changing this to the beta <a href="https://github.com/Azure/app-service-announcements/issues/68" target="_blank" rel="external">doesn’t support proxies yet</a>, so we reverted and included our own promisify.</p>
+<h3 id="Cold-Boot"><a href="#Cold-Boot" class="headerlink" title="Cold Boot"></a>Cold Boot</h3><p>As mentioned before, we initially planned on deploying through Kudu and simply running NPM install there and we did. Thing is, the functions were really slow. I mean… REALLY slow. It took over 20 seconds to start and as it turns out, <a href="https://github.com/Azure/azure-functions-host/issues/298" target="_blank" rel="external">we weren’t the only ones</a>. Our solution was to apply FuncPack and by simply running this before our publish:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g azure-functions-pack</div><div class="line">funcpack pack ./</div></pre></td></tr></table></figure>
+<p>we were able to pack it all into one file. What it does is that it applies <a href="https://www.npmjs.com/package/webpack" target="_blank" rel="external">WebPack</a> magic to your function (also rewriting your function.json to reference to index.js as entrypoint). Running this brought our cold boot down to acceptable levels.</p>
+<h2 id="What-now"><a href="#What-now" class="headerlink" title="What now?"></a>What now?</h2><p>Well, we’re live :) There’s still some work to do by the functions team, but with the newly announced <a href="https://github.com/Azure/app-service-announcements/issues/84" target="_blank" rel="external">Run-From-Zip</a> functionality, I’m positive that it’ll run even smoother than now. On top of that, we now also know what it has cost us over the month of February: a whopping $0.33 :-) So I guess this still applies:</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/microsoft-lt3-oss.png" alt="Microsoft loves Open Source" title="Microsoft loves Open Source">
+<p>Or at least they make it pretty easy for Open Source projects to use their services without incurring too much of a cost penalty. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Recently, I spent some time with the guys from the &lt;a href=&quot;https://stryker-mutator.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Stryker Mutator&lt;/a
+    
+    </summary>
+    
+    
+      <category term="OpenSource" scheme="https://toonen.io/tags/OpenSource/"/>
+    
+      <category term="Cloud" scheme="https://toonen.io/tags/Cloud/"/>
+    
+      <category term="Stryker" scheme="https://toonen.io/tags/Stryker/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Running Docker 17.10 on Windows Server 1709 without nested virtualization</title>
-    <link href="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/"/>
-    <id>https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/</id>
+    <link href="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/"/>
+    <id>https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/</id>
     <published>2018-02-26T11:01:29.000Z</published>
     <updated>2018-02-27T21:07:43.117Z</updated>
     
     <content type="html"><![CDATA[<p>Although some people have overheard me saying that <a href="https://www.youtube.com/watch?v=d2J7GvFdaGE" target="_blank" rel="external">Containers are Dead</a>, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.<br>Recently, during a hackathon, I tried to use Docker Swarm’s awesome <a href="https://docs.docker.com/engine/swarm/ingress/" target="_blank" rel="external">Routing Mesh</a> but couldn’t get it to work on Windows Server 2016. It turns out that it will only work on Windows Server 1709.</p>
 <h1 id="Installing-Docker-EE-Preview"><a href="#Installing-Docker-EE-Preview" class="headerlink" title="Installing Docker EE Preview"></a>Installing Docker EE Preview</h1><p>Since it was a hackathon anyway, I figured I might as well try to roll Windows Server 1709 (this is the new semi-annual release channel by the way) on a VM and I followed the instructions to <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">install Docker</a> on it. But… it still didn’t work. Turns out, I needed <a href="https://blog.docker.com/2017/09/docker-windows-server-1709/" target="_blank" rel="external">different instructions</a> and the preview. But for some reason it wouldn’t install! It told me I needed to install the Hyper-V feature:</p>
-<img src="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
+<img src="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
 <h1 id="Forcing-it-to-run-anyway"><a href="#Forcing-it-to-run-anyway" class="headerlink" title="Forcing it to run anyway"></a>Forcing it to run anyway</h1><p>Using the following piece of Powershell, it’s quite easy to get it to work anyway. This does assume you followed the <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">‘normal’</a> installation instructions first though.</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Stop Docker</span></div><div class="line"><span class="built_in">Stop-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Get Docker</span></div><div class="line">Save-package -providername DockerProvider -Name Docker -RequiredVersion Preview -Path <span class="variable">$Env:TEMP</span></div><div class="line"></div><div class="line"><span class="variable">$dockerZipPath</span> = (<span class="built_in">Resolve-Path</span> <span class="variable">$Env:TEMP</span>\Docker*.zip)</div><div class="line">Expand-archive <span class="variable">$dockerZipPath</span> <span class="variable">$Env:TEMP</span>\Docker</div><div class="line"></div><div class="line"><span class="comment"># Move to correct location</span></div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\dockerd.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\docker.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"></div><div class="line"><span class="comment"># Disable Linux containers</span></div><div class="line">[Environment]::SetEnvironmentVariable(<span class="string">"LCOW_SUPPORTED"</span>, <span class="literal">$null</span>, <span class="string">"Machine"</span>)</div><div class="line"><span class="built_in">Start-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Cleanup</span></div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$dockerZipPath</span> -Force</div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$Env:TEMP</span>\Docker -Recurse -Force</div></pre></td></tr></table></figure>
 <p>The LCOW_SUPPORTED environment variable makes sure you won’t accidently try to run a Linux container anyway :-) O, did I forget to mention that? Docker 17.10 adds <a href="https://blog.docker.com/2017/09/preview-linux-containers-on-windows/" target="_blank" rel="external">support for Linux containers on Windows Server through LinuxKit</a>.</p>
@@ -248,13 +292,13 @@
       <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
     
     
-      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
-    
       <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
       <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
     
       <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
+    
+      <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
     
   </entry>
   
@@ -375,14 +419,14 @@
   
   <entry>
     <title>Dev Intersection 2015 - dag 3</title>
-    <link href="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/"/>
-    <id>https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/</id>
+    <link href="https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/"/>
+    <id>https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/</id>
     <published>2015-10-28T06:38:00.000Z</published>
     <updated>2016-07-09T23:18:22.000Z</updated>
     
     <content type="html"><![CDATA[<p>Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we hier zien en horen. Na <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-1/" target="_blank" rel="external">Edwin</a> en <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-2/" target="_blank" rel="external">Mark</a> ben ik vandaag aan de beurt.</p>
 <p>De derde dag van de conferentie was de eerste dag waarop ‘reguliere’ sessies werden gegeven. Na een goed ontbijt, begon de dag met een keynote van Scott Guthrie. Hij vertelde voornamelijk over de ‘Journey to the Cloud’ en deelde Microsoft’s visie op DevOps met <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="external">Visual Studio Online</a>, enkele indrukwekkende cijfers over Azure (wat te denken van 777 biljoen storage queries per dag?!) en de manier waarop Microsoft’s Clouddiensten zoals Office 365 in het grote plaatje van de moderne IT-industrie passen.</p>
-<img src="/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg" alt="DevOps met VSO" title="DevOps met VSO">
+<img src="/2015/10/27/dev-intersection-2015-dag-3/devops-on-vso.jpg" alt="DevOps met VSO" title="DevOps met VSO">
 <p>Na de keynote zijn we elk onze eigen kant uit gegaan. Ik heb sessies gevolgd van Julie Lerman (Domain Driven Design for the Database Driven Mind), welke erg goed wordt samengevat in een <a href="https://msdn.microsoft.com/en-us/magazine/dn342868.aspx" target="_blank" rel="external">drietal blogposts</a>, een sessie van Steven Murawski (Survive and Thrive in a DevOps World) die erop neer kwam dat het invoeren van DevOps voornamelijk een cultuur-shift is waarbij men de ‘fear culture’ en ‘blame game’ moet laten varen. Hij heeft een flink aantal tips <a href="http://stevenmurawski.com/devops-reading-list/" target="_blank" rel="external">op zijn blog</a> staan om met DevOps aan de slag te gaan.</p>
 <p>In de middag ben ik verder gegaan met een sessie van Troy Hunt (Securing ASP.NET in an Azure Environment). Nadat ik zijn workshop had gevolgd op maandag, was ik erg benieuwd wat hij over dit onderwerp had te zeggen en ik werd niet teleurgesteld. Alhoewel het in het begin voornamelijk om no-brainers ging zoals het least-privileged-account principe, kwam hij uiteindelijk tot tips omtrent <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-database-dynamic-data-masking-get-started/" target="_blank" rel="external">dynamic data masking</a> in Azure SQL databases, stipte hij nog even het belang van application settings en connection strings in de Azure portal aan en dat je eigenlijk altijd two step verification aan moet zetten als je met jouw account een Azure subscription gaat beheren. Dit laatste kun je instellen via <a href="https://account.live.com/proofs/Manage" target="_blank" rel="external">accountbeheer</a>.</p>
 <p>Al met al was dit weer een geslaagde dag en kijk ik al uit naar morgen!</p>

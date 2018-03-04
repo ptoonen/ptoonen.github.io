@@ -151,11 +151,11 @@ ga('send', 'pageview');
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                11
+                12
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                21
+                24
                 <span>tags</span>
             </div>
         </div>
@@ -204,7 +204,7 @@ ga('send', 'pageview');
 
             
             <section id="main">
-    <article id="post-Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-creating-a-github-badge-with-azure-functions" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -212,7 +212,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a>
+            <a class="article-title" href="/2018/03/04/creating-a-github-badge-with-azure-functions/">Creating a GitHub badge with Azure Functions</a>
         </h1>
     
 
@@ -221,22 +221,17 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/">
-            <time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time>
+        <a href="/2018/03/04/creating-a-github-badge-with-azure-functions/">
+            <time datetime="2018-03-04T08:52:47.000Z" itemprop="datePublished">2018-03-04</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Containers/">Containers</a>
-    </div>
-
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Containers/">Containers</a>, <a class="tag-link" href="/tags/Servers/">Servers</a>
+        <a class="tag-link" href="/tags/Cloud/">Cloud</a>, <a class="tag-link" href="/tags/OpenSource/">OpenSource</a>, <a class="tag-link" href="/tags/Stryker/">Stryker</a>
     </div>
 
                     </div>
@@ -247,12 +242,26 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Although some people have overheard me saying that <a href="https://www.youtube.com/watch?v=d2J7GvFdaGE" target="_blank" rel="external">Containers are Dead</a>, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.<br>Recently, during a hackathon, I tried to use Docker Swarm’s awesome <a href="https://docs.docker.com/engine/swarm/ingress/" target="_blank" rel="external">Routing Mesh</a> but couldn’t get it to work on Windows Server 2016. It turns out that it will only work on Windows Server 1709.</p>
-<h1 id="Installing-Docker-EE-Preview"><a href="#Installing-Docker-EE-Preview" class="headerlink" title="Installing Docker EE Preview"></a>Installing Docker EE Preview</h1><p>Since it was a hackathon anyway, I figured I might as well try to roll Windows Server 1709 (this is the new semi-annual release channel by the way) on a VM and I followed the instructions to <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">install Docker</a> on it. But… it still didn’t work. Turns out, I needed <a href="https://blog.docker.com/2017/09/docker-windows-server-1709/" target="_blank" rel="external">different instructions</a> and the preview. But for some reason it wouldn’t install! It told me I needed to install the Hyper-V feature:</p>
-<img src="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
-<h1 id="Forcing-it-to-run-anyway"><a href="#Forcing-it-to-run-anyway" class="headerlink" title="Forcing it to run anyway"></a>Forcing it to run anyway</h1><p>Using the following piece of Powershell, it’s quite easy to get it to work anyway. This does assume you followed the <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">‘normal’</a> installation instructions first though.</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Stop Docker</span></div><div class="line"><span class="built_in">Stop-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Get Docker</span></div><div class="line">Save-package -providername DockerProvider -Name Docker -RequiredVersion Preview -Path <span class="variable">$Env:TEMP</span></div><div class="line"></div><div class="line"><span class="variable">$dockerZipPath</span> = (<span class="built_in">Resolve-Path</span> <span class="variable">$Env:TEMP</span>\Docker*.zip)</div><div class="line">Expand-archive <span class="variable">$dockerZipPath</span> <span class="variable">$Env:TEMP</span>\Docker</div><div class="line"></div><div class="line"><span class="comment"># Move to correct location</span></div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\dockerd.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\docker.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"></div><div class="line"><span class="comment"># Disable Linux containers</span></div><div class="line">[Environment]::SetEnvironmentVariable(<span class="string">"LCOW_SUPPORTED"</span>, <span class="literal">$null</span>, <span class="string">"Machine"</span>)</div><div class="line"><span class="built_in">Start-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Cleanup</span></div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$dockerZipPath</span> -Force</div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$Env:TEMP</span>\Docker -Recurse -Force</div></pre></td></tr></table></figure>
-<p>The LCOW_SUPPORTED environment variable makes sure you won’t accidently try to run a Linux container anyway :-) O, did I forget to mention that? Docker 17.10 adds <a href="https://blog.docker.com/2017/09/preview-linux-containers-on-windows/" target="_blank" rel="external">support for Linux containers on Windows Server through LinuxKit</a>.</p>
+            <p>Recently, I spent some time with the guys from the <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker Mutator</a> team. First in a hackathon over a weekend back in December last year, then finalizing our work in February and launching the <a href="http://stryker-mutator.io/blog/2018-02-08/get-your-mutation-score-badge-now.html" target="_blank" rel="external">Mutation Score Badge</a>. Even though I had to overcome my fear of JavaScript, I managed to find some good parts in NodeJS and combine them into a Azure Function that provides the actual mutation badge. Get the why, how and what in this post.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/mutation-scores.png" alt="Example badges" title="Example badges">
+<h2 id="Why-Azure-Functions"><a href="#Why-Azure-Functions" class="headerlink" title="Why Azure Functions?"></a>Why Azure Functions?</h2><p>Well, simply put: because it’s cheap, easy and it supports multiple languages. Since <a href="https://stryker-mutator.io" target="_blank" rel="external">Stryker</a> is writting in NodeJS, I decided to challenge myself and write the function in NodeJS as well. Our setup is quite simple:</p>
+<ul>
+<li>We use an <a href="https://azure.microsoft.com/en-us/services/storage/tables/" target="_blank" rel="external">Azure Storage Table</a> to score all mutation scores posted from the Dashboard.</li>
+<li>When someone requests a badge, the function performs a lookup in this table and presents the badge</li>
+<li>We have a <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies" target="_blank" rel="external">Function Proxy</a> to be able to use our own domain and a friendly URL.</li>
+</ul>
+<h2 id="How-we-developed-the-function"><a href="#How-we-developed-the-function" class="headerlink" title="How we developed the function"></a>How we developed the function</h2><p>All code was written in TypeScript and using <a href="https://blogs.technet.microsoft.com/livedevopsinjapan/2017/10/11/enabling-typescript-local-debugging-with-azure-functions-on-mac/" target="_blank" rel="external">this</a> excellent post by <a href="https://social.technet.microsoft.com/profile/Tsuyoshi+Ushio" target="_blank" rel="external">Tsuyoshi Ushio</a>, I was able to develop and debug it on my mac quite easily (well, after a crashcourse in TypeScript from <a href="https://twitter.com/_nicojs" target="_blank" rel="external">Nico Jansen</a>).</p>
+<h2 id="Is-it-really-all-that-awesome"><a href="#Is-it-really-all-that-awesome" class="headerlink" title="Is it really all that awesome?"></a>Is it really all that awesome?</h2><p>No, it isn’t. We hit quite a few snags while developing but especially when deploying. As you read before, the functions are dirt-cheap on a consumption plan but this also means that they’re not ‘Always-On’. Where this doesn’t really seem to be an issue for regular C# functions, for some reason the NodeJS functions were extremely slow and on top of that, I had to use Kudu to do an npm install.</p>
+<h3 id="Azure-and-NodeJS"><a href="#Azure-and-NodeJS" class="headerlink" title="Azure and NodeJS"></a>Azure and NodeJS</h3><p>We soon discovered that uploading a lot of small files to Azure would take a while, and we decided we’d just want to upload the package.json and run npm install on Azure <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#node-version-and-package-management" target="_blank" rel="external">through Kudu</a>. Notice that on this page it also says that the Node version is locked on 6.5.0. Even adjusting the WEBSITE_NODE_DEFAULT_VERSION environment variable didn’t work.</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/app-settings.png" alt="Adjusting the environment variable" title="Adjusting the environment variable"> 
+<p>This limited us in our ability to use certain Node functionality that required version 8+ (util.promisify in particular) so we went to look for another solution. This present itself in the portal. If you look carefully at the screenshot above, you can see a variable called FUNCTIONS_EXTENSION_RUNTIME. This is set to ~1 by default, but you can simply change that to run on the ‘beta’ version. <em>Mind you</em>: you can only safely change this if you don’t currently have any functions deployed.</p>
+<p>Unfortunately, it turned out that changing this to the beta <a href="https://github.com/Azure/app-service-announcements/issues/68" target="_blank" rel="external">doesn’t support proxies yet</a>, so we reverted and included our own promisify.</p>
+<h3 id="Cold-Boot"><a href="#Cold-Boot" class="headerlink" title="Cold Boot"></a>Cold Boot</h3><p>As mentioned before, we initially planned on deploying through Kudu and simply running NPM install there and we did. Thing is, the functions were really slow. I mean… REALLY slow. It took over 20 seconds to start and as it turns out, <a href="https://github.com/Azure/azure-functions-host/issues/298" target="_blank" rel="external">we weren’t the only ones</a>. Our solution was to apply FuncPack and by simply running this before our publish:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g azure-functions-pack</div><div class="line">funcpack pack ./</div></pre></td></tr></table></figure>
+<p>we were able to pack it all into one file. What it does is that it applies <a href="https://www.npmjs.com/package/webpack" target="_blank" rel="external">WebPack</a> magic to your function (also rewriting your function.json to reference to index.js as entrypoint). Running this brought our cold boot down to acceptable levels.</p>
+<h2 id="What-now"><a href="#What-now" class="headerlink" title="What now?"></a>What now?</h2><p>Well, we’re live :) There’s still some work to do by the functions team, but with the newly announced <a href="https://github.com/Azure/app-service-announcements/issues/84" target="_blank" rel="external">Run-From-Zip</a> functionality, I’m positive that it’ll run even smoother than now. On top of that, we now also know what it has cost us over the month of February: a whopping $0.33 :-) So I guess this still applies:</p>
+<img src="/2018/03/04/creating-a-github-badge-with-azure-functions/microsoft-lt3-oss.png" alt="Microsoft loves Open Source" title="Microsoft loves Open Source">
+<p>Or at least they make it pretty easy for Open Source projects to use their services without incurring too much of a cost penalty. </p>
 
         
         </div>
@@ -263,7 +272,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/" data-id="cje65993b0000rzbn31oz6wav" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/" data-id="cjed4mzuj0007amsf3922wb8n" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -331,7 +340,144 @@ ga('send', 'pageview');
 
             
     
-        <a href="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/">Comments</a>
+        <a href="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-running-docker-17-10-on-windows-server-2017-without-nested-virtualization" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">
+            <time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Containers/">Containers</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Containers/">Containers</a>, <a class="tag-link" href="/tags/Servers/">Servers</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Although some people have overheard me saying that <a href="https://www.youtube.com/watch?v=d2J7GvFdaGE" target="_blank" rel="external">Containers are Dead</a>, there is actually some use for it when dealing with legacy software and/or on-premise/cloud hybrid applications.<br>Recently, during a hackathon, I tried to use Docker Swarm’s awesome <a href="https://docs.docker.com/engine/swarm/ingress/" target="_blank" rel="external">Routing Mesh</a> but couldn’t get it to work on Windows Server 2016. It turns out that it will only work on Windows Server 1709.</p>
+<h1 id="Installing-Docker-EE-Preview"><a href="#Installing-Docker-EE-Preview" class="headerlink" title="Installing Docker EE Preview"></a>Installing Docker EE Preview</h1><p>Since it was a hackathon anyway, I figured I might as well try to roll Windows Server 1709 (this is the new semi-annual release channel by the way) on a VM and I followed the instructions to <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">install Docker</a> on it. But… it still didn’t work. Turns out, I needed <a href="https://blog.docker.com/2017/09/docker-windows-server-1709/" target="_blank" rel="external">different instructions</a> and the preview. But for some reason it wouldn’t install! It told me I needed to install the Hyper-V feature:</p>
+<img src="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/hyperv-feature.png" alt="Missing Hyper-V feature" title="Missing Hyper-V feature"> 
+<h1 id="Forcing-it-to-run-anyway"><a href="#Forcing-it-to-run-anyway" class="headerlink" title="Forcing it to run anyway"></a>Forcing it to run anyway</h1><p>Using the following piece of Powershell, it’s quite easy to get it to work anyway. This does assume you followed the <a href="https://docs.docker.com/install/windows/docker-ee/" target="_blank" rel="external">‘normal’</a> installation instructions first though.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Stop Docker</span></div><div class="line"><span class="built_in">Stop-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Get Docker</span></div><div class="line">Save-package -providername DockerProvider -Name Docker -RequiredVersion Preview -Path <span class="variable">$Env:TEMP</span></div><div class="line"></div><div class="line"><span class="variable">$dockerZipPath</span> = (<span class="built_in">Resolve-Path</span> <span class="variable">$Env:TEMP</span>\Docker*.zip)</div><div class="line">Expand-archive <span class="variable">$dockerZipPath</span> <span class="variable">$Env:TEMP</span>\Docker</div><div class="line"></div><div class="line"><span class="comment"># Move to correct location</span></div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\dockerd.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"><span class="built_in">Move-Item</span> <span class="variable">$Env:TEMP</span>\Docker\docker\docker.exe <span class="string">"<span class="variable">$Env:ProgramFiles</span>\Docker"</span> -force</div><div class="line"></div><div class="line"><span class="comment"># Disable Linux containers</span></div><div class="line">[Environment]::SetEnvironmentVariable(<span class="string">"LCOW_SUPPORTED"</span>, <span class="literal">$null</span>, <span class="string">"Machine"</span>)</div><div class="line"><span class="built_in">Start-Service</span> Docker</div><div class="line"></div><div class="line"><span class="comment"># Cleanup</span></div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$dockerZipPath</span> -Force</div><div class="line"><span class="built_in">Remove-Item</span> <span class="variable">$Env:TEMP</span>\Docker -Recurse -Force</div></pre></td></tr></table></figure>
+<p>The LCOW_SUPPORTED environment variable makes sure you won’t accidently try to run a Linux container anyway :-) O, did I forget to mention that? Docker 17.10 adds <a href="https://blog.docker.com/2017/09/preview-linux-containers-on-windows/" target="_blank" rel="external">support for Linux containers on Windows Server through LinuxKit</a>.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/" data-id="cjed4mzus000ramsfus379g8h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">Comments</a>
     
 
         </footer>
@@ -424,7 +570,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" data-id="cje65993k0005rzbnel6x7hfr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/24/continuous-delivery-of-azure-functions-with-tfs/" data-id="cjed4mzui0005amsffbugs1a2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -596,7 +742,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="cje65993e0001rzbngqlwmcni" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="cjed4mzuc0001amsfhq2koqzh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -731,7 +877,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="cje65993q000grzbn6isaq6w7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/28/git-in-vs2017-with-self-signed-ssl/" data-id="cjed4mzuo000hamsf644bsuto" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -893,7 +1039,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="cje65993l0006rzbnuo41350y" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/11/16/coretainers/" data-id="cjed4mzuj0006amsfsg485vml" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1038,7 +1184,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="cje65993s000mrzbn4ymuwlyo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/07/09/new-blog/" data-id="cjed4mzuq000namsfd3i0sbww" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1183,7 +1329,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="cje65993i0004rzbnz97gd6ge" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2016/04/06/bash-for-windows/" data-id="cjed4mzue0002amsflf3u7xvd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1323,7 +1469,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="cje65993p000erzbnufm1m4rt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/11/09/dev-intersection-2015-dag-6/" data-id="cjed4mzun000famsf1rd46rvd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1409,7 +1555,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2015/10/28/dev-intersection-2015-dag-3/">Dev Intersection 2015 - dag 3</a>
+            <a class="article-title" href="/2015/10/27/dev-intersection-2015-dag-3/">Dev Intersection 2015 - dag 3</a>
         </h1>
     
 
@@ -1418,7 +1564,7 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/10/28/dev-intersection-2015-dag-3/">
+        <a href="/2015/10/27/dev-intersection-2015-dag-3/">
             <time datetime="2015-10-28T06:38:00.000Z" itemprop="datePublished">2015-10-28</time>
         </a>
     </div>
@@ -1446,7 +1592,7 @@ ga('send', 'pageview');
             
             <p>Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we hier zien en horen. Na <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-1/" target="_blank" rel="external">Edwin</a> en <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-2/" target="_blank" rel="external">Mark</a> ben ik vandaag aan de beurt.</p>
 <p>De derde dag van de conferentie was de eerste dag waarop ‘reguliere’ sessies werden gegeven. Na een goed ontbijt, begon de dag met een keynote van Scott Guthrie. Hij vertelde voornamelijk over de ‘Journey to the Cloud’ en deelde Microsoft’s visie op DevOps met <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="external">Visual Studio Online</a>, enkele indrukwekkende cijfers over Azure (wat te denken van 777 biljoen storage queries per dag?!) en de manier waarop Microsoft’s Clouddiensten zoals Office 365 in het grote plaatje van de moderne IT-industrie passen.</p>
-<img src="/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg" alt="DevOps met VSO" title="DevOps met VSO">
+<img src="/2015/10/27/dev-intersection-2015-dag-3/devops-on-vso.jpg" alt="DevOps met VSO" title="DevOps met VSO">
 <p>Na de keynote zijn we elk onze eigen kant uit gegaan. Ik heb sessies gevolgd van Julie Lerman (Domain Driven Design for the Database Driven Mind), welke erg goed wordt samengevat in een <a href="https://msdn.microsoft.com/en-us/magazine/dn342868.aspx" target="_blank" rel="external">drietal blogposts</a>, een sessie van Steven Murawski (Survive and Thrive in a DevOps World) die erop neer kwam dat het invoeren van DevOps voornamelijk een cultuur-shift is waarbij men de ‘fear culture’ en ‘blame game’ moet laten varen. Hij heeft een flink aantal tips <a href="http://stevenmurawski.com/devops-reading-list/" target="_blank" rel="external">op zijn blog</a> staan om met DevOps aan de slag te gaan.</p>
 <p>In de middag ben ik verder gegaan met een sessie van Troy Hunt (Securing ASP.NET in an Azure Environment). Nadat ik zijn workshop had gevolgd op maandag, was ik erg benieuwd wat hij over dit onderwerp had te zeggen en ik werd niet teleurgesteld. Alhoewel het in het begin voornamelijk om no-brainers ging zoals het least-privileged-account principe, kwam hij uiteindelijk tot tips omtrent <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-database-dynamic-data-masking-get-started/" target="_blank" rel="external">dynamic data masking</a> in Azure SQL databases, stipte hij nog even het belang van application settings en connection strings in de Azure portal aan en dat je eigenlijk altijd two step verification aan moet zetten als je met jouw account een Azure subscription gaat beheren. Dit laatste kun je instellen via <a href="https://account.live.com/proofs/Manage" target="_blank" rel="external">accountbeheer</a>.</p>
 <p>Al met al was dit weer een geslaagde dag en kijk ik al uit naar morgen!</p>
@@ -1460,7 +1606,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/" data-id="cje65993n000brzbn14jnclky" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/" data-id="cjed4mzum000camsf0vptid3r" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1528,182 +1674,7 @@ ga('send', 'pageview');
 
             
     
-        <a href="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-custom-build-tasks-in-tfs-2015" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/07/21/custom-build-tasks-in-tfs-2015/">Custom build tasks in TFS 2015</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/07/21/custom-build-tasks-in-tfs-2015/">
-            <time datetime="2015-07-21T12:46:00.000Z" itemprop="datePublished">2015-07-21</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/NET/">.NET</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Build/">Build</a>, <a class="tag-link" href="/tags/Customization/">Customization</a>, <a class="tag-link" href="/tags/TFS/">TFS</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Since I upgraded my team’s private TFS instance to TFS 2015 RC1, followed by RC2, the whole team has been working with TFS 2015 quite a lot. Of course one of the major features is the new build engine and we’ve given that quite a ride. From cross platform builds on Mac and Linux to custom build tasks, we’ve accomplished quite a lot. Seeing as during yesterday’s Visual Studio 2015 launch, Brian Harry stated that it was ‘quite easy’ to build your own tasks, I figured I’d give a short write-down of our experiences with custom tasks.</p>
-<h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>From the moment I upgraded our R&amp;D server to RC1, we’ve been working with the new build system. Up until RC2 it was only possible to add custom build tasks, but we weren’t able to remove them. On top of that, the whole process isn’t documented quite yet. Seeing as we quite often add NuGet packages to a feed and didn’t want to add a, not very descriptive, PowerShell task to all of our build definitions, we decided to use this example for a custom task and see how it would fare.</p>
-<h2 id="Prerequisite-one-What-is-a-task"><a href="#Prerequisite-one-What-is-a-task" class="headerlink" title="Prerequisite one: What is a task?"></a>Prerequisite one: What is a task?</h2><p>To make a custom build task, we first need to know what it looks like. Luckily Microsoft has open-sourced most of the current build tasks in <a href="https://github.com/Microsoft/vso-agent-tasks" target="_blank" rel="external">https://github.com/Microsoft/vso-agent-tasks</a> which gave us a fair idea of what a build task is:</p>
-<ol>
-<li>a JSON file describing the plugin</li>
-<li>a PowerShell or Node.JS file containing the functionality (this post will focus on PowerShell)</li>
-<li>an (optional) icon file</li>
-<li>optional resources translating the options to another language</li>
-</ol>
-<p>Now the only thing we needed to find out was: how to upload these tasks and in what format?</p>
-<p>Good to know:</p>
-<ol>
-<li>To make sure your icon displays correctly, it must be 32×32 pixels</li>
-<li>The task ID is a GUID which you need to create yourself</li>
-<li>The task category should be an existing category</li>
-<li>Visibility tells you what kind of task it is, possible values are: Build, Release and Preview. Currently only Build-type tasks are shown</li>
-</ol>
-<h2 id="Prerequisite-two-How-to-upload-a-task"><a href="#Prerequisite-two-How-to-upload-a-task" class="headerlink" title="Prerequisite two: How to upload a task?"></a>Prerequisite two: How to upload a task?</h2><p>We quickly figured out that the tasks were simply .zip files containing the aforementioned items, so creating a zip was an easy but then we needed to get it there. By going through the github repository’s, we figured out there was a REST-API which controls all the tasks and we figured that by doing a PUT-call to said endpoint we could create a new task, but also overwrite tasks.</p>
-<p>The following powershell-script enables you to upload tasks:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">param</span>(</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string]<span class="variable">$TaskPath</span>,</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string]<span class="variable">$TfsUrl</span>,</div><div class="line">   [PSCredential]<span class="variable">$Credential</span> = (<span class="built_in">Get-Credential</span>),</div><div class="line">   [switch]<span class="variable">$Overwrite</span> = <span class="literal">$false</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment"># Load task definition from the JSON file</span></div><div class="line"><span class="variable">$taskDefinition</span> = (<span class="built_in">Get-Content</span> <span class="variable">$taskPath</span>\task.json) -join <span class="string">"`n"</span> | <span class="built_in">ConvertFrom-Json</span></div><div class="line"><span class="variable">$taskFolder</span> = <span class="built_in">Get-Item</span> <span class="variable">$TaskPath</span></div><div class="line"></div><div class="line"><span class="comment"># Zip the task content</span></div><div class="line"><span class="built_in">Write-Output</span> <span class="string">"Zipping task content"</span></div><div class="line"><span class="variable">$taskZip</span> = (<span class="string">"&#123;0&#125;\..\&#123;1&#125;.zip"</span> -f <span class="variable">$taskFolder</span>, <span class="variable">$taskDefinition</span>.id)</div><div class="line"><span class="keyword">if</span> (<span class="built_in">Test-Path</span> <span class="variable">$taskZip</span>) &#123; <span class="built_in">Remove-Item</span> <span class="variable">$taskZip</span> &#125;</div><div class="line"></div><div class="line"><span class="built_in">Add-Type</span> -AssemblyName <span class="string">"System.IO.Compression.FileSystem"</span></div><div class="line">[IO.Compression.ZipFile]::CreateFromDirectory(<span class="variable">$taskFolder</span>, <span class="variable">$taskZip</span>)</div><div class="line"></div><div class="line"><span class="comment"># Prepare to upload the task</span></div><div class="line"><span class="built_in">Write-Output</span> <span class="string">"Uploading task content"</span></div><div class="line"><span class="variable">$headers</span> = @&#123; <span class="string">"Accept"</span> = <span class="string">"application/json; api-version=2.0-preview"</span>; <span class="string">"X-TFS-FedAuthRedirect"</span> = <span class="string">"Suppress"</span> &#125;</div><div class="line"><span class="variable">$taskZipItem</span> = <span class="built_in">Get-Item</span> <span class="variable">$taskZip</span></div><div class="line"><span class="variable">$headers</span>.Add(<span class="string">"Content-Range"</span>, <span class="string">"bytes 0-$(<span class="variable">$taskZipItem</span>.Length - 1)/$(<span class="variable">$taskZipItem</span>.Length)"</span>)</div><div class="line"><span class="variable">$url</span> = (<span class="string">"&#123;0&#125;/_apis/distributedtask/tasks/&#123;1&#125;"</span> -f <span class="variable">$TfsUrl</span>, <span class="variable">$taskDefinition</span>.id)</div><div class="line"><span class="keyword">if</span> (<span class="variable">$Overwrite</span>) &#123;</div><div class="line">   <span class="variable">$url</span> += <span class="string">"?overwrite=true"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Actually upload it</span></div><div class="line"><span class="built_in">Invoke-RestMethod</span> -Uri <span class="variable">$url</span> -Credential <span class="variable">$Credential</span> -Headers <span class="variable">$headers</span> -ContentType application/octet-stream -Method Put -InFile <span class="variable">$taskZipItem</span></div></pre></td></tr></table></figure>
-<p>Good to know:</p>
-<ol>
-<li>Currently only ‘Agent Pool Administrators’ are able to add/update or remove tasks.</li>
-<li>Tasks are server-wide, this means that you will upload to the server, not to a specific collection or project.</li>
-</ol>
-<h2 id="Creating-the-actual-task"><a href="#Creating-the-actual-task" class="headerlink" title="Creating the actual task"></a>Creating the actual task</h2><p>So like I said, we’ll be creating a new task that’s going to publish our NuGet packages to a feed. So first we need to decide what information we need to push our packages:</p>
-<ol>
-<li>The target we want to pack (.csproj or .nuspec file relative to the source-directory)</li>
-<li>The package source we want to push to</li>
-</ol>
-<p>For this example I’m assuming you’re only building for a single build configuration and single target platform, which we’ll use in the PowerShell-script.</p>
-<p>First we’ll make the task definition. As I said, this is simply a JSON file describing the task and its inputs.</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   <span class="attr">"id"</span>: <span class="string">"61ed0e1d-efb7-406e-a42b-80f5d22e6d54"</span>,</div><div class="line">   <span class="attr">"name"</span>: <span class="string">"NuGetPackAndPush"</span>,</div><div class="line">   <span class="attr">"friendlyName"</span>: <span class="string">"Nuget Pack and Push"</span>,</div><div class="line">   <span class="attr">"description"</span>: <span class="string">"Packs your output as NuGet package and pushes it to the specified source."</span>,</div><div class="line">   <span class="attr">"category"</span>: <span class="string">"Package"</span>,</div><div class="line">   <span class="attr">"author"</span>: <span class="string">"Info Support"</span>,</div><div class="line">   <span class="attr">"version"</span>: &#123;</div><div class="line">      <span class="attr">"Major"</span>: <span class="number">0</span>,</div><div class="line">      <span class="attr">"Minor"</span>: <span class="number">1</span>,</div><div class="line">      <span class="attr">"Patch"</span>: <span class="number">0</span></div><div class="line">   &#125;,</div><div class="line">   <span class="attr">"minimumAgentVersion"</span>: <span class="string">"1.83.0"</span>,</div><div class="line">   <span class="attr">"inputs"</span>: [</div><div class="line">      &#123;</div><div class="line">         <span class="attr">"name"</span>: <span class="string">"packtarget"</span>,</div><div class="line">         <span class="attr">"type"</span>: <span class="string">"string"</span>,</div><div class="line">         <span class="attr">"label"</span>: <span class="string">"Pack target"</span>,</div><div class="line">         <span class="attr">"defaultValue"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"required"</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">"helpMarkDown"</span>: <span class="string">"Relative path to .csproj or .nuspec file to pack."</span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">         <span class="attr">"name"</span>: <span class="string">"packagesource"</span>,</div><div class="line">         <span class="attr">"type"</span>: <span class="string">"string"</span>,</div><div class="line">         <span class="attr">"label"</span>: <span class="string">"Package Source"</span>,</div><div class="line">         <span class="attr">"defaultValue"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"required"</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">"helpMarkDown"</span>: <span class="string">"The source we want to push the package to"</span></div><div class="line">      &#125;</div><div class="line">   ],</div><div class="line">   <span class="attr">"instanceNameFormat"</span>: <span class="string">"Nuget Pack and Push $(packtarget)"</span>,</div><div class="line">   <span class="attr">"execution"</span>: &#123;</div><div class="line">      <span class="attr">"PowerShell"</span>: &#123;</div><div class="line">         <span class="attr">"target"</span>: <span class="string">"$(currentDirectory)\\PackAndPush.ps1"</span>,</div><div class="line">         <span class="attr">"argumentFormat"</span>: <span class="string">""</span>,</div><div class="line">         <span class="attr">"workingDirectory"</span>: <span class="string">"$(currentDirectory)"</span></div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>This version of the task will  be a very rudimentary one, which doesn’t do much (any) validation, so you might want to add that yourself.</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">[cmdletbinding()]</div><div class="line"><span class="keyword">param</span></div><div class="line">(</div><div class="line">   [Parameter(Mandatory=<span class="literal">$true</span>)][string] <span class="variable">$packtarget</span>,</div><div class="line">   [Parameter(Mandatory=<span class="literal">$false</span>)][string] <span class="variable">$packagesource</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 1 Auto Configuration</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="comment"># Stop the script on error</span></div><div class="line"><span class="variable">$ErrorActionPreference</span> = <span class="string">"Stop"</span></div><div class="line"></div><div class="line"><span class="comment"># Relative location of nuget.exe to build agent home directory</span></div><div class="line"><span class="variable">$nugetExecutableRelativePath</span> = <span class="string">"Agent\Worker\Tools\nuget.exe"</span></div><div class="line"></div><div class="line"><span class="comment"># These variables are provided by TFS</span></div><div class="line"><span class="variable">$buildAgentHomeDirectory</span> = <span class="variable">$env:AGENT_HOMEDIRECTORY</span></div><div class="line"><span class="variable">$buildSourcesDirectory</span> = <span class="variable">$Env:BUILD_SOURCESDIRECTORY</span></div><div class="line"><span class="variable">$buildStagingDirectory</span> = <span class="variable">$Env:BUILD_STAGINGDIRECTORY</span></div><div class="line"><span class="variable">$buildPlatform</span> = <span class="variable">$Env:BUILDPLATFORM</span></div><div class="line"><span class="variable">$buildConfiguration</span> = <span class="variable">$Env:BUILDCONFIGURATION</span></div><div class="line"></div><div class="line"><span class="variable">$packagesOutputDirectory</span> = <span class="variable">$buildStagingDirectory</span></div><div class="line"></div><div class="line"><span class="comment"># Determine full path of pack target file</span></div><div class="line"><span class="variable">$packTargetFullPath</span> = <span class="built_in">Join-Path</span> -Path <span class="variable">$buildSourcesDirectory</span> -ChildPath <span class="variable">$packTarget</span></div><div class="line"></div><div class="line"><span class="comment"># Determine full path to nuget.exe</span></div><div class="line"><span class="variable">$nugetExecutableFullPath</span> = <span class="built_in">Join-Path</span> -Path <span class="variable">$buildAgentHomeDirectory</span> -ChildPath <span class="variable">$nugetExecutableRelativePath</span></div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 2 Create package</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"2. Creating NuGet package"</span></div><div class="line"></div><div class="line"><span class="variable">$packCommand</span> = (<span class="string">"pack `"&#123;0&#125;`" -OutputDirectory `"&#123;1&#125;`" -NonInteractive -Symbols"</span> -f <span class="variable">$packTargetFullPath</span>, <span class="variable">$packagesOutputDirectory</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="variable">$packTargetFullPath</span>.ToLower().EndsWith(<span class="string">".csproj"</span>))</div><div class="line">&#123;</div><div class="line">   <span class="variable">$packCommand</span> += <span class="string">" -IncludeReferencedProjects"</span></div><div class="line"></div><div class="line">   <span class="comment"># Remove spaces from build platform, so 'Any CPU' becomes 'AnyCPU'</span></div><div class="line">   <span class="variable">$packCommand</span> += (<span class="string">" -Properties `"Configuration=&#123;0&#125;;Platform=&#123;1&#125;`""</span> -f    <span class="variable">$buildConfiguration</span>, (<span class="variable">$buildPlatform</span> <span class="nomarkup">-replace</span> <span class="string">'\s'</span>,<span class="string">''</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPack command: &#123;0&#125;"</span> -f <span class="variable">$packCommand</span>)</div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tCreating package..."</span>)</div><div class="line"></div><div class="line"><span class="variable">$packOutput</span> = <span class="built_in">Invoke-Expression</span> <span class="string">"&amp;'<span class="variable">$nugetExecutableFullPath</span>' <span class="variable">$packCommand</span>"</span> | <span class="built_in">Out-String</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPackage successfully created:"</span>)</div><div class="line"></div><div class="line"><span class="variable">$generatedPackageFullPath</span> = [regex]::match(<span class="variable">$packOutput</span>,<span class="string">"Successfully created package '(.+(?&lt;!\.symbols)\.nupkg)'"</span>).Groups[<span class="number">1</span>].Value</div><div class="line"><span class="built_in">Write-Host</span> `t`t<span class="variable">$generatedPackageFullPath</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tNote: The created package will be available in the drop location."</span>)</div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tOutput from NuGet.exe:"</span></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`t`t<span class="variable">$packOutput</span>"</span> <span class="nomarkup">-Replace</span> <span class="string">"`r`n"</span>, <span class="string">"`r`n`t`t"</span>)</div><div class="line"></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"><span class="comment"># 3 Publish package</span></div><div class="line"><span class="comment">####################################################################################################</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"3. Publish package"</span></div><div class="line"><span class="variable">$pushCommand</span> = <span class="string">"push `"&#123;0&#125;`" -Source `"&#123;1&#125;`" -NonInteractive"</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPush package '&#123;0&#125;' to '&#123;1&#125;'."</span> -f (<span class="built_in">Split-Path</span> <span class="variable">$generatedPackageFullPath</span> -Leaf), <span class="variable">$packagesource</span>)</div><div class="line"><span class="variable">$regularPackagePushCommand</span> = (<span class="variable">$pushCommand</span> -f <span class="variable">$generatedPackageFullPath</span>, <span class="variable">$packagesource</span>)</div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`tPush command: &#123;0&#125;"</span> -f <span class="variable">$regularPackagePushCommand</span>)</div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tPushing..."</span></div><div class="line"></div><div class="line"><span class="variable">$pushOutput</span> = <span class="built_in">Invoke-Expression</span> <span class="string">"&amp;'<span class="variable">$nugetExecutableFullPath</span>' <span class="variable">$regularPackagePushCommand</span>"</span> | <span class="built_in">Out-String</span></div><div class="line"></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tSuccess. Package pushed to source."</span></div><div class="line"><span class="built_in">Write-Host</span> <span class="string">"`tOutput from NuGet.exe:"</span></div><div class="line"><span class="built_in">Write-Host</span> (<span class="string">"`t`t<span class="variable">$pushOutput</span>"</span> <span class="nomarkup">-Replace</span> <span class="string">"`r`n"</span>, <span class="string">"`r`n`t`t"</span>)</div></pre></td></tr></table></figure>
-<p>To finish up, don’t forget to add a .png logo to your task ;-)<br>You should now be able to add a custom task to your build pipeline from the “Package” category:</p>
-<img src="/2015/07/21/custom-build-tasks-in-tfs-2015/custom-task.png" alt="Custom Task in Package category" title="Custom Task in Package category">
-<h2 id="Words-of-warning"><a href="#Words-of-warning" class="headerlink" title="Words of warning"></a>Words of warning</h2><p>Tasks can be versioned, use this to your advantage. All build definitions use the latest available version of a specific task, you can’t change this behavior from the web interface, so always assume the latest version is being used.</p>
-<p>If you don’t change the version number of your task when updating it, the build agents that have previously used your task will not download the newer version because the version number is still the same. This means that if you change the behavior of your task, you should always update the version number!</p>
-<p>When deleting a task, this task is not automatically removed from current build definitions, on top of that you won’t get a notification when editing the build definition but you will get an exception on executing a build based on that definition.</p>
-<p>Tasks are always available for the entire TFS instance, this means that you shouldn’t include credentials or anything that you don’t want others to see. Use ‘secret variables’ for this purpose:</p>
-<img src="/2015/07/21/custom-build-tasks-in-tfs-2015/secret-vars.png" alt="Secret Variables" title="Secret Variables">
-<h2 id="Further-Reading"><a href="#Further-Reading" class="headerlink" title="Further Reading"></a>Further Reading</h2><p>If you’ve followed this post so far, I recommend you also check out my team member Jonathan’s post/videos (in Dutch) out:</p>
-<p><a href="http://blogs.infosupport.com/using-invoke-sqlcmd-in-tfs-build-2015/" target="_blank" rel="external">Blog Post about Invoke SQLCmd in build vNext</a><br><a href="https://www.youtube.com/watch?v=e0U-Ca5ElQQ" target="_blank" rel="external">Video on build vNext (in Dutch)</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/" data-id="cje65993m0009rzbnmh79rt8z" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2015/07/21/custom-build-tasks-in-tfs-2015/">Comments</a>
+        <a href="https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/">Comments</a>
     
 
         </footer>
@@ -1729,8 +1700,17 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/creating-a-github-badge-with-azure-functions/" class="title">Creating a GitHub badge with Azure Functions</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T08:52:47.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Containers/">Containers</a></p>
-                            <p class="item-title"><a href="/2018/02/26/Running-Docker-17-10-on-Windows-Server-1709-without-nested-virtualization/" class="title">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a></p>
+                            <p class="item-title"><a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/" class="title">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a></p>
                             <p class="item-date"><time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time></p>
                         </div>
                     </li>
@@ -1762,15 +1742,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/DevOps/">DevOps</a></p>
-                            <p class="item-title"><a href="/2016/11/16/coretainers/" class="title">Coretainers</a></p>
-                            <p class="item-date"><time datetime="2016-11-16T19:56:02.000Z" itemprop="datePublished">2016-11-16</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1789,7 +1760,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1798,7 +1769,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/">Cloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSource/">OpenSource</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stryker/">Stryker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1807,7 +1778,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cloud/" style="font-size: 10px;">Cloud</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/OpenSource/" style="font-size: 10px;">OpenSource</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/Stryker/" style="font-size: 10px;">Stryker</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 
