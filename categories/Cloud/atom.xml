@@ -5,7 +5,7 @@
     <link href="/categories/Cloud/atom.xml" rel="self"/>
     
     <link href="https://toonen.io/"/>
-    <updated>2018-03-04T18:29:56.853Z</updated>
+    <updated>2018-03-04T18:29:56.000Z</updated>
     <id>/categories/Cloud/</id>
     
     <generator uri="http://hexo.io/">Hexo</generator>
@@ -15,11 +15,11 @@
         <link href="https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/"/>
         <id>https://toonen.io/2018/03/04/creating-a-github-badge-with-azure-functions/</id>
         <published>2018-03-04T08:52:47.000Z</published>
-        <updated>2018-03-04T18:29:56.853Z</updated>
+        <updated>2018-03-04T18:29:56.000Z</updated>
         
         <summary type="html">
             
-            &lt;p&gt;Recently, I spent some time with the guys from the &lt;a href=&quot;https://stryker-mutator.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Stryker Mutator&lt;/a
+            &lt;p&gt;Recently, I spent some time with the guys from the &lt;a href=&quot;https://stryker-mutator.io&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Stryker Mutator&lt;/a
             
         </summary>
         

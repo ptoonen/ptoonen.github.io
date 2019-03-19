@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     
     <title>Going Serverless - Azure Functions put to use | Peter Toonen on all things tech</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is n">
+<meta name="keywords" content="Azure,Serverless">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Going Serverless - Azure Functions put to use">
 <meta property="og:url" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/index.html">
 <meta property="og:site_name" content="Peter Toonen on all things tech">
 <meta property="og:description" content="We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is n">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/create-function-app.png">
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/create-your-own-function.png">
 <meta property="og:image" content="https://toonen.io/2017/02/08/azure-functions-put-to-use/your-first-function.png">
@@ -25,7 +27,7 @@
     
 
     
-        <link rel="alternate" href="atom.xml" title="Peter Toonen on all things tech" type="application/atom+xml" />
+        <link rel="alternate" href="atom.xml" title="Peter Toonen on all things tech" type="application/atom+xml">
     
 
     
@@ -57,7 +59,7 @@ ga('send', 'pageview');
 
 
 </head>
-
+</html>
 <body>
     <div id="container">
         <header id="header">
@@ -79,7 +81,7 @@ ga('send', 'pageview');
                 <nav id="sub-nav">
                     <div class="profile" id="profile-nav">
                         <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/css/images/PeterToonen.jpg" />
+                            <img class="avatar" src="/css/images/PeterToonen.jpg">
                             <i class="fa fa-caret-down"></i>
                         </a>
                     </div>
@@ -88,14 +90,14 @@ ga('send', 'pageview');
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search">
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <input type="text" class="ins-search-input" placeholder="Type something...">
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -135,7 +137,7 @@ ga('send', 'pageview');
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search">
     </div>
 
                 </td>
@@ -151,19 +153,19 @@ ga('send', 'pageview');
 <aside id="profile">
     <div class="inner profile-inner">
         <div class="base-info profile-block">
-            <img id="avatar" src="/css/images/PeterToonen.jpg" />
+            <img id="avatar" src="/css/images/PeterToonen.jpg">
             <h2 id="name">Peter Toonen</h2>
             <h3 id="title">ALM Consultant / DevOps Engineer</h3>
-            <span id="location"><a href="https://www.google.nl/maps/@52.0842715,5.0124518,12z" target=_blank><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
+            <span id="location"><a href="https://www.google.nl/maps/@52.0842715,5.0124518,12z" target="_blank"><i class="fa fa-map-marker"></i>Utrecht, The Netherlands</a></span>
         </div>
 		<!--
         <div class="article-info profile-block">
             <div class="article-info-block">
-                12
+                14
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                24
+                25
                 <span>tags</span>
             </div>
         </div>
@@ -175,19 +177,19 @@ ga('send', 'pageview');
                     
                     
                     <td>
-                        <a href="https://github.com/ptoonen" target="_blank" title="github" class=tooltip>
+                        <a href="https://github.com/ptoonen" target="_blank" title="github" class="tooltip">
                             <i class="fa fa-github"></i>
                         </a>
                     </td>
                     
                     <td>
-                        <a href="https://twitter.com/ptoonen" target="_blank" title="twitter" class=tooltip>
+                        <a href="https://twitter.com/ptoonen" target="_blank" title="twitter" class="tooltip">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </td>
                     
                     <td>
-                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                        <a href="/atom.xml" target="_blank" title="rss" class="tooltip">
                             <i class="fa fa-rss"></i>
                         </a>
                     </td>
@@ -200,10 +202,10 @@ ga('send', 'pageview');
 			<h2>About</h2>
 			<p>I am a Microsoft MVP working as an ALM Consultant / DevOps Engineer at <a href="http://www.infosupport.com" target="_blank">Info Support</a>.</p>
 			<p>This blog has been started as a way to share knowledge on various technology-related subjects. In my spare time I like to be outdoors (with my dog) or travel the world.</p>
-			<br />
+			<br>
 			<p>
 				<a href="https://mvp.microsoft.com/en-us/PublicProfile/5001945?fullName=Peter%20%20Toonen">
-					<img class="mvp-logo" src="/css/images/MVP_Logo_Preferred_Cyan300_RGB_72ppi.png" />
+					<img class="mvp-logo" src="/css/images/MVP_Logo_Preferred_Cyan300_RGB_72ppi.png">
 				</a>
 			</p>
 		</div>
@@ -256,43 +258,43 @@ ga('send', 'pageview');
             
             <p>We run an application which is event-driven and utilizes microservices across several trust boundaries. The application originated from our ‘automate everything you do more than twice’-mantra and is now continuously evolving and making our live as a small DevOps team easier.</p>
 <p>The underlying messaging mechanism of our app is an Azure Service Bus (or actually, multiple buses), with several topics and subscriptions upon those topics. As all of our events flow through Azure already, it’s easy to store them in blobstorage and use them for auditing/analysis/what-have-you at a later point in time. Now that the usage is increasing, we felt that it was time to add some alerting and we made plans for a new service that would react to our ‘ActivityFailed’-event, it would then send an email as soon as one of those events (luckily they don’t occur that often) would occur. Sounds easy enough, right?</p>
-<h1 id="Dockerize-or-…"><a href="#Dockerize-or-…" class="headerlink" title="Dockerize or … ?"></a>Dockerize or … ?</h1><p>As you may know Docker is a great tool to envelope your application into a well-known and well-described format so that it can run anywhere the same as it would on your machine. We would develop the service in .NET Core, so it would be easy enough to Dockerize it and host it somewhere just like some of the other services. But last night I thought to myself ‘Wait, we run in Azure, use the Azure Service Bus and only need to react to messages on the bus..’ and I decided I would try to create an <a href="https://azure.microsoft.com/en-us/services/functions/" target="_blank" rel="external">Azure Function</a> to react to the event and send me the mail. It literally took me about 15 minutes to develop. I’ll describe the process below.</p>
+<h1 id="Dockerize-or-…"><a href="#Dockerize-or-…" class="headerlink" title="Dockerize or … ?"></a>Dockerize or … ?</h1><p>As you may know Docker is a great tool to envelope your application into a well-known and well-described format so that it can run anywhere the same as it would on your machine. We would develop the service in .NET Core, so it would be easy enough to Dockerize it and host it somewhere just like some of the other services. But last night I thought to myself ‘Wait, we run in Azure, use the Azure Service Bus and only need to react to messages on the bus..’ and I decided I would try to create an <a href="https://azure.microsoft.com/en-us/services/functions/" target="_blank" rel="noopener">Azure Function</a> to react to the event and send me the mail. It literally took me about 15 minutes to develop. I’ll describe the process below.</p>
 <h2 id="Going-serverless"><a href="#Going-serverless" class="headerlink" title="Going serverless"></a>Going serverless</h2><p>Azure Functions are a way to process events in an easy way without having to worry about where you run it. It’s basically ‘just code’ and Azure does the rest for you. I had played with Azure Functions before, but didn’t really find a use-case for it. I do however feel that they are the next step after containerization. It may not fit all problems, but there are certainly use-cases out there which would benefit from a completely serverless architecture.</p>
-<p>Step one is going to the <a href="https://portal.azure.com" target="_blank" rel="external">Azure Portal</a> and creating a new ‘Function App’. Tip: use a consumption plan if you only want to be billed for your actual usage.</p>
-<img src="/2017/02/08/azure-functions-put-to-use/create-function-app.png" alt="Creating the Function App" title="Creating the Function App"> 
+<p>Step one is going to the <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure Portal</a> and creating a new ‘Function App’. Tip: use a consumption plan if you only want to be billed for your actual usage.</p>
+<img src="/2017/02/08/azure-functions-put-to-use/create-function-app.png" title="Creating the Function App"> 
 <p>Once your Function App is created, navigate to it. The first time you navigate to your Function App, you won’t have any functions yet, so you will be presented with the Quickstart Wizard. We will not use it, so scroll down and click ‘Create your own custom function’.</p>
-<img src="/2017/02/08/azure-functions-put-to-use/create-your-own-function.png" alt="Create your own custom function" title="Create your own custom function"> 
+<img src="/2017/02/08/azure-functions-put-to-use/create-your-own-function.png" title="Create your own custom function"> 
 <p>Now from the template gallery, select C# as language and ‘Data Processing’ as scenario. Click the ‘ServiceBusTopicTrigger-CSharp’ template and enter the following values in the corresponding fields:</p>
 <ul>
 <li><strong>Name</strong>: a meaningful name for your function, pick something like ‘EmailNotifier’</li>
 <li><strong>Topic name</strong>: this is the name of the topic on your service bus which you’ll listen to</li>
 <li><strong>Subscription name</strong>: The subscription name on top of the topic specified above</li>
-<li><strong>Access Rights</strong>: select ‘Manage’, and make this match the <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-shared-access-signature-authentication" target="_blank" rel="external">SAS Token</a>. As of writing this post, there’s a <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="external">bug</a> preventing you from using the expected ‘Listen’ permissions. That is - you can use it, but your function will cease to trigger after a few hours.</li>
+<li><strong>Access Rights</strong>: select ‘Manage’, and make this match the <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-shared-access-signature-authentication" target="_blank" rel="noopener">SAS Token</a>. As of writing this post, there’s a <a href="https://github.com/Azure/azure-webjobs-sdk-script/issues/1048" target="_blank" rel="noopener">bug</a> preventing you from using the expected ‘Listen’ permissions. That is - you can use it, but your function will cease to trigger after a few hours.</li>
 <li><strong>Service Bus connection</strong>: Service Bus connection strings are saved as Application Setting for your entire Function App and can be shared over multiple functions. Just click ‘new’ the first time and enter the connection string <em>without</em> the EntityPath in it</li>
 </ul>
 <p>You will now have a basic function. Congratulations!</p>
 <h2 id="Making-it-do-something-useful"><a href="#Making-it-do-something-useful" class="headerlink" title="Making it do something useful"></a>Making it do something useful</h2><p>In order to do something meaningful with our app, we’ll need to go through a few steps. First let’s discover what is created for us. Click the ‘Files’ button on the top right of the editor:</p>
-<img src="/2017/02/08/azure-functions-put-to-use/your-first-function.png" alt="Exploring your first function" title="Exploring your first function"> 
+<img src="/2017/02/08/azure-functions-put-to-use/your-first-function.png" title="Exploring your first function"> 
 <p>You will see that you have two files:</p>
 <ul>
 <li>function.json - which describes your in- and outputs</li>
 <li>run.csx - which is the code for your function</li>
 </ul>
 <p>Take some time to familiarize you with both files and notice that the run.csx isn’t much different from a regular C# program.</p>
-<p>It actually has using statements and a <code>public static void Main()</code> alike function called ‘Run’. Azure Functions provides you with framework libraries such as System and System.Linq and you can include some additional assemblies using the <code>#r</code> directive. A full list of all available assemblies can be found <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-csharp#importing-namespaces" target="_blank" rel="external">here</a>. As you can see, using all types/methods within the Microsoft.ServiceBus namespace will be easy. I can just add a the following lines of code to the beginning of run.csx:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using Microsoft.Servicebus;</div></pre></td></tr></table></figure>
+<p>It actually has using statements and a <code>public static void Main()</code> alike function called ‘Run’. Azure Functions provides you with framework libraries such as System and System.Linq and you can include some additional assemblies using the <code>#r</code> directive. A full list of all available assemblies can be found <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-csharp#importing-namespaces" target="_blank" rel="noopener">here</a>. As you can see, using all types/methods within the Microsoft.ServiceBus namespace will be easy. I can just add a the following lines of code to the beginning of run.csx:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#r &quot;Microsoft.ServiceBus&quot;</span><br><span class="line"></span><br><span class="line">using Microsoft.Servicebus;</span><br></pre></td></tr></table></figure>
 <p>I also will be using Newtonsoft.Json to deserialize my messages and SendGrid to send my emails, so I will need some way to restore the NuGet packages. This turns out to be quite easy. I just have to add a new file and tell my function what my dependencies are. Add a file called <code>project.json</code> to your function like so:</p>
-<img src="/2017/02/08/azure-functions-put-to-use/add-file-to-function.png" alt="Adding a file" title="Adding a file"> 
+<img src="/2017/02/08/azure-functions-put-to-use/add-file-to-function.png" title="Adding a file"> 
 <p>Now add the following code to it:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;frameworks&quot;: &#123;</div><div class="line">    &quot;net46&quot;:&#123;</div><div class="line">      &quot;dependencies&quot;: &#123;</div><div class="line">        &quot;Sendgrid&quot;: &quot;8.0.5&quot;,</div><div class="line">        &quot;Newtonsoft.Json&quot;: &quot;9.0.1&quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;frameworks&quot;: &#123;</span><br><span class="line">    &quot;net46&quot;:&#123;</span><br><span class="line">      &quot;dependencies&quot;: &#123;</span><br><span class="line">        &quot;Sendgrid&quot;: &quot;8.0.5&quot;,</span><br><span class="line">        &quot;Newtonsoft.Json&quot;: &quot;9.0.1&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>This will trigger my function to perform a NuGet restore before executing my function for the first time. Don’t forget to add the using statements to your code.</p>
 <p>We’re almost ready to get the code done but first we’ll need to add an output to our function. Head to the ‘Integrate’ section of your function and take note of the ‘Message parameter name’, we will use this later on. Now click ‘New Output’ and select ‘SendGrid’ (currently in preview).</p>
-<img src="/2017/02/08/azure-functions-put-to-use/integrate-tab.png" alt="Integrate" title="Integrate"> 
+<img src="/2017/02/08/azure-functions-put-to-use/integrate-tab.png" title="Integrate"> 
 <p>The easiest way to utilize this output, is to enter the from, to, subject and API key here. Mind you that the API key is the name of an Application Setting which contains the actual key! </p>
-<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" alt="Configure SendGrid" title="Configure SendGrid"> 
+<img src="/2017/02/08/azure-functions-put-to-use/sendgrid-config.png" title="Configure SendGrid"> 
 <p>Save the changes and then add the Application Setting corresponding to the API key name (SendGridApiKey in this example) by clicking ‘Function App Settings’ and then ‘Configure app setings’<br>Once you’ve added the input, take a look at your <code>function.json</code> and see how it reflects the changes. </p>
 <p>Finally adjust the code for run.csx to reflect your application logic. Notice how I named the ‘Message parameter name’ incomingMessage and added an <code>out Mail message</code> to the method signature:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#r &quot;SendGrid&quot;</div><div class="line">#r &quot;Newtonsoft.Json&quot;</div><div class="line">#r &quot;Microsoft.ServiceBus&quot;</div><div class="line"></div><div class="line">using SendGrid.Helpers.Mail;</div><div class="line">using Newtonsoft.Json;</div><div class="line">using System;</div><div class="line">using System.Threading.Tasks;</div><div class="line">using Microsoft.ServiceBus.Messaging;</div><div class="line"></div><div class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</div><div class="line">&#123;</div><div class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</div><div class="line">    </div><div class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</div><div class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</div><div class="line">    </div><div class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</div><div class="line"></div><div class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</div><div class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</div><div class="line"></div><div class="line">         message = new Mail();</div><div class="line"></div><div class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</div><div class="line">         message.AddContent(messageContent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#r &quot;SendGrid&quot;</span><br><span class="line">#r &quot;Newtonsoft.Json&quot;</span><br><span class="line">#r &quot;Microsoft.ServiceBus&quot;</span><br><span class="line"></span><br><span class="line">using SendGrid.Helpers.Mail;</span><br><span class="line">using Newtonsoft.Json;</span><br><span class="line">using System;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line">using Microsoft.ServiceBus.Messaging;</span><br><span class="line"></span><br><span class="line">public static void Run(BrokeredMessage incomingMessage, TraceWriter log, out Mail message)</span><br><span class="line">&#123;</span><br><span class="line">    message = null; // set output to null, it must be set as it is a mandatory out parameter</span><br><span class="line">    </span><br><span class="line">    var msgBody = incomingMessage.GetBody&lt;string&gt;();</span><br><span class="line">    var msg = JsonConvert.DeserializeObject&lt;dynamic&gt;(msgBody);</span><br><span class="line">    </span><br><span class="line">    log.Info($&quot;Event type: &#123;msg.messageType&#125;&quot;);</span><br><span class="line"></span><br><span class="line">    if(msg.messageType == &quot;activityFailed&quot;) &#123;</span><br><span class="line">         log.Info($&quot;Found a failed activity: &#123;msg.processId&#125;&quot;);</span><br><span class="line"></span><br><span class="line">         message = new Mail();</span><br><span class="line"></span><br><span class="line">         var messageContent = new Content(&quot;text/html&quot;, $&quot;Activity Failed: &#123;msg.processId&#125;&quot;);</span><br><span class="line">         message.AddContent(messageContent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>That’s it. Click Run and your message will be parsed, checked and you will be alerted in case something goes wrong :-)</p>
 <h1 id="The-result"><a href="#The-result" class="headerlink" title="The result"></a>The result</h1><p>I’ve already received my first alert - even though I triggered it intentionally, it’s still awesome to see that I now have a low-cost, easy to use solution which only runs when it should. Of course there optimizations to be made, but for now it does the trick. And in the meanwhile I’ve learned some more about building serverless applications using Azure Functions.</p>
 
@@ -305,7 +307,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="cjed4szcd0001czsfs37xba0x" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://toonen.io/2017/02/08/azure-functions-put-to-use/" data-id="cjtg5t8s1002qevsfqfyi7ivw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -428,9 +430,27 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/03/19/It-s-been-a-while/" class="title">It&#39;s been a while</a></p>
+                            <p class="item-date"><time datetime="2019-03-19T09:30:41.000Z" itemprop="datePublished">2019-03-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Cloud/">Cloud</a></p>
                             <p class="item-title"><a href="/2018/03/04/creating-a-github-badge-with-azure-functions/" class="title">Creating a GitHub badge with Azure Functions</a></p>
                             <p class="item-date"><time datetime="2018-03-04T08:52:47.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/01/Bank-account-in-minutes/" class="title">Bank account in minutes</a></p>
+                            <p class="item-date"><time datetime="2018-03-01T12:29:46.000Z" itemprop="datePublished">2018-03-01</time></p>
                         </div>
                     </li>
                 
@@ -452,24 +472,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Cloud/">Cloud</a></p>
-                            <p class="item-title"><a href="/2017/02/08/azure-functions-put-to-use/" class="title">Going Serverless - Azure Functions put to use</a></p>
-                            <p class="item-date"><time datetime="2017-02-08T20:16:27.000Z" itemprop="datePublished">2017-02-08</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/11/28/git-in-vs2017-with-self-signed-ssl/" class="title">Git in VS2017 with self-signed SSL</a></p>
-                            <p class="item-date"><time datetime="2016-11-28T11:00:47.000Z" itemprop="datePublished">2016-11-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -488,7 +490,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -497,7 +499,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/">Cloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSource/">OpenSource</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stryker/">Stryker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Build/">Build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/">Cloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Connect/">Connect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Containers/">Containers</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Continuous-Delivery/">Continuous Delivery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cross-Platform/">Cross-Platform</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Customization/">Customization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevInterSection/">DevInterSection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/">DevOps</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dutch/">Dutch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSource/">OpenSource</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Personal/">Personal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Serverless/">Serverless</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Servers/">Servers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Stryker/">Stryker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TFS/">TFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Visual-Studio/">Visual Studio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freebies/">freebies</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips-and-tricks/">tips-and-tricks</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -506,7 +508,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cloud/" style="font-size: 10px;">Cloud</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 10px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/OpenSource/" style="font-size: 10px;">OpenSource</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/Stryker/" style="font-size: 10px;">Stryker</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
+            <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Bash/" style="font-size: 15px;">Bash</a> <a href="/tags/Build/" style="font-size: 10px;">Build</a> <a href="/tags/Cloud/" style="font-size: 10px;">Cloud</a> <a href="/tags/Connect/" style="font-size: 10px;">Connect</a> <a href="/tags/Containers/" style="font-size: 15px;">Containers</a> <a href="/tags/Continuous-Delivery/" style="font-size: 10px;">Continuous Delivery</a> <a href="/tags/Cross-Platform/" style="font-size: 15px;">Cross-Platform</a> <a href="/tags/Customization/" style="font-size: 10px;">Customization</a> <a href="/tags/DevInterSection/" style="font-size: 15px;">DevInterSection</a> <a href="/tags/DevOps/" style="font-size: 15px;">DevOps</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Dutch/" style="font-size: 15px;">Dutch</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/OpenSource/" style="font-size: 10px;">OpenSource</a> <a href="/tags/Personal/" style="font-size: 10px;">Personal</a> <a href="/tags/Serverless/" style="font-size: 15px;">Serverless</a> <a href="/tags/Servers/" style="font-size: 10px;">Servers</a> <a href="/tags/Stryker/" style="font-size: 10px;">Stryker</a> <a href="/tags/TFS/" style="font-size: 15px;">TFS</a> <a href="/tags/Test/" style="font-size: 10px;">Test</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows/" style="font-size: 15px;">Windows</a> <a href="/tags/freebies/" style="font-size: 10px;">freebies</a> <a href="/tags/tips-and-tricks/" style="font-size: 10px;">tips-and-tricks</a>
         </div>
     </div>
 
@@ -534,7 +536,7 @@ ga('send', 'pageview');
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 Peter Toonen<br>
+            &copy; 2019 Peter Toonen<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
