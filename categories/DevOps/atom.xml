@@ -54,9 +54,9 @@
         <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
         
         
-        <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
-        
         <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
+        
+        <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
         
         <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
         
