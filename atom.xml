@@ -96,30 +96,6 @@
   </entry>
   
   <entry>
-    <title>Bank account in minutes</title>
-    <link href="https://toonen.io/2018/03/01/Bank-account-in-minutes/"/>
-    <id>https://toonen.io/2018/03/01/Bank-account-in-minutes/</id>
-    <published>2018-03-01T12:29:46.000Z</published>
-    <updated>2018-03-05T20:07:07.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-      <category term="Windows" scheme="https://toonen.io/tags/Windows/"/>
-    
-      <category term="Linux" scheme="https://toonen.io/tags/Linux/"/>
-    
-      <category term="Cross-Platform" scheme="https://toonen.io/tags/Cross-Platform/"/>
-    
-      <category term="Bash" scheme="https://toonen.io/tags/Bash/"/>
-    
-      <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Running Docker 17.10 on Windows Server 1709 without nested virtualization</title>
     <link href="https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/"/>
     <id>https://toonen.io/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/</id>
