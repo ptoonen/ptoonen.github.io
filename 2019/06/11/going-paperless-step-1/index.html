@@ -3,18 +3,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     
-    <title>Archive: 2018/2 | Peter Toonen on all things tech</title>
+    <title>Going paperless: step 1 | Peter Toonen on all things tech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="All about tech and the adventures of Peter Toonen in the digital world.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Peter Toonen on all things tech">
-<meta property="og:url" content="https://toonen.io/archives/2018/02/index.html">
+    <meta name="description" content="In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every day by requesting digital versions of everything from invoices t">
+<meta name="keywords" content="paperless,azure,serverless">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Going paperless: step 1">
+<meta property="og:url" content="https://toonen.io/2019/06/11/going-paperless-step-1/index.html">
 <meta property="og:site_name" content="Peter Toonen on all things tech">
-<meta property="og:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta property="og:description" content="In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every day by requesting digital versions of everything from invoices t">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://toonen.io/2019/06/11/going-paperless-step-1/include-attachments.png">
+<meta property="og:image" content="https://toonen.io/2019/06/11/going-paperless-step-1/keyvault-referencing.png">
+<meta property="og:image" content="https://toonen.io/2019/06/11/going-paperless-step-1/keyvault-dont-check-this-box.png">
+<meta property="og:updated_time" content="2019-06-11T17:24:28.148Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peter Toonen on all things tech">
-<meta name="twitter:description" content="All about tech and the adventures of Peter Toonen in the digital world.">
+<meta name="twitter:title" content="Going paperless: step 1">
+<meta name="twitter:description" content="In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every day by requesting digital versions of everything from invoices t">
+<meta name="twitter:image" content="https://toonen.io/2019/06/11/going-paperless-step-1/include-attachments.png">
     
 
     
@@ -204,50 +210,176 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-going-paperless-step-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">Running Docker 17.10 on Windows Server 1709 without nested virtualization</a>
+        <h1 class="article-title" itemprop="name">
+            Going paperless: step 1
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/26/running-docker-17-10-on-windows-server-2017-without-nested-virtualization/">
-            <time datetime="2018-02-26T11:01:29.000Z" itemprop="datePublished">2018-02-26</time>
+        <a href="/2019/06/11/going-paperless-step-1/">
+            <time datetime="2019-06-11T16:09:25.000Z" itemprop="datePublished">2019-06-11</time>
         </a>
     </div>
 
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Containers/">Containers</a>
-    </div>
-
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Containers/">Containers</a>, <a class="tag-link" href="/tags/Servers/">Servers</a>
+        <a class="tag-link" href="/tags/azure/">azure</a>, <a class="tag-link" href="/tags/paperless/">paperless</a>, <a class="tag-link" href="/tags/serverless/">serverless</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every day by requesting digital versions of everything from invoices to tax statements to payment slips. Right now I receive most of these through email as a PDF file and I put them in a folder on my NAS and then never touch it again until I need it. That’s when I spend hours and hours trying to locate what I need. I mean.. search only gets you so far when it concerns images or passworded PDF’s.  </p>
+<p>This post describes how to at least get rid of those pesky passworded PDF’s and in the follow-ups on this post, I’ll also dive deeper into my efforts to go truly paperless.</p>
+<h2 id="Pesky-Passworded-PDF’s-and-how-to-get-rid-of-them"><a href="#Pesky-Passworded-PDF’s-and-how-to-get-rid-of-them" class="headerlink" title="Pesky Passworded PDF’s and how to get rid of them"></a>Pesky Passworded PDF’s and how to get rid of them</h2><p>Some companies insist on supplying you with a passworded PDF. The problem with these is that you do need the password before they’re searchable and what’s worse.. the password may change over time (or you forget it), leaving you with useless files. Of course I could just open the PDF, enter the password, print the file to another PDF and then save it to my NAS. Or I could print it on paper and put it in a physical folder for safekeeping. But seeing as I want to <em>reduce</em> paper and I hate doing manual labor, I just couldn’t resist automating this. So this is how it went:</p>
+<ul>
+<li>Every 24 hours, an Azure Logic App checks a subfolder in my Exchange Online mailbox for new mails with PDF attachments</li>
+<li>If it finds any emails matching those criteria, it pipes the attachments into an Azure Function</li>
+<li>The function removes the password using a password which is stored in Azure Key vault</li>
+<li>It then returns a filestream to my Azure Logic App which safely stores it as a PDF in OneDrive</li>
+</ul>
+<p>The OneDrive folder is then synced with my Synology NAS overnight and there we go.. password removed. </p>
+<h2 id="If-only-it-were-that-easy"><a href="#If-only-it-were-that-easy" class="headerlink" title="If only it were that easy"></a>If only it were that easy</h2><p>The idea was simple enough and after finding a library that didn’t need a commercial license and was also .NET Core compatible <a href="https://www.nuget.org/packages/itext7/" target="_blank" rel="noopener">iText 7</a> (<em>MIND YOU</em>: in commercial software you’ll probably want to buy a license due to the AGPL that’s attached to this library), I started to code my Function which was easy enough. But then when deploying, there were a few caveats. The first was that I wouldn’t get any attachments in my function for some reason and then there was the issue of getting my password accessible from within my Function.</p>
+<h3 id="Attachments-and-Logic-Apps’-Exchange-Connector"><a href="#Attachments-and-Logic-Apps’-Exchange-Connector" class="headerlink" title="Attachments and Logic Apps’ Exchange Connector"></a>Attachments and Logic Apps’ Exchange Connector</h3><p>Azure Logic Apps is an awesome way to quickly create an application with standard functionality but also allows you to call custom code with a Function connector. In this application I use a few standard connectors and add a custom function. My trigger is a standard Office 365 connector that periodically checks a subfolder in my mailbox, then I have some conditional logic that checks for specific conditions based on the email that triggered the Logic App and if the condition is met, it will proceed with a foreach loop on all the attachments attached to the email and push them through my custom Function which removes the password. Finally another standard OneDrive connector stores the file in my OneDrive account.</p>
+<p>This process took a whole 2 minutes to create the Logic App, create the logic and make it all work. Unfortunately it didn’t work. In fact, I wasn’t getting any attachments into my Function and I couldn’t for the life of it figure out why. But I’ll help you out here and say what I’m almost ashamed to say: the ‘Include Attachments’ dropdown, actually means ‘Do you want to do something with these attachments in the following step?’ and you will probably want to answer this with a firm ‘yes’ :-)</p>
+<img src="/2019/06/11/going-paperless-step-1/include-attachments.png" title="Say yes to including attachments">
+<p>After this, it was on to the next step.. securing my secrets.</p>
+<h3 id="Azure-Functions-MSI-Key-vault-and-VNet-integration"><a href="#Azure-Functions-MSI-Key-vault-and-VNet-integration" class="headerlink" title="Azure Functions, MSI, Key vault and VNet integration"></a>Azure Functions, MSI, Key vault and VNet integration</h3><p>For a while now it is possible to use <a href="https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity" target="_blank" rel="noopener">Managed Identities</a> in Azure. This is a great solution in case you don’t want to specify a username/password (a secret) to access your secrets because that kind of defeats the point or at the very least complicates things. So there really was no choice other than to store my secrets in a Key vault and then use an MSI (Managed Service Identity) to access the proper secrets. The best thing there is that you can even reference these secrets from within a function by merely using a specially crafted Environment Variable, this process is called <a href="https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references" target="_blank" rel="noopener">‘Key vault References’</a>. You simply create an environment variable called something like ‘MyPDFPassword’ and then as a value you use <code>@Microsoft.KeyVault({referenceString})</code> where {referenceString} is the secret location, something like this:</p>
+<img src="/2019/06/11/going-paperless-step-1/keyvault-referencing.png" title="Key vault Referencing">
+<p>Now all you need to do is grant the MSI you’re using for the function permission to access the secret in your vault and don’t firewall your Key vault. Wait.. what did you say? Isn’t it a good thing to make sure only Azure Services can access my resources? Well yes dear reader, generally it is, but not when your service <a href="https://docs.microsoft.com/en-us/azure/key-vault/key-vault-overview-vnet-service-endpoints#trusted-services" target="_blank" rel="noopener">isn’t supported yet</a>! Even though Azure App Service is mentioned there, and even though Azure Functions may run in ‘sort of an App Service’, do not make make the same mistake I did and tick the ‘Selected networks’ box, or you’ll spend quite some time figuring out why your Function gets the name of the Environment Variable that you’re using to reference rather than the value of the secret it is supposed to reference..</p>
+<img src="/2019/06/11/going-paperless-step-1/keyvault-dont-check-this-box.png" title="Do NOT check this box">
+<p>After you do NOT check that box, you can happily access the passwords for your PDF’s and can even version the secret which might come in handy in case you do ever need that old password.</p>
+<h2 id="One-step-closer"><a href="#One-step-closer" class="headerlink" title="One step closer"></a>One step closer</h2><p>This solution has been spinning for a few months now and has been removing those pesky passwords from my PDF’s and it’s even quite cheap.. In fact, it cost me a whopping €0.01 per month :-) I’m not sure if I’d make this investment as a company, but at least I’ve learned some more and got to play around with some of the more recent concepts in Azure. The code for the Function can be found on <a href="https://github.com/ptoonen/paperless" target="_blank" rel="noopener">GitHub</a>. Over the course of the next few months I’ll continue writing about my efforts of going paperless which includes my first steps into the world of AI (more specifically Machine Learning) to classify documents. And by the end of the year, I hope to be completely paperless. </p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://toonen.io/2019/06/11/going-paperless-step-1/" data-id="cjws21blg00099lhai92oni7q" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://toonen.io/2019/06/11/going-paperless-step-1/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://toonen.io/2019/06/11/going-paperless-step-1/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/03/19/It-s-been-a-while/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">It&#39;s been a while</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -377,11 +509,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://toonen.io/2019/06/11/going-paperless-step-1/';
+        
+        this.page.identifier = 'going-paperless-step-1';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'toonen-io' + '.disqus.com/count.js';
+        s.src = '//' + 'toonen-io' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

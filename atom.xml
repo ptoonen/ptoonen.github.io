@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://toonen.io/"/>
-  <updated>2019-03-19T19:14:20.545Z</updated>
+  <updated>2019-06-11T17:24:28.148Z</updated>
   <id>https://toonen.io/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Going paperless: step 1</title>
+    <link href="https://toonen.io/2019/06/11/going-paperless-step-1/"/>
+    <id>https://toonen.io/2019/06/11/going-paperless-step-1/</id>
+    <published>2019-06-11T16:09:25.000Z</published>
+    <updated>2019-06-11T17:24:28.148Z</updated>
+    
+    <content type="html"><![CDATA[<p>In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every day by requesting digital versions of everything from invoices to tax statements to payment slips. Right now I receive most of these through email as a PDF file and I put them in a folder on my NAS and then never touch it again until I need it. That’s when I spend hours and hours trying to locate what I need. I mean.. search only gets you so far when it concerns images or passworded PDF’s.  </p>
+<p>This post describes how to at least get rid of those pesky passworded PDF’s and in the follow-ups on this post, I’ll also dive deeper into my efforts to go truly paperless.</p>
+<h2 id="Pesky-Passworded-PDF’s-and-how-to-get-rid-of-them"><a href="#Pesky-Passworded-PDF’s-and-how-to-get-rid-of-them" class="headerlink" title="Pesky Passworded PDF’s and how to get rid of them"></a>Pesky Passworded PDF’s and how to get rid of them</h2><p>Some companies insist on supplying you with a passworded PDF. The problem with these is that you do need the password before they’re searchable and what’s worse.. the password may change over time (or you forget it), leaving you with useless files. Of course I could just open the PDF, enter the password, print the file to another PDF and then save it to my NAS. Or I could print it on paper and put it in a physical folder for safekeeping. But seeing as I want to <em>reduce</em> paper and I hate doing manual labor, I just couldn’t resist automating this. So this is how it went:</p>
+<ul>
+<li>Every 24 hours, an Azure Logic App checks a subfolder in my Exchange Online mailbox for new mails with PDF attachments</li>
+<li>If it finds any emails matching those criteria, it pipes the attachments into an Azure Function</li>
+<li>The function removes the password using a password which is stored in Azure Key vault</li>
+<li>It then returns a filestream to my Azure Logic App which safely stores it as a PDF in OneDrive</li>
+</ul>
+<p>The OneDrive folder is then synced with my Synology NAS overnight and there we go.. password removed. </p>
+<h2 id="If-only-it-were-that-easy"><a href="#If-only-it-were-that-easy" class="headerlink" title="If only it were that easy"></a>If only it were that easy</h2><p>The idea was simple enough and after finding a library that didn’t need a commercial license and was also .NET Core compatible <a href="https://www.nuget.org/packages/itext7/" target="_blank" rel="noopener">iText 7</a> (<em>MIND YOU</em>: in commercial software you’ll probably want to buy a license due to the AGPL that’s attached to this library), I started to code my Function which was easy enough. But then when deploying, there were a few caveats. The first was that I wouldn’t get any attachments in my function for some reason and then there was the issue of getting my password accessible from within my Function.</p>
+<h3 id="Attachments-and-Logic-Apps’-Exchange-Connector"><a href="#Attachments-and-Logic-Apps’-Exchange-Connector" class="headerlink" title="Attachments and Logic Apps’ Exchange Connector"></a>Attachments and Logic Apps’ Exchange Connector</h3><p>Azure Logic Apps is an awesome way to quickly create an application with standard functionality but also allows you to call custom code with a Function connector. In this application I use a few standard connectors and add a custom function. My trigger is a standard Office 365 connector that periodically checks a subfolder in my mailbox, then I have some conditional logic that checks for specific conditions based on the email that triggered the Logic App and if the condition is met, it will proceed with a foreach loop on all the attachments attached to the email and push them through my custom Function which removes the password. Finally another standard OneDrive connector stores the file in my OneDrive account.</p>
+<p>This process took a whole 2 minutes to create the Logic App, create the logic and make it all work. Unfortunately it didn’t work. In fact, I wasn’t getting any attachments into my Function and I couldn’t for the life of it figure out why. But I’ll help you out here and say what I’m almost ashamed to say: the ‘Include Attachments’ dropdown, actually means ‘Do you want to do something with these attachments in the following step?’ and you will probably want to answer this with a firm ‘yes’ :-)</p>
+<img src="/2019/06/11/going-paperless-step-1/include-attachments.png" title="Say yes to including attachments">
+<p>After this, it was on to the next step.. securing my secrets.</p>
+<h3 id="Azure-Functions-MSI-Key-vault-and-VNet-integration"><a href="#Azure-Functions-MSI-Key-vault-and-VNet-integration" class="headerlink" title="Azure Functions, MSI, Key vault and VNet integration"></a>Azure Functions, MSI, Key vault and VNet integration</h3><p>For a while now it is possible to use <a href="https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity" target="_blank" rel="noopener">Managed Identities</a> in Azure. This is a great solution in case you don’t want to specify a username/password (a secret) to access your secrets because that kind of defeats the point or at the very least complicates things. So there really was no choice other than to store my secrets in a Key vault and then use an MSI (Managed Service Identity) to access the proper secrets. The best thing there is that you can even reference these secrets from within a function by merely using a specially crafted Environment Variable, this process is called <a href="https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references" target="_blank" rel="noopener">‘Key vault References’</a>. You simply create an environment variable called something like ‘MyPDFPassword’ and then as a value you use <code>@Microsoft.KeyVault({referenceString})</code> where {referenceString} is the secret location, something like this:</p>
+<img src="/2019/06/11/going-paperless-step-1/keyvault-referencing.png" title="Key vault Referencing">
+<p>Now all you need to do is grant the MSI you’re using for the function permission to access the secret in your vault and don’t firewall your Key vault. Wait.. what did you say? Isn’t it a good thing to make sure only Azure Services can access my resources? Well yes dear reader, generally it is, but not when your service <a href="https://docs.microsoft.com/en-us/azure/key-vault/key-vault-overview-vnet-service-endpoints#trusted-services" target="_blank" rel="noopener">isn’t supported yet</a>! Even though Azure App Service is mentioned there, and even though Azure Functions may run in ‘sort of an App Service’, do not make make the same mistake I did and tick the ‘Selected networks’ box, or you’ll spend quite some time figuring out why your Function gets the name of the Environment Variable that you’re using to reference rather than the value of the secret it is supposed to reference..</p>
+<img src="/2019/06/11/going-paperless-step-1/keyvault-dont-check-this-box.png" title="Do NOT check this box">
+<p>After you do NOT check that box, you can happily access the passwords for your PDF’s and can even version the secret which might come in handy in case you do ever need that old password.</p>
+<h2 id="One-step-closer"><a href="#One-step-closer" class="headerlink" title="One step closer"></a>One step closer</h2><p>This solution has been spinning for a few months now and has been removing those pesky passwords from my PDF’s and it’s even quite cheap.. In fact, it cost me a whopping €0.01 per month :-) I’m not sure if I’d make this investment as a company, but at least I’ve learned some more and got to play around with some of the more recent concepts in Azure. The code for the Function can be found on <a href="https://github.com/ptoonen/paperless" target="_blank" rel="noopener">GitHub</a>. Over the course of the next few months I’ll continue writing about my efforts of going paperless which includes my first steps into the world of AI (more specifically Machine Learning) to classify documents. And by the end of the year, I hope to be completely paperless. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;In an effort to leave a (little) smaller footprint on this world, I’ve been minimizing the amount of paper I receive through mail every d
+    
+    </summary>
+    
+    
+      <category term="paperless" scheme="https://toonen.io/tags/paperless/"/>
+    
+      <category term="azure" scheme="https://toonen.io/tags/azure/"/>
+    
+      <category term="serverless" scheme="https://toonen.io/tags/serverless/"/>
+    
+  </entry>
   
   <entry>
     <title>It&#39;s been a while</title>
@@ -173,13 +218,13 @@
       <category term="DevOps" scheme="https://toonen.io/categories/DevOps/"/>
     
     
+      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
+    
       <category term="Azure" scheme="https://toonen.io/tags/Azure/"/>
     
       <category term="Serverless" scheme="https://toonen.io/tags/Serverless/"/>
     
       <category term="Continuous Delivery" scheme="https://toonen.io/tags/Continuous-Delivery/"/>
-    
-      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
     
       <category term="TFS" scheme="https://toonen.io/tags/TFS/"/>
     
@@ -330,11 +375,11 @@
     
       <category term="Docker" scheme="https://toonen.io/tags/Docker/"/>
     
-      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
-    
       <category term="Connect" scheme="https://toonen.io/tags/Connect/"/>
     
       <category term="Containers" scheme="https://toonen.io/tags/Containers/"/>
+    
+      <category term="DevOps" scheme="https://toonen.io/tags/DevOps/"/>
     
   </entry>
   
@@ -455,14 +500,14 @@
   
   <entry>
     <title>Dev Intersection 2015 - dag 3</title>
-    <link href="https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/"/>
-    <id>https://toonen.io/2015/10/27/dev-intersection-2015-dag-3/</id>
+    <link href="https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/"/>
+    <id>https://toonen.io/2015/10/28/dev-intersection-2015-dag-3/</id>
     <published>2015-10-28T06:38:00.000Z</published>
     <updated>2016-07-09T23:18:22.000Z</updated>
     
     <content type="html"><![CDATA[<p>Samen met Mark Rexwinkel en Edwin van Wijk ben ik deze week aanwezig op de Dev Intersection 2015 conferentie in Las Vegas. Via een dagelijkse blog proberen wij jullie op de hoogte te houden van wat we hier zien en horen. Na <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-1/" target="_blank" rel="noopener">Edwin</a> en <a href="https://blogs.infosupport.com/dev-intersection-2015-dag-2/" target="_blank" rel="noopener">Mark</a> ben ik vandaag aan de beurt.</p>
 <p>De derde dag van de conferentie was de eerste dag waarop ‘reguliere’ sessies werden gegeven. Na een goed ontbijt, begon de dag met een keynote van Scott Guthrie. Hij vertelde voornamelijk over de ‘Journey to the Cloud’ en deelde Microsoft’s visie op DevOps met <a href="https://www.visualstudio.com/en-us/products/what-is-visual-studio-online-vs.aspx" target="_blank" rel="noopener">Visual Studio Online</a>, enkele indrukwekkende cijfers over Azure (wat te denken van 777 biljoen storage queries per dag?!) en de manier waarop Microsoft’s Clouddiensten zoals Office 365 in het grote plaatje van de moderne IT-industrie passen.</p>
-<img src="/2015/10/27/dev-intersection-2015-dag-3/devops-on-vso.jpg" title="DevOps met VSO">
+<img src="/2015/10/28/dev-intersection-2015-dag-3/devops-on-vso.jpg" title="DevOps met VSO">
 <p>Na de keynote zijn we elk onze eigen kant uit gegaan. Ik heb sessies gevolgd van Julie Lerman (Domain Driven Design for the Database Driven Mind), welke erg goed wordt samengevat in een <a href="https://msdn.microsoft.com/en-us/magazine/dn342868.aspx" target="_blank" rel="noopener">drietal blogposts</a>, een sessie van Steven Murawski (Survive and Thrive in a DevOps World) die erop neer kwam dat het invoeren van DevOps voornamelijk een cultuur-shift is waarbij men de ‘fear culture’ en ‘blame game’ moet laten varen. Hij heeft een flink aantal tips <a href="http://stevenmurawski.com/devops-reading-list/" target="_blank" rel="noopener">op zijn blog</a> staan om met DevOps aan de slag te gaan.</p>
 <p>In de middag ben ik verder gegaan met een sessie van Troy Hunt (Securing ASP.NET in an Azure Environment). Nadat ik zijn workshop had gevolgd op maandag, was ik erg benieuwd wat hij over dit onderwerp had te zeggen en ik werd niet teleurgesteld. Alhoewel het in het begin voornamelijk om no-brainers ging zoals het least-privileged-account principe, kwam hij uiteindelijk tot tips omtrent <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-database-dynamic-data-masking-get-started/" target="_blank" rel="noopener">dynamic data masking</a> in Azure SQL databases, stipte hij nog even het belang van application settings en connection strings in de Azure portal aan en dat je eigenlijk altijd two step verification aan moet zetten als je met jouw account een Azure subscription gaat beheren. Dit laatste kun je instellen via <a href="https://account.live.com/proofs/Manage" target="_blank" rel="noopener">accountbeheer</a>.</p>
 <p>Al met al was dit weer een geslaagde dag en kijk ik al uit naar morgen!</p>
